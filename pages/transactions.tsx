@@ -68,7 +68,7 @@ const TransactionRow = (props: any) => {
   )
 }
 
-const Overview = () => {
+const Transactions = () => {
   const router = useRouter();
   const pathname = router.pathname;
 
@@ -76,7 +76,7 @@ const Overview = () => {
     <Box backgroundColor={colors.background_start} height="100vh">
       {/* Left Panel */}
       <Box display="flex" flexDirection="row">
-        <Box width="80px" backgroundColor={colors.block} display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
+        <Box width="80px" height="500px" backgroundColor={colors.block} display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
           <Link onClick={() => router.push(`/`)}>
             <Box textAlign="center" m="12px" p="8px">
               <Image src={require('/assets/icons/logo.svg')} alt='Wisp Logo' width="30px" height="30px" />
@@ -113,7 +113,7 @@ const Overview = () => {
           {/* Header */}
           <Box p="32px" display="flex" flexDirection="row" justifyContent="space-between">
             <Box>
-              <Text color="white" {...app.med_28}>Overview</Text>
+              <Text color="white" {...app.med_28}>Transactions</Text>
             </Box>
             <Box display="flex" flexDirection="row">
               <Box>
@@ -135,84 +135,9 @@ const Overview = () => {
             </Box>
           </Box>
 
-          {/* Total Value */}
+          {/* Transactions Table */}
           <Box mx="32px">
-            <Box>
-              <Text color={colors.neutral_400} {...app.reg_16}>Total Value</Text>
-            </Box>
-            
-            <Box display="flex" flexDirection="row">
-              <Box>
-                <Text color="white" {...app.reg_32}>$12,453.00</Text>
-              </Box>
-
-              <Box ml="12px">
-                <Text color={colors.green} {...app.reg_14}>+ $435 Value</Text>
-                <Text color={colors.green} {...app.reg_14}>+ 5.00% APY</Text>
-              </Box>
-
-              <Box as="button"
-                backgroundColor={colors.primary_800}
-                borderRadius="6px"
-                py="12px"
-                width="110px"
-                textAlign="center"
-                ml="36px"
-                _hover={{ bg: colors.primary_700 }}
-              >
-                  <Text ml="auto" mr="auto" color="white" {...app.reg_16}>Withdraw</Text>
-              </Box>
-
-              {/* ETH */}
-              <Box flexDirection="row" display="flex" ml="36px" mt="2px">
-                <Box>
-                  <Image src={require('/assets/icons/eth_logo.svg')} alt='Ethereum Logo' width="36px" height="36px" />
-                </Box>
-                <Text color="white" {...app.reg_16} ml="8px" mt="5px">ETH 4.24</Text>
-              </Box>
-
-              {/* USDC */}
-              <Box flexDirection="row" display="flex" ml="36px" mt="2px">
-                <Box>
-                <Image src={require('/assets/icons/usdc_logo.svg')} alt='USDC Logo' width="36px" height="36px" />
-                </Box>
-                <Text color="white" {...app.reg_16} ml="8px" mt="5px">USDC 342</Text>
-              </Box>
-
-              {/* UniSwap */}
-              <Box flexDirection="row" display="flex" ml="36px" mt="2px">
-                <Box>
-                <Image src={require('/assets/icons/uniswap_logo.svg')} alt='UniSwap Logo' width="36px" height="36px" />
-                </Box>
-                <Text color="white" {...app.reg_16} ml="8px" mt="5px">UNI 116,537.09</Text>
-              </Box>
-            </Box>
-
-            {/* Dashboards */}
-            <Box m="32px" borderColor="yellow" borderWidth="1px" width="744px" height="305px">
-              {/* TODO: Get from CompaoDao */}
-              <Text color="white">Statistics</Text> 
-              {/* <Line
-                data={flow}
-                width={400}
-                height={200}
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      position: 'top' as const,
-                    },
-                  },
-                }}
-              /> */}
-            </Box>
-
             <Box m="32px" borderRadius="4px" backgroundColor={colors.block} p="16px">
-              <Box display="flex" flexDirection="row" justifyContent="space-between">
-                <Text color="white" {...app.med_16}>Transaction History</Text>
-                <Text color={colors.neutral_500} {...app.reg_14}>View all</Text>
-              </Box>
-
               <TableContainer>
                 <Table variant="simple">
                   {/* {submissions.length != 0 && ( */}
@@ -273,4 +198,4 @@ const Overview = () => {
   )
 }
 
-export default Overview;
+export default Transactions;
