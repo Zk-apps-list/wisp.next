@@ -6,7 +6,7 @@ import TransparentButton from "../src/components/TransparentButton";
 import Footer from "../src/components/Footer";
 
 const Home: NextPage = () => {
-  // const contentWidths = [1088];
+  const contentWidths = [1088];
   return (
     <Flex
       align="center"
