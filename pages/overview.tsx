@@ -5,6 +5,7 @@ import { colors } from '../styles/colors';
 import { app } from '../styles/fonts';
 import { truncateWallet } from '../util/truncateWallet';
 import { useRouter } from 'next/router';
+import Header from '../components/Header';
 // import {
 //   Chart as ChartJS,
 //   CategoryScale,
@@ -77,7 +78,7 @@ const Overview = () => {
       {/* Left Panel */}
       <Box display="flex" flexDirection="row">
         <Box width="80px" backgroundColor={colors.block} display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
-          <Link onClick={() => router.push(`/`)}>
+          <Link onClick={() => router.push('/')}>
             <Box textAlign="center" m="12px" p="8px">
               <Image src={require('/assets/icons/logo.svg')} alt='Wisp Logo' width="30px" height="30px" />
             </Box>
@@ -110,40 +111,17 @@ const Overview = () => {
 
         {/* Right Panel */}
         <Box flex={10}>
-          {/* Header */}
-          <Box p="32px" display="flex" flexDirection="row" justifyContent="space-between">
-            <Box>
-              <Text color="white" {...app.med_28}>Overview</Text>
-            </Box>
-            <Box display="flex" flexDirection="row">
-              <Box>
-                <Box as="button"
-                  backgroundColor={colors.primary_800}
-                  borderRadius="6px"
-                  py="12px"
-                  width="110px"
-                  textAlign="center"
-                  ml="36px"
-                  _hover={{ bg: colors.primary_700 }}
-                >
-                    <Text ml="auto" mr="auto" color="white" {...app.reg_16}>Create Link</Text>
-                </Box>
-              </Box>
-              <Box color="white" px="16px" py="8px" {...app.reg_14}>
-                  0xa0492...4959123
-              </Box>
-            </Box>
-          </Box>
+          <Header />
 
           {/* Total Value */}
-          <Box mx="32px">
+          <Box mx="64px" >
             <Box>
               <Text color={colors.neutral_400} {...app.reg_16}>Total Value</Text>
             </Box>
             
             <Box display="flex" flexDirection="row">
               <Box>
-                <Text color="white" {...app.reg_32}>$12,453.00</Text>
+                <Text color="white" {...app.reg_32}>$15,294,453.00</Text>
               </Box>
 
               <Box ml="12px">
@@ -151,7 +129,7 @@ const Overview = () => {
                 <Text color={colors.green} {...app.reg_14}>+ 5.00% APY</Text>
               </Box>
 
-              <Box as="button"
+              <Box as={Button}
                 backgroundColor={colors.primary_800}
                 borderRadius="6px"
                 py="12px"
@@ -159,8 +137,9 @@ const Overview = () => {
                 textAlign="center"
                 ml="36px"
                 _hover={{ bg: colors.primary_700 }}
+                leftIcon={<Image src={require('/assets/icons/arrow_down.svg')} alt='Ethereum Logo' width="16px" height="16px" />}
               >
-                  <Text ml="auto" mr="auto" color="white" {...app.reg_16}>Withdraw</Text>
+                  <Text ml="auto" mr="auto" color="white" {...app.reg_14}>Withdraw</Text>
               </Box>
 
               {/* ETH */}
@@ -189,7 +168,7 @@ const Overview = () => {
             </Box>
 
             {/* Dashboards */}
-            <Box m="32px" borderColor="yellow" borderWidth="1px" width="744px" height="305px">
+            <Box my="32px" borderColor="yellow" borderWidth="1px" width="744px" height="305px">
               {/* TODO: Get from CompaoDao */}
               <Text color="white">Statistics</Text> 
               {/* <Line
@@ -207,7 +186,7 @@ const Overview = () => {
               /> */}
             </Box>
 
-            <Box m="32px" borderRadius="4px" backgroundColor={colors.block} p="16px">
+            <Box my="32px" borderRadius="4px" backgroundColor={colors.block} p="16px">
               <Box display="flex" flexDirection="row" justifyContent="space-between">
                 <Text color="white" {...app.med_16}>Transaction History</Text>
                 <Text color={colors.neutral_500} {...app.reg_14}>View all</Text>

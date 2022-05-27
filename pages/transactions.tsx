@@ -5,6 +5,7 @@ import { colors } from '../styles/colors';
 import { app } from '../styles/fonts';
 import { truncateWallet } from '../util/truncateWallet';
 import { useRouter } from 'next/router';
+import Header from '../components/Header';
 // import {
 //   Chart as ChartJS,
 //   CategoryScale,
@@ -110,30 +111,7 @@ const Transactions = () => {
 
         {/* Right Panel */}
         <Box flex={10}>
-          {/* Header */}
-          <Box p="32px" display="flex" flexDirection="row" justifyContent="space-between">
-            <Box>
-              <Text color="white" {...app.med_28}>Transactions</Text>
-            </Box>
-            <Box display="flex" flexDirection="row">
-              <Box>
-                <Box as="button"
-                  backgroundColor={colors.primary_800}
-                  borderRadius="6px"
-                  py="12px"
-                  width="110px"
-                  textAlign="center"
-                  ml="36px"
-                  _hover={{ bg: colors.primary_700 }}
-                >
-                    <Text ml="auto" mr="auto" color="white" {...app.reg_16}>Create Link</Text>
-                </Box>
-              </Box>
-              <Box color="white" px="16px" py="8px" {...app.reg_14}>
-                  0xa0492...4959123
-              </Box>
-            </Box>
-          </Box>
+          <Header />
 
           {/* Transactions Table */}
           <Box mx="32px">
