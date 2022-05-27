@@ -27,7 +27,7 @@ const appTheme = extendTheme({
       start: "#242628",
       end: "#1B1B1B",
     },
-    landingBG: "#1e1e1e",
+    landingBG: "#1E1E1E",
   },
   fonts: {
     // app: "'Prompt', sans-serif",
@@ -127,6 +127,18 @@ const appTheme = extendTheme({
       fontWeight: 400,
       lineHeight: "200%",
     },
+    land_reg_35: {
+      fontFamily: "Prompt",
+      fontSize: "35px",
+      fontWeight: 400,
+      lineHeight: "110%",
+    },
+    land_med_35: {
+      fontFamily: "Prompt",
+      fontSize: "35px",
+      fontWeight: 500,
+      lineHeight: "110%",
+    },
     land_reg_32: {
       fontFamily: "Prompt",
       fontSize: "32px",
@@ -138,6 +150,12 @@ const appTheme = extendTheme({
       fontSize: "24px",
       fontWeight: 400,
       lineHeight: "200%",
+    },
+    land_reg_24_150: {
+      fontFamily: "Prompt",
+      fontSize: "24px",
+      fontWeight: 400,
+      lineHeight: "150%",
     },
     land_reg_20: {
       fontFamily: "Prompt",

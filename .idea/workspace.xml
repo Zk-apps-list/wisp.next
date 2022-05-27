@@ -4,19 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab35a535-8f8e-454d-b670-27f801257895" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/prettier.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/webResources.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/wisp.next.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/wisp.next.iml" afterDir="false" />
+    <list default="true" id="ab35a535-8f8e-454d-b670-27f801257895" name="Changes" comment="Responsiveness finished">
+      <change afterPath="$PROJECT_DIR$/public/close-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/hamburger-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/home-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/logo-sm.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/rocket-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/settings-icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/why-wisp-docs.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/why-wisp-liquidity.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/landing-phones.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/landing-phones.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/BlueButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/BlueButton.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/TransparentButton.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TransparentButton.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Footer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Footer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/theme.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +41,8 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
+    <property name="settings.editor.selected.configurable" value="settings.javascript.prettier" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
@@ -58,8 +59,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1653659820166</updated>
-      <workItem from="1653659823052" duration="1319000" />
+      <workItem from="1653659823052" duration="12628000" />
     </task>
+    <task id="LOCAL-00001" summary="Fixed broken images">
+      <created>1653661593795</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1653661593795</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -75,5 +84,14 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed broken images" />
+    <MESSAGE value="Responsiveness finished" />
+    <option name="LAST_COMMIT_MESSAGE" value="Responsiveness finished" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
