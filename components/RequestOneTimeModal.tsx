@@ -61,11 +61,11 @@ const RequestOneTimeModal = (props: any) => {
       }}
     >
     <ModalOverlay />
-    <ModalContent>
-      <ModalHeader {...app.med_18}>Request one time payment</ModalHeader>
-      <ModalCloseButton />
+    <ModalContent backgroundColor={colors.block}>
+      <ModalHeader {...app.med_18} color="white">Request one time payment</ModalHeader>
+      <ModalCloseButton color="white" />
       <ModalBody>
-        <Text {...app.reg_12}>Invite to request payment by sharing link</Text>
+        <Text {...app.reg_12} color="white">Invite to request payment by sharing link</Text>
         <Menu>
           <MenuButton
             as={Button}
@@ -74,16 +74,16 @@ const RequestOneTimeModal = (props: any) => {
             textAlign={'left'}
             color="white"
             backgroundColor={colors.neutral_850}
-            _hover={{ bg: colors.neutral_900 }}
+            _hover={{ bg: colors.neutral_700 }}
             _active={{ bg: colors.neutral_800 }}
             rightIcon={<Image src={require('/assets/icons/chevron_down.svg')} alt='Chevron Down' width="16px" height="16px" />}
           >
             {!!selectedToken ? token(selectedToken) : 'Select Token'}
           </MenuButton>
-          <MenuList backgroundColor={colors.neutral_850}>
-            <MenuItem _hover={{ bg: colors.neutral_900 }} onClick={() => setSelectedToken('ETH')}>{token('ETH')}</MenuItem>
-            <MenuItem _hover={{ bg: colors.neutral_900 }} onClick={() => setSelectedToken('USDC')}>{token('USDC')}</MenuItem>
-            <MenuItem _hover={{ bg: colors.neutral_900 }} onClick={() => setSelectedToken('UNI')}>{token('UNI')}</MenuItem>
+          <MenuList backgroundColor={colors.neutral_850} borderWidth="0px">
+            <MenuItem _hover={{ bg: colors.neutral_700 }} _focus={{ bg: colors.neutral_800 }} onClick={() => setSelectedToken('ETH')}>{token('ETH')}</MenuItem>
+            <MenuItem _hover={{ bg: colors.neutral_700 }} _focus={{ bg: colors.neutral_800 }} onClick={() => setSelectedToken('USDC')}>{token('USDC')}</MenuItem>
+            <MenuItem _hover={{ bg: colors.neutral_700 }} _focus={{ bg: colors.neutral_800 }} onClick={() => setSelectedToken('UNI')}>{token('UNI')}</MenuItem>
           </MenuList>
         </Menu>
 
@@ -91,10 +91,14 @@ const RequestOneTimeModal = (props: any) => {
           mt="16px"
           value={value}
           placeholder='0'
+          color="white"
+          borderWidth="0px"
+          backgroundColor={colors.neutral_850}
+          isDisabled={!selectedToken}
           onChange={handleValueChange}
         />
 
-        <Text mt="8px" {...app.reg_12}>~ 0 USD</Text>
+        <Text mt="8px" {...app.reg_12} color={colors.neutral_500}>~ 0 USD</Text>
       </ModalBody>
 
       <ModalFooter>
