@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Box, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Menu, MenuButton, MenuList, MenuItem, Input } from '@chakra-ui/react';
-import { colors } from '../styles/colors';
-import { app } from '../styles/fonts';
 import Image from 'next/image';
 
 const RequestOneTimeModal = (props: any) => {
@@ -27,7 +25,7 @@ const RequestOneTimeModal = (props: any) => {
             <Box>
               <Image src={require('/assets/icons/eth_logo.svg')} alt='Ethereum Logo' width="24px" height="24px" />
             </Box>
-            <Text color="white" {...app.reg_14} ml="8px" mt="2px">Ethereum (ETH)</Text>
+            <Text color="white" textStyle="app_reg_14" ml="8px" mt="2px">Ethereum (ETH)</Text>
           </Box>
         )
       case 'USDC':
@@ -36,7 +34,7 @@ const RequestOneTimeModal = (props: any) => {
             <Box>
               <Image src={require('/assets/icons/usdc_logo.svg')} alt='USDC Logo' width="24px" height="24px" />
             </Box>
-            <Text color="white" {...app.reg_14} ml="8px" mt="2px">USDC Coin (USDC)</Text>
+            <Text color="white" textStyle="app_reg_14" ml="8px" mt="2px">USDC Coin (USDC)</Text>
           </Box>
         )
       case 'UNI': default:
@@ -45,7 +43,7 @@ const RequestOneTimeModal = (props: any) => {
             <Box>
               <Image src={require('/assets/icons/uniswap_logo.svg')} alt='Uniswap Logo' width="24px" height="24px" />
             </Box>
-            <Text color="white" {...app.reg_14} ml="8px" mt="2px">Uniswap (UNI)</Text>
+            <Text color="white" textStyle="app_reg_14" ml="8px" mt="2px">Uniswap (UNI)</Text>
           </Box>
         )
     }
@@ -61,11 +59,11 @@ const RequestOneTimeModal = (props: any) => {
       }}
     >
     <ModalOverlay />
-    <ModalContent backgroundColor={colors.block}>
-      <ModalHeader {...app.med_18} color="white">Request one time payment</ModalHeader>
+    <ModalContent backgroundColor="block">
+      <ModalHeader textStyle="app_med_18" color="white">Request one time payment</ModalHeader>
       <ModalCloseButton color="white" />
       <ModalBody>
-        <Text {...app.reg_12} color="white">Invite to request payment by sharing link</Text>
+        <Text textStyle="app_reg_12" color="white">Invite to request payment by sharing link</Text>
         <Menu>
           <MenuButton
             as={Button}
@@ -73,17 +71,17 @@ const RequestOneTimeModal = (props: any) => {
             width="100%"
             textAlign={'left'}
             color="white"
-            backgroundColor={colors.neutral_850}
-            _hover={{ bg: colors.neutral_700 }}
-            _active={{ bg: colors.neutral_800 }}
+            backgroundColor="neutral.800"
+            _hover={{ bg: "neutral.700" }}
+            _active={{ bg: "neutral_800" }}
             rightIcon={<Image src={require('/assets/icons/chevron_down.svg')} alt='Chevron Down' width="16px" height="16px" />}
           >
             {!!selectedToken ? token(selectedToken) : 'Select Token'}
           </MenuButton>
-          <MenuList backgroundColor={colors.neutral_850} borderWidth="0px">
-            <MenuItem _hover={{ bg: colors.neutral_700 }} _focus={{ bg: colors.neutral_800 }} onClick={() => setSelectedToken('ETH')}>{token('ETH')}</MenuItem>
-            <MenuItem _hover={{ bg: colors.neutral_700 }} _focus={{ bg: colors.neutral_800 }} onClick={() => setSelectedToken('USDC')}>{token('USDC')}</MenuItem>
-            <MenuItem _hover={{ bg: colors.neutral_700 }} _focus={{ bg: colors.neutral_800 }} onClick={() => setSelectedToken('UNI')}>{token('UNI')}</MenuItem>
+          <MenuList backgroundColor="neutral.800" borderWidth="0px">
+            <MenuItem _hover={{ bg: "neutral.700" }} _focus={{ bg: "neutral_800" }} onClick={() => setSelectedToken('ETH')}>{token('ETH')}</MenuItem>
+            <MenuItem _hover={{ bg: "neutral.700" }} _focus={{ bg: "neutral_800" }} onClick={() => setSelectedToken('USDC')}>{token('USDC')}</MenuItem>
+            <MenuItem _hover={{ bg: "neutral.700" }} _focus={{ bg: "neutral_800" }} onClick={() => setSelectedToken('UNI')}>{token('UNI')}</MenuItem>
           </MenuList>
         </Menu>
 
@@ -93,12 +91,12 @@ const RequestOneTimeModal = (props: any) => {
           placeholder='0'
           color="white"
           borderWidth="0px"
-          backgroundColor={colors.neutral_850}
+          backgroundColor="neutral.800"
           isDisabled={!selectedToken}
           onChange={handleValueChange}
         />
 
-        <Text mt="8px" {...app.reg_12} color={colors.neutral_500}>~ 0 USD</Text>
+        <Text mt="8px" textStyle="app_reg_12" color="neutral.500">~ 0 USD</Text>
       </ModalBody>
 
       <ModalFooter>
@@ -108,17 +106,17 @@ const RequestOneTimeModal = (props: any) => {
               <Image src={require('/assets/icons/lock.svg')} alt='Lock' width="20px" height="20px" />
             </Box>
             <Box display="flex" justifyContent="center" alignItems="center">
-              <Text {...app.reg_12}>{`${generatedLink.substring(0,40)}...`}</Text>
+              <Text textStyle="app_reg_12">{`${generatedLink.substring(0,40)}...`}</Text>
             </Box>
             <Box>
               <Box
                 as={Button}
                 borderRadius="6px"
-                backgroundColor={colors.primary_800}
+                backgroundColor="primary.800"
                 leftIcon={<Image src={require('/assets/icons/copy.svg')} alt='Copy' width="16px" height="16px" />}
                 color="white"
-                _hover={{ bg: colors.primary_700 }}
-                {...app.reg_14}
+                _hover={{ bg: "primary.700" }}
+                textStyle="app_reg_14"
                 onClick={() => {
                   navigator.clipboard.writeText(generatedLink);
                   // TODO: Toast copied to clipboard
@@ -131,15 +129,15 @@ const RequestOneTimeModal = (props: any) => {
         ) : (
           <Box
             as={Button}
-            backgroundColor={colors.primary_800}
+            backgroundColor="primary.800"
             borderRadius="6px"
             py="12px"
             width="100%"
             textAlign="center"
             leftIcon={<Image src={require('/assets/icons/chain.svg')} alt='Chevron Down' width="16px" height="16px" />}
-            _hover={{ bg: colors.primary_700 }}
+            _hover={{ bg: "primary.700" }}
             color="white"
-            {...app.reg_14}
+            textStyle="app_reg_14"
             isDisabled={!selectedToken || !value}
             onClick={() => setGeneratedLink('https://www.wisp.finance/28gdf93jf9dsfDjdf9gfFIQPWmpoqpmIekfdE8q013985De5')}
           >

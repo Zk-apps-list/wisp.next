@@ -1,8 +1,6 @@
 import { Box, Button, Link, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import Image from 'next/image';
 import React from 'react';
-import { colors } from '../styles/colors';
-import { app } from '../styles/fonts';
 import { truncateWallet } from '../util/truncateWallet';
 import { useRouter } from 'next/router';
 import Header from '../components/Header';
@@ -50,21 +48,21 @@ const TransactionRow = (props: any) => {
           <Box>
             <Image src={tokenToLogo()} alt='Ethereum Logo' width="24px" height="24px" />
           </Box>
-          <Text color="white" {...app.reg_14} ml="8px" mt="2px">{tokenToText()}</Text>
+          <Text color="white" textStyle="app_reg_14" ml="8px" mt="2px">{tokenToText()}</Text>
         </Box>
       </Td>
       
-      <Td color="white" {...app.reg_14}>
+      <Td color="white" textStyle="app_reg_14">
         {truncateWallet(transactionId, 15)}
       </Td>
 
-      <Td color="white" {...app.reg_14}>{status}</Td>
+      <Td color="white" textStyle="app_reg_14">{status}</Td>
 
-      <Td color="white" {...app.reg_14}>{amount}</Td>
+      <Td color="white" textStyle="app_reg_14">{amount}</Td>
 
-      <Td color="white" {...app.reg_14} isNumeric>{value}</Td>
+      <Td color="white" textStyle="app_reg_14" isNumeric>{value}</Td>
 
-      <Td color="white" {...app.reg_14} isNumeric>{date}</Td>
+      <Td color="white" textStyle="app_reg_14" isNumeric>{date}</Td>
     </Tr>
   )
 }
@@ -74,10 +72,10 @@ const Transactions = () => {
   const pathname = router.pathname;
 
   return (
-    <Box backgroundColor={colors.background_start} height="100vh">
+    <Box backgroundColor="background.start" height="100vh">
       {/* Left Panel */}
       <Box display="flex" flexDirection="row">
-        <Box width="80px" height="500px" backgroundColor={colors.block} display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
+        <Box width="80px" height="500px" backgroundColor="block" display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
           <Link onClick={() => router.push(`/`)}>
             <Box textAlign="center" m="12px" p="8px">
               <Image src={require('/assets/icons/logo.svg')} alt='Wisp Logo' width="30px" height="30px" />
@@ -89,8 +87,8 @@ const Transactions = () => {
             m="12px"
             p="8px"
             borderRadius="6px"
-            backgroundColor={pathname === "/overview" ? colors.primary_800 : 'transparent'}
-            _hover={{ bg: colors.primary_800 }}
+            backgroundColor={pathname === "/overview" ? "primary.800" : 'transparent'}
+            _hover={{ bg: "primary.800" }}
             onClick={() => router.push(`/overview`)}
           >
             <Image src={require('/assets/icons/dashboard.svg')} alt='Dashboard' width="30px" height="30px" />
@@ -101,8 +99,8 @@ const Transactions = () => {
             m="12px"
             p="8px"
             borderRadius="6px"
-            backgroundColor={pathname === "/transactions" ? colors.primary_800 : 'transparent'}
-            _hover={{ bg: colors.primary_800 }}
+            backgroundColor={pathname === "/transactions" ? "primary.800" : 'transparent'}
+            _hover={{ bg: "primary.800" }}
             onClick={() => router.push(`/transactions`)}
           >
             <Image src={require('/assets/icons/transactions.svg')} alt='Transactions' width="30px" height="30px" />
@@ -115,24 +113,24 @@ const Transactions = () => {
 
           {/* Transactions Table */}
           <Box mx="32px">
-            <Box m="32px" borderRadius="4px" backgroundColor={colors.block} p="16px">
+            <Box m="32px" borderRadius="4px" backgroundColor="block" p="16px">
               <TableContainer>
                 <Table variant="simple">
                   {/* {submissions.length != 0 && ( */}
                     <>
                       <Thead>
                         <Tr>
-                          <Th {...app.light_14} color={colors.neutral_500}>Token</Th>
+                          <Th textStyle="app_light_14" color="neutral.500">Token</Th>
 
-                          <Th {...app.light_14} color={colors.neutral_500}>Transaction ID</Th>
+                          <Th textStyle="app_light_14" color="neutral.500">Transaction ID</Th>
                           
-                          <Th {...app.light_14} color={colors.neutral_500}>Status</Th>
+                          <Th textStyle="app_light_14" color="neutral.500">Status</Th>
 
-                          <Th {...app.light_14} color={colors.neutral_500}>Amount</Th>
+                          <Th textStyle="app_light_14" color="neutral.500">Amount</Th>
 
-                          <Th {...app.light_14} color={colors.neutral_500} isNumeric>Value</Th>
+                          <Th textStyle="app_light_14" color="neutral.500" isNumeric>Value</Th>
 
-                          <Th {...app.light_14} color={colors.neutral_500} isNumeric>Date</Th>
+                          <Th textStyle="app_light_14" color="neutral.500" isNumeric>Date</Th>
                         </Tr>
                       </Thead>
                       <Tbody>

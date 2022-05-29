@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { Button, Box, Text } from '@chakra-ui/react';
-import { app } from '../styles/fonts';
-import { colors } from '../styles/colors';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import RequestOneTimeModal from './RequestOneTimeModal';
@@ -23,21 +21,21 @@ const Header = () => {
   return (
     <Box py="32px" px="64px" display="flex" flexDirection="row" justifyContent="space-between">
       <Box>
-        <Text color="white" {...app.med_28}>{title()}</Text>
+        <Text color="white" textStyle="app_med_28">{title()}</Text>
       </Box>
       <Box display="flex" flexDirection="row">
         <Box>
           <Box as={Button}
-            backgroundColor={colors.primary_800}
+            backgroundColor="primary.800"
             borderRadius="6px"
             py="12px"
             textAlign="center"
             ml="36px"
             leftIcon={<Image src={require('/assets/icons/chain.svg')} alt='Ethereum Logo' width="16px" height="16px" />}
-            _hover={{ bg: colors.primary_700 }}
+            _hover={{ bg: "primary.700" }}
             onClick={() => setIsOpen(true)}
           >
-              <Text ml="auto" mr="auto" color="white" {...app.reg_14}>Create a Link</Text>
+              <Text ml="auto" mr="auto" color="white" textStyle="app_reg_14">Create a Link</Text>
           </Box>
         </Box>
         <Box
@@ -46,11 +44,11 @@ const Header = () => {
           px="16px"
           py="8px"
           ml="16px"
-          backgroundColor={colors.block}
+          backgroundColor="block"
           borderRadius="6px"
           rightIcon={<Image src={require('/assets/icons/chevron_down.svg')} alt='Chevron Down' width="16px" height="16px" />}
-          _hover={{ bg: colors.neutral_800 }}
-          {...app.reg_14}
+          _hover={{ bg: "neutral.800" }}
+          textStyle="app_reg_14"
         >
             0xa0223x...49fv859
         </Box>

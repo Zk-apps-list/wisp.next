@@ -1,8 +1,6 @@
 import { Box, Button, Link, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import Image from 'next/image';
 import React from 'react';
-import { colors } from '../styles/colors';
-import { app } from '../styles/fonts';
 import { truncateWallet } from '../util/truncateWallet';
 import { useRouter } from 'next/router';
 import Header from '../components/Header';
@@ -50,21 +48,21 @@ const TransactionRow = (props: any) => {
           <Box>
             <Image src={tokenToLogo()} alt='Ethereum Logo' width="24px" height="24px" />
           </Box>
-          <Text color="white" {...app.reg_14} ml="8px" mt="2px">{tokenToText()}</Text>
+          <Text color="white" textStyle="app_reg_14" ml="8px" mt="2px">{tokenToText()}</Text>
         </Box>
       </Td>
       
-      <Td color="white" {...app.reg_14}>
+      <Td color="white" textStyle="app_reg_14">
         {truncateWallet(transactionId, 15)}
       </Td>
 
-      <Td color="white" {...app.reg_14}>{status}</Td>
+      <Td color="white" textStyle="app_reg_14">{status}</Td>
 
-      <Td color="white" {...app.reg_14}>{amount}</Td>
+      <Td color="white" textStyle="app_reg_14">{amount}</Td>
 
-      <Td color="white" {...app.reg_14} isNumeric>{value}</Td>
+      <Td color="white" textStyle="app_reg_14" isNumeric>{value}</Td>
 
-      <Td color="white" {...app.reg_14} isNumeric>{date}</Td>
+      <Td color="white" textStyle="app_reg_14" isNumeric>{date}</Td>
     </Tr>
   )
 }
@@ -74,10 +72,10 @@ const Overview = () => {
   const pathname = router.pathname;
 
   return (
-    <Box backgroundColor={colors.background_start} height="100vh">
+    <Box backgroundColor="background.start" height="100vh">
       {/* Left Panel */}
       <Box display="flex" flexDirection="row">
-        <Box width="80px" backgroundColor={colors.block} display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
+        <Box width="80px" backgroundColor="block" display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
           <Link onClick={() => router.push('/')}>
             <Box textAlign="center" m="12px" p="8px">
               <Image src={require('/assets/icons/logo.svg')} alt='Wisp Logo' width="30px" height="30px" />
@@ -89,8 +87,8 @@ const Overview = () => {
             m="12px"
             p="8px"
             borderRadius="6px"
-            backgroundColor={pathname === "/overview" ? colors.primary_800 : 'transparent'}
-            _hover={{ bg: colors.primary_800 }}
+            backgroundColor={pathname === "/overview" ? "primary.800" : 'transparent'}
+            _hover={{ bg: "primary.800" }}
             onClick={() => router.push(`/overview`)}
           >
             <Image src={require('/assets/icons/dashboard.svg')} alt='Dashboard' width="30px" height="30px" />
@@ -101,8 +99,8 @@ const Overview = () => {
             m="12px"
             p="8px"
             borderRadius="6px"
-            backgroundColor={pathname === "/transactions" ? colors.primary_800 : 'transparent'}
-            _hover={{ bg: colors.primary_800 }}
+            backgroundColor={pathname === "/transactions" ? "primary.800" : 'transparent'}
+            _hover={{ bg: "primary.800" }}
             onClick={() => router.push(`/transactions`)}
           >
             <Image src={require('/assets/icons/transactions.svg')} alt='Transactions' width="30px" height="30px" />
@@ -116,30 +114,30 @@ const Overview = () => {
           {/* Total Value */}
           <Box mx="64px" >
             <Box>
-              <Text color={colors.neutral_400} {...app.reg_16}>Total Value</Text>
+              <Text color="neutral.400" textStyle="app_reg_16">Total Value</Text>
             </Box>
             
             <Box display="flex" flexDirection="row">
               <Box>
-                <Text color="white" {...app.reg_32}>$15,294,453.00</Text>
+                <Text color="white" textStyle="app_reg_32">$15,294,453.00</Text>
               </Box>
 
               <Box ml="12px">
-                <Text color={colors.green} {...app.reg_14}>+ $435 Value</Text>
-                <Text color={colors.green} {...app.reg_14}>+ 5.00% APY</Text>
+                <Text color="green" textStyle="app_reg_14">+ $435 Value</Text>
+                <Text color="green" textStyle="app_reg_14">+ 5.00% APY</Text>
               </Box>
 
               <Box as={Button}
-                backgroundColor={colors.primary_800}
+                backgroundColor={"primary.800"}
                 borderRadius="6px"
                 py="12px"
                 width="110px"
                 textAlign="center"
                 ml="36px"
-                _hover={{ bg: colors.primary_700 }}
+                _hover={{ bg: "primary.700" }}
                 leftIcon={<Image src={require('/assets/icons/arrow_down.svg')} alt='Ethereum Logo' width="16px" height="16px" />}
               >
-                  <Text ml="auto" mr="auto" color="white" {...app.reg_14}>Withdraw</Text>
+                  <Text ml="auto" mr="auto" color="white" textStyle="app_reg_14">Withdraw</Text>
               </Box>
 
               {/* ETH */}
@@ -147,7 +145,7 @@ const Overview = () => {
                 <Box>
                   <Image src={require('/assets/icons/eth_logo.svg')} alt='Ethereum Logo' width="36px" height="36px" />
                 </Box>
-                <Text color="white" {...app.reg_16} ml="8px" mt="5px">ETH 4.24</Text>
+                <Text color="white" textStyle="app_reg_16" ml="8px" mt="5px">ETH 4.24</Text>
               </Box>
 
               {/* USDC */}
@@ -155,7 +153,7 @@ const Overview = () => {
                 <Box>
                 <Image src={require('/assets/icons/usdc_logo.svg')} alt='USDC Logo' width="36px" height="36px" />
                 </Box>
-                <Text color="white" {...app.reg_16} ml="8px" mt="5px">USDC 342</Text>
+                <Text color="white" textStyle="app_reg_16" ml="8px" mt="5px">USDC 342</Text>
               </Box>
 
               {/* UniSwap */}
@@ -163,7 +161,7 @@ const Overview = () => {
                 <Box>
                 <Image src={require('/assets/icons/uniswap_logo.svg')} alt='UniSwap Logo' width="36px" height="36px" />
                 </Box>
-                <Text color="white" {...app.reg_16} ml="8px" mt="5px">UNI 116,537.09</Text>
+                <Text color="white" textStyle="app_reg_16" ml="8px" mt="5px">UNI 116,537.09</Text>
               </Box>
             </Box>
 
@@ -186,10 +184,10 @@ const Overview = () => {
               /> */}
             </Box>
 
-            <Box my="32px" borderRadius="4px" backgroundColor={colors.block} p="16px">
+            <Box my="32px" borderRadius="4px" backgroundColor="block" p="16px">
               <Box display="flex" flexDirection="row" justifyContent="space-between">
-                <Text color="white" {...app.med_16}>Transaction History</Text>
-                <Text color={colors.neutral_500} {...app.reg_14}>View all</Text>
+                <Text color="white" textStyle="app_med_16">Transaction History</Text>
+                <Text color="neutral.500" textStyle="app_reg_14">View all</Text>
               </Box>
 
               <TableContainer>
@@ -198,17 +196,17 @@ const Overview = () => {
                     <>
                       <Thead>
                         <Tr>
-                          <Th {...app.light_14} color={colors.neutral_500}>Token</Th>
+                          <Th textStyle="app_light_14" color="neutral.500">Token</Th>
 
-                          <Th {...app.light_14} color={colors.neutral_500}>Transaction ID</Th>
+                          <Th textStyle="app_light_14" color="neutral.500">Transaction ID</Th>
                           
-                          <Th {...app.light_14} color={colors.neutral_500}>Status</Th>
+                          <Th textStyle="app_light_14" color="neutral.500">Status</Th>
 
-                          <Th {...app.light_14} color={colors.neutral_500}>Amount</Th>
+                          <Th textStyle="app_light_14" color="neutral.500">Amount</Th>
 
-                          <Th {...app.light_14} color={colors.neutral_500} isNumeric>Value</Th>
+                          <Th textStyle="app_light_14" color="neutral.500" isNumeric>Value</Th>
 
-                          <Th {...app.light_14} color={colors.neutral_500} isNumeric>Date</Th>
+                          <Th textStyle="app_light_14" color="neutral.500" isNumeric>Date</Th>
                         </Tr>
                       </Thead>
                       <Tbody>
