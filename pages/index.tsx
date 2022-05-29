@@ -61,11 +61,11 @@ const Home: NextPage = () => {
         padding="12px"
       >
         <Image
-          src="logo-md.svg"
+          src="icons/logo-md.svg"
           display={{ base: "none", md: "block" }}
           mr="55px"
         />
-        <Image src="logo-sm.svg" display={{ base: "block", md: "none" }} />
+        <Image src="icons/logo-sm.svg" display={{ base: "block", md: "none" }} />
         <Text
           textStyle="app_med_18"
           display={{ base: "block", md: "none" }}
@@ -104,7 +104,7 @@ const Home: NextPage = () => {
           display={{ base: "block", md: "none" }}
           onClick={() => setMenuOpen(true)}
         >
-          <Image w="20px" h="20px" mx="auto" src="hamburger-icon.svg" />
+          <Image w="20px" h="20px" mx="auto" src="icons/hamburger-icon.svg" />
         </Button>
       </Flex>
       <Flex mt="88px">
@@ -142,7 +142,7 @@ const Home: NextPage = () => {
       </Flex>
       <Box overflow="hidden" mt="56px" width="100%">
         <Image
-          src="landing-phones.svg"
+          src="images/landing-phones.svg"
           width={{
             base: "875px",
             sm: "875px",
@@ -243,14 +243,14 @@ const Home: NextPage = () => {
             >
               Get started
               <Image
-                src="blue-arrow-right-thin.svg"
+                src="icons/blue-arrow-right-thin.svg"
                 display="inline-block"
                 ml="16px"
               />
             </Link>
           </Flex>
           <Image
-            src="how-it-works-wallet.svg"
+            src="images/how-it-works-wallet.svg"
             w={{ base: "350px", md: "unset" }}
           />
         </Flex>
@@ -327,14 +327,14 @@ const Home: NextPage = () => {
             >
               Get started
               <Image
-                src="blue-arrow-right-thin.svg"
+                src="icons/blue-arrow-right-thin.svg"
                 display="inline-block"
                 ml="16px"
               />
             </Link>
           </Flex>
           <Image
-            src="how-it-works-request.svg"
+            src="images/how-it-works-request.svg"
             w={{ base: "350px", md: "unset" }}
           />
         </Flex>
@@ -411,14 +411,14 @@ const Home: NextPage = () => {
             >
               Get started
               <Image
-                src="blue-arrow-right-thin.svg"
+                src="icons/blue-arrow-right-thin.svg"
                 display="inline-block"
                 ml="16px"
               />
             </Link>
           </Flex>
           <Image
-            src="how-it-works-link.svg"
+            src="images/how-it-works-link.svg"
             w={{ base: "350px", md: "unset" }}
           />
         </Flex>
@@ -524,7 +524,7 @@ const Home: NextPage = () => {
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="why-wisp-wallet.svg" />
+          <Image src="images/why-wisp-wallet.svg" />
           <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
             Payment & Transaction
           </Text>
@@ -547,7 +547,7 @@ const Home: NextPage = () => {
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="why-wisp-liquidity.svg" />
+          <Image src="images/why-wisp-liquidity.svg" />
           <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
             Liquidity Pool
           </Text>
@@ -571,7 +571,7 @@ const Home: NextPage = () => {
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="why-wisp-docs.svg" />
+          <Image src="images/why-wisp-docs.svg" />
           <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
             Compliance docs
           </Text>
@@ -628,7 +628,7 @@ const Home: NextPage = () => {
               display={{ base: "block", md: "none" }}
               onClick={() => setMenuOpen(false)}
             >
-              <Image w="20px" h="20px" mx="auto" src="hamburger-icon.svg" />
+              <Image w="20px" h="20px" mx="auto" src="icons/hamburger-icon.svg" />
             </Button>
           </Flex>
           <Flex direction="column" width={contentWidths} gap="12px">
@@ -642,7 +642,7 @@ const Home: NextPage = () => {
               href="#"
             >
               <Flex align="center">
-                <Image src="home-icon.svg" mr="12px" />
+                <Image src="icons/home-icon.svg" mr="12px" />
                 Home
               </Flex>
             </Link>
@@ -656,7 +656,7 @@ const Home: NextPage = () => {
               href="#"
             >
               <Flex align="center">
-                <Image src="settings-icon.svg" mr="12px" />
+                <Image src="icons/settings-icon.svg" mr="12px" />
                 How it works
               </Flex>
             </Link>
@@ -670,7 +670,7 @@ const Home: NextPage = () => {
               href="#"
             >
               <Flex align="center">
-                <Image src="rocket-icon.svg" mr="12px" />
+                <Image src="icons/rocket-icon.svg" mr="12px" />
                 Get started
               </Flex>
             </Link>

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Box, Text } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Button, Box, Image, Text } from '@chakra-ui/react';
 import { useRouter } from 'next/router';
 import RequestOneTimeModal from './RequestOneTimeModal';
 
@@ -31,7 +30,7 @@ const Header = () => {
             py="12px"
             textAlign="center"
             ml="36px"
-            leftIcon={<Image src={require('/assets/icons/chain.svg')} alt='Ethereum Logo' width="16px" height="16px" />}
+            leftIcon={<Image src='icons/chain.svg' alt='Ethereum Logo' width="16px" height="16px" />}
             _hover={{ bg: "primary.700" }}
             onClick={() => setIsOpen(true)}
           >
@@ -46,7 +45,7 @@ const Header = () => {
           ml="16px"
           backgroundColor="block"
           borderRadius="6px"
-          rightIcon={<Image src={require('/assets/icons/chevron_down.svg')} alt='Chevron Down' width="16px" height="16px" />}
+          rightIcon={<Image src='icons/chevron_down.svg' alt='Chevron Down' width="16px" height="16px" />}
           _hover={{ bg: "neutral.800" }}
           textStyle="app_reg_14"
         >

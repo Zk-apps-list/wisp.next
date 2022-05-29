@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Box, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Menu, MenuButton, MenuList, MenuItem, Input } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Button, Box, Image, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Menu, MenuButton, MenuList, MenuItem, Input } from '@chakra-ui/react';
 
 const RequestOneTimeModal = (props: any) => {
   const { isOpen, onClose } = props;
@@ -23,7 +22,7 @@ const RequestOneTimeModal = (props: any) => {
         return  (
           <Box flexDirection="row" display="flex">
             <Box>
-              <Image src={require('/assets/icons/eth_logo.svg')} alt='Ethereum Logo' width="24px" height="24px" />
+              <Image src='icons/eth_logo.svg' alt='Ethereum Logo' width="24px" height="24px" />
             </Box>
             <Text color="white" textStyle="app_reg_14" ml="8px" mt="2px">Ethereum (ETH)</Text>
           </Box>
@@ -32,7 +31,7 @@ const RequestOneTimeModal = (props: any) => {
         return (
           <Box flexDirection="row" display="flex">
             <Box>
-              <Image src={require('/assets/icons/usdc_logo.svg')} alt='USDC Logo' width="24px" height="24px" />
+              <Image src='icons/usdc_logo.svg' alt='USDC Logo' width="24px" height="24px" />
             </Box>
             <Text color="white" textStyle="app_reg_14" ml="8px" mt="2px">USDC Coin (USDC)</Text>
           </Box>
@@ -41,7 +40,7 @@ const RequestOneTimeModal = (props: any) => {
         return (
           <Box flexDirection="row" display="flex">
             <Box>
-              <Image src={require('/assets/icons/uniswap_logo.svg')} alt='Uniswap Logo' width="24px" height="24px" />
+              <Image src='icons/uniswap_logo.svg' alt='Uniswap Logo' width="24px" height="24px" />
             </Box>
             <Text color="white" textStyle="app_reg_14" ml="8px" mt="2px">Uniswap (UNI)</Text>
           </Box>
@@ -74,7 +73,7 @@ const RequestOneTimeModal = (props: any) => {
             backgroundColor="neutral.800"
             _hover={{ bg: "neutral.700" }}
             _active={{ bg: "neutral_800" }}
-            rightIcon={<Image src={require('/assets/icons/chevron_down.svg')} alt='Chevron Down' width="16px" height="16px" />}
+            rightIcon={<Image src='icons/chevron_down.svg' alt='Chevron Down' width="16px" height="16px" />}
           >
             {!!selectedToken ? token(selectedToken) : 'Select Token'}
           </MenuButton>
@@ -103,7 +102,7 @@ const RequestOneTimeModal = (props: any) => {
         {!!generatedLink ? (
           <Box width="100%" p="8px" borderWidth="1px" borderRadius="6px" display="flex" justifyContent="space-between">
             <Box display="flex" justifyContent="center" alignItems="center">
-              <Image src={require('/assets/icons/lock.svg')} alt='Lock' width="20px" height="20px" />
+              <Image src='icons/lock.svg' alt='Lock' width="20px" height="20px" />
             </Box>
             <Box display="flex" justifyContent="center" alignItems="center">
               <Text textStyle="app_reg_12">{`${generatedLink.substring(0,40)}...`}</Text>
@@ -113,7 +112,7 @@ const RequestOneTimeModal = (props: any) => {
                 as={Button}
                 borderRadius="6px"
                 backgroundColor="primary.800"
-                leftIcon={<Image src={require('/assets/icons/copy.svg')} alt='Copy' width="16px" height="16px" />}
+                leftIcon={<Image src='icons/copy.svg' alt='Copy' width="16px" height="16px" />}
                 color="white"
                 _hover={{ bg: "primary.700" }}
                 textStyle="app_reg_14"
@@ -134,7 +133,7 @@ const RequestOneTimeModal = (props: any) => {
             py="12px"
             width="100%"
             textAlign="center"
-            leftIcon={<Image src={require('/assets/icons/chain.svg')} alt='Chevron Down' width="16px" height="16px" />}
+            leftIcon={<Image src='icons/chain.svg' alt='Chevron Down' width="16px" height="16px" />}
             _hover={{ bg: "primary.700" }}
             color="white"
             textStyle="app_reg_14"

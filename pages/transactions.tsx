@@ -1,5 +1,4 @@
-import { Box, Button, Link, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Box, Button, Image, Link, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import React from 'react';
 import { truncateWallet } from '../util/truncateWallet';
 import { useRouter } from 'next/router';
@@ -22,11 +21,11 @@ const TransactionRow = (props: any) => {
   const tokenToLogo = () => {
     switch (token) {
       case 'ETH':
-        return require('/assets/icons/eth_logo.svg');
+        return 'icons/eth_logo.svg';
       case 'USDC':
-        return require('/assets/icons/usdc_logo.svg');
+        return 'icons/usdc_logo.svg';
       case 'UNI': default:
-        return require('/assets/icons/uniswap_logo.svg');
+        return 'icons/uniswap_logo.svg';
     }
   }
 
@@ -78,11 +77,11 @@ const Transactions = () => {
         <Box width="80px" height="500px" backgroundColor="block" display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
           <Link onClick={() => router.push(`/`)}>
             <Box textAlign="center" m="12px" p="8px">
-              <Image src={require('/assets/icons/logo.svg')} alt='Wisp Logo' width="30px" height="30px" />
+              <Image src='icons/logo.svg' alt='Wisp Logo' width="30px" height="30px" />
             </Box>
           </Link>
           <Box
-            as="button"
+            as={Button}
             textAlign="center"
             m="12px"
             p="8px"
@@ -91,10 +90,10 @@ const Transactions = () => {
             _hover={{ bg: "primary.800" }}
             onClick={() => router.push(`/overview`)}
           >
-            <Image src={require('/assets/icons/dashboard.svg')} alt='Dashboard' width="30px" height="30px" />
+            <Image src='icons/dashboard.svg' alt='Dashboard' width="30px" height="30px" />
           </Box>
           <Box
-            as="button"
+            as={Button}
             textAlign="center"
             m="12px"
             p="8px"
@@ -103,7 +102,7 @@ const Transactions = () => {
             _hover={{ bg: "primary.800" }}
             onClick={() => router.push(`/transactions`)}
           >
-            <Image src={require('/assets/icons/transactions.svg')} alt='Transactions' width="30px" height="30px" />
+            <Image src='icons/transactions.svg' alt='Transactions' width="30px" height="30px" />
           </Box>
         </Box>
 

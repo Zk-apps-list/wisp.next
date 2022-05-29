@@ -1,5 +1,4 @@
-import { Box, Button, Link, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
-import Image from 'next/image';
+import { Box, Button, Image, Link, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import React from 'react';
 import { truncateWallet } from '../util/truncateWallet';
 import { useRouter } from 'next/router';
@@ -22,11 +21,11 @@ const TransactionRow = (props: any) => {
   const tokenToLogo = () => {
     switch (token) {
       case 'ETH':
-        return require('/assets/icons/eth_logo.svg');
+        return 'icons/eth_logo.svg';
       case 'USDC':
-        return require('/assets/icons/usdc_logo.svg');
+        return 'icons/usdc_logo.svg';
       case 'UNI': default:
-        return require('/assets/icons/uniswap_logo.svg');
+        return 'icons/uniswap_logo.svg';
     }
   }
 
@@ -78,7 +77,7 @@ const Overview = () => {
         <Box width="80px" backgroundColor="block" display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
           <Link onClick={() => router.push('/')}>
             <Box textAlign="center" m="12px" p="8px">
-              <Image src={require('/assets/icons/logo.svg')} alt='Wisp Logo' width="30px" height="30px" />
+              <Image src='icons/logo.svg' alt='Wisp Logo' width="30px" height="30px" />
             </Box>
           </Link>
           <Box
@@ -91,7 +90,7 @@ const Overview = () => {
             _hover={{ bg: "primary.800" }}
             onClick={() => router.push(`/overview`)}
           >
-            <Image src={require('/assets/icons/dashboard.svg')} alt='Dashboard' width="30px" height="30px" />
+            <Image src='icons/dashboard.svg' alt='Dashboard' width="30px" height="30px" />
           </Box>
           <Box
             as="button"
@@ -103,7 +102,7 @@ const Overview = () => {
             _hover={{ bg: "primary.800" }}
             onClick={() => router.push(`/transactions`)}
           >
-            <Image src={require('/assets/icons/transactions.svg')} alt='Transactions' width="30px" height="30px" />
+            <Image src='icons/transactions.svg' alt='Transactions' width="30px" height="30px" />
           </Box>
         </Box>
 
@@ -135,7 +134,7 @@ const Overview = () => {
                 textAlign="center"
                 ml="36px"
                 _hover={{ bg: "primary.700" }}
-                leftIcon={<Image src={require('/assets/icons/arrow_down.svg')} alt='Ethereum Logo' width="16px" height="16px" />}
+                leftIcon={<Image src='icons/arrow_down.svg' alt='Ethereum Logo' width="16px" height="16px" />}
               >
                   <Text ml="auto" mr="auto" color="white" textStyle="app_reg_14">Withdraw</Text>
               </Box>
@@ -143,7 +142,7 @@ const Overview = () => {
               {/* ETH */}
               <Box flexDirection="row" display="flex" ml="36px" mt="2px">
                 <Box>
-                  <Image src={require('/assets/icons/eth_logo.svg')} alt='Ethereum Logo' width="36px" height="36px" />
+                  <Image src='icons/eth_logo.svg' alt='Ethereum Logo' width="36px" height="36px" />
                 </Box>
                 <Text color="white" textStyle="app_reg_16" ml="8px" mt="5px">ETH 4.24</Text>
               </Box>
@@ -151,7 +150,7 @@ const Overview = () => {
               {/* USDC */}
               <Box flexDirection="row" display="flex" ml="36px" mt="2px">
                 <Box>
-                <Image src={require('/assets/icons/usdc_logo.svg')} alt='USDC Logo' width="36px" height="36px" />
+                <Image src='icons/usdc_logo.svg' alt='USDC Logo' width="36px" height="36px" />
                 </Box>
                 <Text color="white" textStyle="app_reg_16" ml="8px" mt="5px">USDC 342</Text>
               </Box>
@@ -159,7 +158,7 @@ const Overview = () => {
               {/* UniSwap */}
               <Box flexDirection="row" display="flex" ml="36px" mt="2px">
                 <Box>
-                <Image src={require('/assets/icons/uniswap_logo.svg')} alt='UniSwap Logo' width="36px" height="36px" />
+                <Image src='icons/uniswap_logo.svg' alt='UniSwap Logo' width="36px" height="36px" />
                 </Box>
                 <Text color="white" textStyle="app_reg_16" ml="8px" mt="5px">UNI 116,537.09</Text>
               </Box>
