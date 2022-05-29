@@ -1,19 +1,8 @@
 import { Box, Button, Image, Link, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from '@chakra-ui/react';
 import React from 'react';
 import { truncateWallet } from '../util/truncateWallet';
-import { useRouter } from 'next/router';
 import Header from '../components/Header';
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-//   PointElement,
-//   LineElement
-// } from 'chart.js';
+import LeftPanel from '../components/LeftPanel';
 
 const TransactionRow = (props: any) => {
   const { token, transactionId, status, amount, value, date } = props;
@@ -50,7 +39,7 @@ const TransactionRow = (props: any) => {
           <Text color="white" textStyle="app_reg_14" ml="8px" mt="2px">{tokenToText()}</Text>
         </Box>
       </Td>
-      
+
       <Td color="white" textStyle="app_reg_14">
         {truncateWallet(transactionId, 15)}
       </Td>
@@ -67,44 +56,11 @@ const TransactionRow = (props: any) => {
 }
 
 const Transactions = () => {
-  const router = useRouter();
-  const pathname = router.pathname;
-
   return (
-    <Box backgroundColor="background.start" height="100vh">
-      {/* Left Panel */}
+    <Box backgroundColor="background.start" height="100%">
       <Box display="flex" flexDirection="row">
-        <Box width="80px" height="500px" backgroundColor="block" display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
-          <Link onClick={() => router.push(`/`)}>
-            <Box textAlign="center" m="12px" p="8px">
-              <Image src='icons/logo.svg' alt='Wisp Logo' width="30px" height="30px" />
-            </Box>
-          </Link>
-          <Box
-            as={Button}
-            textAlign="center"
-            m="12px"
-            p="8px"
-            borderRadius="6px"
-            backgroundColor={pathname === "/overview" ? "primary.800" : 'transparent'}
-            _hover={{ bg: "primary.800" }}
-            onClick={() => router.push(`/overview`)}
-          >
-            <Image src='icons/dashboard.svg' alt='Dashboard' width="30px" height="30px" />
-          </Box>
-          <Box
-            as={Button}
-            textAlign="center"
-            m="12px"
-            p="8px"
-            borderRadius="6px"
-            backgroundColor={pathname === "/transactions" ? "primary.800" : 'transparent'}
-            _hover={{ bg: "primary.800" }}
-            onClick={() => router.push(`/transactions`)}
-          >
-            <Image src='icons/transactions.svg' alt='Transactions' width="30px" height="30px" />
-          </Box>
-        </Box>
+        {/* Left Panel */}
+        <LeftPanel />
 
         {/* Right Panel */}
         <Box flex={10}>
@@ -114,10 +70,10 @@ const Transactions = () => {
           <Box mx="32px">
             <Box m="32px" borderRadius="4px" backgroundColor="block" p="16px">
               <TableContainer>
-                <Table variant="simple">
+                <Table variant="unstyled">
                   {/* {submissions.length != 0 && ( */}
                     <>
-                      <Thead>
+                      <Thead borderBottomWidth="1px" borderColor="neutral.800">
                         <Tr>
                           <Th textStyle="app_light_14" color="neutral.500">Token</Th>
 

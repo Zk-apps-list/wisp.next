@@ -3,17 +3,66 @@ import React from 'react';
 import { truncateWallet } from '../util/truncateWallet';
 import { useRouter } from 'next/router';
 import Header from '../components/Header';
-// import {
-//   Chart as ChartJS,
-//   CategoryScale,
-//   LinearScale,
-//   BarElement,
-//   Title,
-//   Tooltip,
-//   Legend,
-//   PointElement,
-//   LineElement
-// } from 'chart.js';
+import LeftPanel from '../components/LeftPanel';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement
+);
+
+const options = {
+  responsive: true,
+  elements: {
+    line: {
+      borderJoinStyle: 'round',
+    }
+  },
+  plugins: {
+    legend: {
+      display: true,
+      position: 'top',
+      align: 'end',
+    },
+  },
+};
+
+const labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const data = {
+  labels,
+  datasets: [
+    {
+      label: 'Dataset 1',
+      data: [1,5,2,6,3,9,7,6,9,3,2,1],
+      borderColor: "#494b4d",
+      backgroundColor: "#494b4d",
+    },
+    {
+      label: 'Dataset 2',
+      data: [1,-5,2,-6,3,-9,7,8,2,4,10,8],
+      borderColor: "#147BDA",
+      backgroundColor: "#147BDA",
+    },
+  ],
+};
+
 
 const TransactionRow = (props: any) => {
   const { token, transactionId, status, amount, value, date } = props;
@@ -68,43 +117,12 @@ const TransactionRow = (props: any) => {
 
 const Overview = () => {
   const router = useRouter();
-  const pathname = router.pathname;
 
   return (
-    <Box backgroundColor="background.start" height="100vh">
-      {/* Left Panel */}
+    <Box backgroundColor="background.start" height="100%">
       <Box display="flex" flexDirection="row">
-        <Box width="80px" backgroundColor="block" display="flex" flexDirection="column" borderWidth="1" borderColor="yellow">
-          <Link onClick={() => router.push('/')}>
-            <Box textAlign="center" m="12px" p="8px">
-              <Image src='icons/logo.svg' alt='Wisp Logo' width="30px" height="30px" />
-            </Box>
-          </Link>
-          <Box
-            as="button"
-            textAlign="center"
-            m="12px"
-            p="8px"
-            borderRadius="6px"
-            backgroundColor={pathname === "/overview" ? "primary.800" : 'transparent'}
-            _hover={{ bg: "primary.800" }}
-            onClick={() => router.push(`/overview`)}
-          >
-            <Image src='icons/dashboard.svg' alt='Dashboard' width="30px" height="30px" />
-          </Box>
-          <Box
-            as="button"
-            textAlign="center"
-            m="12px"
-            p="8px"
-            borderRadius="6px"
-            backgroundColor={pathname === "/transactions" ? "primary.800" : 'transparent'}
-            _hover={{ bg: "primary.800" }}
-            onClick={() => router.push(`/transactions`)}
-          >
-            <Image src='icons/transactions.svg' alt='Transactions' width="30px" height="30px" />
-          </Box>
-        </Box>
+        {/* Left Panel */}
+        <LeftPanel />
 
         {/* Right Panel */}
         <Box flex={10}>
@@ -165,35 +183,29 @@ const Overview = () => {
             </Box>
 
             {/* Dashboards */}
-            <Box my="32px" borderColor="yellow" borderWidth="1px" width="744px" height="305px">
-              {/* TODO: Get from CompaoDao */}
-              <Text color="white">Statistics</Text> 
-              {/* <Line
-                data={flow}
+            <Box my="32px" p="32px" borderRadius="6px" width="700px">
+              <Text color="white" textStyle="app_med_16">Statistics</Text> 
+              <Line
+                data={data}
                 width={400}
                 height={200}
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      position: 'top' as const,
-                    },
-                  },
-                }}
-              /> */}
+                options={options}
+              />
             </Box>
 
-            <Box my="32px" borderRadius="4px" backgroundColor="block" p="16px">
-              <Box display="flex" flexDirection="row" justifyContent="space-between">
+            <Box my="32px" borderRadius="4px" backgroundColor="block" p="24px">
+              <Box mt="16px" display="flex" flexDirection="row" justifyContent="space-between">
                 <Text color="white" textStyle="app_med_16">Transaction History</Text>
-                <Text color="neutral.500" textStyle="app_reg_14">View all</Text>
+                <Link onClick={() => router.push('/transactions')}>
+                  <Text color="neutral.500" textStyle="app_reg_14">View all</Text>
+                </Link>
               </Box>
 
               <TableContainer>
-                <Table variant="simple">
+                <Table variant="unstyled">
                   {/* {submissions.length != 0 && ( */}
                     <>
-                      <Thead>
+                      <Thead borderBottomWidth="1px" borderColor="neutral.800">
                         <Tr>
                           <Th textStyle="app_light_14" color="neutral.500">Token</Th>
 
