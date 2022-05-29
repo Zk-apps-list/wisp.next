@@ -12,9 +12,9 @@ import {
   MenuList,
   Text,
 } from "@chakra-ui/react";
-import BlueButton from "../src/components/BlueButton";
-import TransparentButton from "../src/components/TransparentButton";
-import Footer from "../src/components/Footer";
+import BlueButton from "../components/BlueButton";
+import TransparentButton from "../components/TransparentButton";
+import Footer from "../components/Footer";
 import { useState } from "react";
 
 const Home: NextPage = () => {
