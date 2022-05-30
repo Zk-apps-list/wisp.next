@@ -6,19 +6,92 @@ import {
   Flex,
   Image,
   Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
 } from "@chakra-ui/react";
 import BlueButton from "../components/BlueButton";
 import TransparentButton from "../components/TransparentButton";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ethers } from "ethers";
+import Web3Modal from "web3modal";
+import { providerOptions } from '../services/WalletConnect';
+import Wallet from "../components/Wallet";
+
+let web3Modal: any;
+if (typeof window !== 'undefined') {
+  web3Modal = new Web3Modal({
+    network: "mainnet",
+    cacheProvider: true,
+    providerOptions,
+  })
+}
 
 const Home: NextPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [provider, setProvider] = useState(undefined);
+  const [account, setAccount] = useState(undefined);
+  const [error, setError] = useState("");
+  const [isWalletLoading, setIsWalletLoading] = useState(false);
+
+  const connectWallet = async () => {
+    try {
+      setIsWalletLoading(true);
+      const provider = await web3Modal.connect();
+      const library = new ethers.providers.Web3Provider(provider);
+      const accounts = await library.listAccounts();
+      setProvider(provider);
+      if (accounts) setAccount(accounts[0]);
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsWalletLoading(false);
+    }
+  };
+
+  const refreshState = () => {
+    setAccount(undefined);
+  };
+
+  const disconnect = async () => {
+    await web3Modal.clearCachedProvider();
+    refreshState();
+  };
+
+  useEffect(() => {
+    if (web3Modal.cachedProvider) {
+      connectWallet();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (provider?.on) {
+      const handleAccountsChanged = (accounts) => {
+        console.log("accountsChanged", accounts);
+        if (accounts) setAccount(accounts[0]);
+      };
+
+      const handleChainChanged = (_hexChainId) => {
+        setChainId(_hexChainId);
+      };
+
+      const handleDisconnect = () => {
+        console.log("disconnect", error);
+        disconnect();
+      };
+
+      provider.on("accountsChanged", handleAccountsChanged);
+      provider.on("chainChanged", handleChainChanged);
+      provider.on("disconnect", handleDisconnect);
+
+      return () => {
+        if (provider.removeListener) {
+          provider.removeListener("accountsChanged", handleAccountsChanged);
+          provider.removeListener("chainChanged", handleChainChanged);
+          provider.removeListener("disconnect", handleDisconnect);
+        }
+      };
+    }
+  }, [provider]);
 
   const contentWidths = {
     base: "343px",
@@ -94,7 +167,12 @@ const Home: NextPage = () => {
           >
             How it works?
           </Link>
-          <BlueButton ml="auto">Connect Wallet</BlueButton>
+          <Wallet
+            account={account}
+            connectWallet={connectWallet}
+            disconnect={disconnect}
+            isLoading={isWalletLoading}
+          />
         </Flex>
         <Button
           backgroundColor="neutral.800"
@@ -670,8 +748,12 @@ const Home: NextPage = () => {
               href="#"
             >
               <Flex align="center">
-                <Image src="icons/rocket-icon.svg" mr="12px" />
-                Get started
+                <Wallet
+                  account={account}
+                  connectWallet={connectWallet}
+                  disconnect={disconnect}
+                  isLoading={isWalletLoading}
+                />
               </Flex>
             </Link>
           </Flex>
