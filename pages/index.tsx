@@ -221,7 +221,8 @@ const Home: NextPage = () => {
       </Flex>
       <Box overflow="hidden" mt="56px" width="100%">
         <Image
-          src="images/landing-phones.svg"
+          src="images/landing-phones.png"
+          alt="jumbotron image"
           width={{
             base: "875px",
             sm: "875px",
