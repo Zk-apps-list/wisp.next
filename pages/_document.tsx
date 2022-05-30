@@ -4,7 +4,6 @@ export default function Document() {
   return (
     <Html>
       <Head>
-        <title>Wisp</title>
         <meta
           name="description"
           content="Turn your public wallet into a private, decentralized bank"
