@@ -11,95 +11,32 @@ import {
 import BlueButton from "../components/BlueButton";
 import TransparentButton from "../components/TransparentButton";
 import Footer from "../components/Footer";
-import { useContext, useEffect, useState } from "react";
-import { ethers } from "ethers";
-import Web3Modal from "web3modal";
-import { providerOptions } from '../services/WalletConnect';
+import { useContext, useState } from "react";
 import Wallet from "../components/Wallet";
 import { AuthContext } from "../contexts/AuthContext";
 
-let web3Modal: any;
+import { providerOptions } from '../services/WalletConnect';
+import Web3Modal from "web3modal";
+
+export let web3Modal: any;
 if (typeof window !== 'undefined') {
   web3Modal = new Web3Modal({
-    network: "mainnet",
+    network: 'mainnet',
     cacheProvider: true,
     providerOptions,
     theme: {
-      background: "rgb(39, 49, 56)",
-      main: "rgb(199, 199, 199)",
-      secondary: "rgb(136, 136, 136)",
-      border: "rgba(195, 195, 195, 0.14)",
-      hover: "rgb(16, 26, 32)"
+      background: 'rgb(39, 49, 56)',
+      main: 'rgb(199, 199, 199)',
+      secondary: 'rgb(136, 136, 136)',
+      border: 'rgba(195, 195, 195, 0.14)',
+      hover: 'rgb(16, 26, 32)'
     }
   })
 }
 
 const Home: NextPage = () => {
-  const { account, setAccount } = useContext(AuthContext);
+  const { account, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [provider, setProvider] = useState(undefined);
-  const [error, setError] = useState("");
-  const [isWalletLoading, setIsWalletLoading] = useState(false);
-
-  const connectWallet = async () => {
-    try {
-      setIsWalletLoading(true);
-      const provider = await web3Modal.connect();
-      const library = new ethers.providers.Web3Provider(provider);
-      const accounts = await library.listAccounts();
-      setProvider(provider);
-      if (accounts) setAccount(accounts[0]);
-    } catch (error) {
-      setError(error);
-    } finally {
-      setIsWalletLoading(false);
-    }
-  };
-
-  const refreshState = () => {
-    setAccount(undefined);
-  };
-
-  const disconnect = async () => {
-    await web3Modal.clearCachedProvider();
-    refreshState();
-  };
-
-  useEffect(() => {
-    if (web3Modal.cachedProvider) {
-      connectWallet();
-    }
-  }, []);
-
-  useEffect(() => {
-    if (provider?.on) {
-      const handleAccountsChanged = (accounts) => {
-        console.log("accountsChanged", accounts);
-        if (accounts) setAccount(accounts[0]);
-      };
-
-      const handleChainChanged = (_hexChainId) => {
-        setChainId(_hexChainId);
-      };
-
-      const handleDisconnect = () => {
-        console.log("disconnect", error);
-        disconnect();
-      };
-
-      provider.on("accountsChanged", handleAccountsChanged);
-      provider.on("chainChanged", handleChainChanged);
-      provider.on("disconnect", handleDisconnect);
-
-      return () => {
-        if (provider.removeListener) {
-          provider.removeListener("accountsChanged", handleAccountsChanged);
-          provider.removeListener("chainChanged", handleChainChanged);
-          provider.removeListener("disconnect", handleDisconnect);
-        }
-      };
-    }
-  }, [provider]);
 
   const contentWidths = {
     base: "343px",
@@ -117,21 +54,6 @@ const Home: NextPage = () => {
       paddingTop="24px"
       backgroundColor="landingBG"
     >
-      <Head>
-        <title>Wisp</title>
-        <meta
-          name="description"
-          content="Turn your wallet into a decentralized bank"
-        />
-        <link rel="icon" href="../public/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-
       <Flex
         width={contentWidths}
         height={58}
@@ -144,11 +66,16 @@ const Home: NextPage = () => {
       >
         <Image
           src="icons/logo-md.svg"
+          alt="Wisp Logo"
           display={{ base: "none", md: "block" }}
           width="70px"
           mr="55px"
         />
-        <Image src="icons/logo-sm.svg" display={{ base: "block", md: "none" }} />
+        <Image
+          src="icons/logo-sm.svg"
+          alt="Wisp Logo"
+          display={{ base: "block", md: "none" }}
+        />
         <Text
           textStyle="app_med_18"
           display={{ base: "block", md: "none" }}
@@ -333,6 +260,7 @@ const Home: NextPage = () => {
               Get started
               <Image
                 src="icons/blue-arrow-right-thin.svg"
+                alt="blue arrow right"
                 display="inline-block"
                 ml="16px"
               />
@@ -340,6 +268,7 @@ const Home: NextPage = () => {
           </Flex>
           <Image
             src="images/how-it-works-wallet.svg"
+            alt="how it works wallet"
             w={{ base: "350px", md: "unset" }}
           />
         </Flex>
@@ -417,6 +346,7 @@ const Home: NextPage = () => {
               Get started
               <Image
                 src="icons/blue-arrow-right-thin.svg"
+                alt="blue arrow right"
                 display="inline-block"
                 ml="16px"
               />
@@ -424,6 +354,7 @@ const Home: NextPage = () => {
           </Flex>
           <Image
             src="images/how-it-works-request.svg"
+            alt="how it works request"
             w={{ base: "350px", md: "unset" }}
           />
         </Flex>
@@ -501,6 +432,7 @@ const Home: NextPage = () => {
               Get started
               <Image
                 src="icons/blue-arrow-right-thin.svg"
+                alt="blue arrow right"
                 display="inline-block"
                 ml="16px"
               />
@@ -508,12 +440,12 @@ const Home: NextPage = () => {
           </Flex>
           <Image
             src="images/how-it-works-link.svg"
+            alt="how it works link"
             w={{ base: "350px", md: "unset" }}
           />
         </Flex>
 
         {/*Steps*/}
-
         <Flex
           w="1"
           height="80%"
