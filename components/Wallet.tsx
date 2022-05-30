@@ -12,7 +12,7 @@ const Wallet = (props: any) => {
             backgroundColor={"primary.800"}
             borderRadius="6px"
             py="12px"
-            width="110px"
+            height="34px"
             textAlign="center"
             ml="36px"
             _hover={{ bg: "primary.700" }}
@@ -27,7 +27,6 @@ const Wallet = (props: any) => {
             backgroundColor={"primary.800"}
             borderRadius="6px"
             py="12px"
-            width="110px"
             textAlign="center"
             ml="36px"
             _hover={{ bg: "primary.700" }}

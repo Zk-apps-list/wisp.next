@@ -24,6 +24,13 @@ if (typeof window !== 'undefined') {
     network: "mainnet",
     cacheProvider: true,
     providerOptions,
+    theme: {
+      background: "rgb(39, 49, 56)",
+      main: "rgb(199, 199, 199)",
+      secondary: "rgb(136, 136, 136)",
+      border: "rgba(195, 195, 195, 0.14)",
+      hover: "rgb(16, 26, 32)"
+    }
   })
 }
 
@@ -132,11 +139,13 @@ const Home: NextPage = () => {
         borderRadius="6px"
         align="center"
         justify="space-between"
-        padding="12px"
+        py="12px"
+        px="32px"
       >
         <Image
           src="icons/logo-md.svg"
           display={{ base: "none", md: "block" }}
+          width="70px"
           mr="55px"
         />
         <Image src="icons/logo-sm.svg" display={{ base: "block", md: "none" }} />
