@@ -11,11 +11,12 @@ import {
 import BlueButton from "../components/BlueButton";
 import TransparentButton from "../components/TransparentButton";
 import Footer from "../components/Footer";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
 import Web3Modal from "web3modal";
 import { providerOptions } from '../services/WalletConnect';
 import Wallet from "../components/Wallet";
+import { AuthContext } from "../contexts/AuthContext";
 
 let web3Modal: any;
 if (typeof window !== 'undefined') {
@@ -27,9 +28,9 @@ if (typeof window !== 'undefined') {
 }
 
 const Home: NextPage = () => {
+  const { account, setAccount } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [provider, setProvider] = useState(undefined);
-  const [account, setAccount] = useState(undefined);
   const [error, setError] = useState("");
   const [isWalletLoading, setIsWalletLoading] = useState(false);
 
