@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Box, Image, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Menu, MenuButton, MenuList, MenuItem, Input } from '@chakra-ui/react';
+import { Button, Box, Image, Text, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Menu, MenuButton, MenuList, MenuItem, Input, Tooltip } from '@chakra-ui/react';
 
 const RequestOneTimeModal = (props: any) => {
   const { isOpen, onClose } = props;
@@ -7,12 +7,15 @@ const RequestOneTimeModal = (props: any) => {
   const [value, setValue] = useState<number | undefined>(undefined);
   const [selectedToken, setSelectedToken] = useState<string | undefined>(undefined);
   const [generatedLink, setGeneratedLink] = useState<string | undefined>(undefined);
+  const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const reset = () => {
     setValue(undefined);
     setSelectedToken(undefined);
     setGeneratedLink(undefined);
   }
+
+  const closeTooltip = () => setTimeout(() => setIsCopied(false), 3000);
 
   const handleValueChange = (event: any) => setValue(event.target.value);
 
@@ -105,9 +108,9 @@ const RequestOneTimeModal = (props: any) => {
               <Image src='icons/lock.svg' alt='Lock' width="20px" height="20px" />
             </Box>
             <Box display="flex" justifyContent="center" alignItems="center">
-              <Text textStyle="app_reg_12">{`${generatedLink.substring(0,40)}...`}</Text>
+              <Text textStyle="app_reg_12" color="white">{`${generatedLink.substring(0,40)}...`}</Text>
             </Box>
-            <Box>
+            <Tooltip label='Copied' placement='top' hasArrow arrowSize={8} offset={[0,15]} isOpen={isCopied} onOpen={closeTooltip}>
               <Box
                 as={Button}
                 borderRadius="6px"
@@ -118,12 +121,12 @@ const RequestOneTimeModal = (props: any) => {
                 textStyle="app_reg_14"
                 onClick={() => {
                   navigator.clipboard.writeText(generatedLink);
-                  // TODO: Toast copied to clipboard
+                  setIsCopied(true);
                 }}
               >
                 Copy
               </Box>
-            </Box>
+            </Tooltip>
           </Box>
         ) : (
           <Box

@@ -1,9 +1,12 @@
 import { Box, Image, Text } from '@chakra-ui/react';
-import React from 'react';
-import BlueButton from '../components/BlueButton';
+import React, { useContext } from 'react';
+import Wallet from '../components/Wallet';
+import { AuthContext } from '../contexts/AuthContext';
 
 
 const Request = () => {
+  const { account, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
+
   return (
     <Box backgroundColor="background.end" height="100vh">
       <Box height="100%" display="flex" justifyContent="center" alignItems="center">
@@ -19,7 +22,12 @@ const Request = () => {
                 <Text color="neutral.500" textStyle="app_reg_12">{`By connecting your wallet, you agree to Wisp's Terms, Privacy Policy, and Community Standards.`}</Text>
             </Box>
             <Box mt="32px" textAlign="center">
-              <BlueButton ml="auto">Connect Wallet</BlueButton>
+            <Wallet
+              account={account}
+              connectWallet={connectWallet}
+              disconnect={disconnect}
+              isLoading={isWalletLoading}
+            />
             </Box>
             <Box mt="32px">
                 <Text color="white" textStyle="app_reg_14">

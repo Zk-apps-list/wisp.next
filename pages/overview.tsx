@@ -8,7 +8,6 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -20,7 +19,6 @@ import { Line } from 'react-chartjs-2';
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -32,7 +30,11 @@ const options = {
   responsive: true,
   elements: {
     line: {
+      tension: 0.2,
       borderJoinStyle: 'round',
+    },
+    point: {
+      radius: 0,
     }
   },
   plugins: {
@@ -40,6 +42,11 @@ const options = {
       display: true,
       position: 'top',
       align: 'end',
+      labels: {
+        boxHeight: 1,
+        boxWidth: 32,
+        padding: 20
+      }
     },
   },
 };
@@ -51,14 +58,16 @@ const data = {
     {
       label: 'Dataset 1',
       data: [1,5,2,6,3,9,7,6,9,3,2,1],
-      borderColor: "#494b4d",
-      backgroundColor: "#494b4d",
+      borderColor: "#147BDA",
+      backgroundColor: "#147BDA",
+      borderWidth: 1
     },
     {
       label: 'Dataset 2',
       data: [1,-5,2,-6,3,-9,7,8,2,4,10,8],
-      borderColor: "#147BDA",
-      backgroundColor: "#147BDA",
+      borderColor: "#494b4d",
+      backgroundColor: "#494b4d",
+      borderWidth: 1,
     },
   ],
 };
