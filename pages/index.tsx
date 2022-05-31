@@ -1,23 +1,40 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import {
   Box,
   Button,
   Flex,
   Image,
   Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
 } from "@chakra-ui/react";
-import BlueButton from "../src/components/BlueButton";
-import TransparentButton from "../src/components/TransparentButton";
-import Footer from "../src/components/Footer";
-import { useState } from "react";
+import BlueButton from "../components/BlueButton";
+import TransparentButton from "../components/TransparentButton";
+import Footer from "../components/Footer";
+import { useContext, useState } from "react";
+import Wallet from "../components/Wallet";
+import { AuthContext } from "../contexts/AuthContext";
+
+import { providerOptions } from '../services/WalletConnect';
+import Web3Modal from "web3modal";
+
+export let web3Modal: any;
+if (typeof window !== 'undefined') {
+  web3Modal = new Web3Modal({
+    network: 'mainnet',
+    cacheProvider: true,
+    providerOptions,
+    theme: {
+      background: 'rgb(39, 49, 56)',
+      main: 'rgb(199, 199, 199)',
+      secondary: 'rgb(136, 136, 136)',
+      border: 'rgba(195, 195, 195, 0.14)',
+      hover: 'rgb(16, 26, 32)'
+    }
+  })
+}
 
 const Home: NextPage = () => {
+  const { account, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const contentWidths = {
@@ -36,21 +53,6 @@ const Home: NextPage = () => {
       paddingTop="24px"
       backgroundColor="landingBG"
     >
-      <Head>
-        <title>Wisp</title>
-        <meta
-          name="description"
-          content="Turn your wallet into a decentralized bank"
-        />
-        <link rel="icon" href="../public/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Prompt:wght@100;200;300;400;500;600;700;800;900&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
-
       <Flex
         width={contentWidths}
         height={58}
@@ -58,14 +60,21 @@ const Home: NextPage = () => {
         borderRadius="6px"
         align="center"
         justify="space-between"
-        padding="12px"
+        py="12px"
+        px="32px"
       >
         <Image
-          src="logo-md.svg"
+          src="icons/logo-md.svg"
+          alt="Wisp Logo"
           display={{ base: "none", md: "block" }}
+          width="70px"
           mr="55px"
         />
-        <Image src="logo-sm.svg" display={{ base: "block", md: "none" }} />
+        <Image
+          src="icons/logo-sm.svg"
+          alt="Wisp Logo"
+          display={{ base: "block", md: "none" }}
+        />
         <Text
           textStyle="app_med_18"
           display={{ base: "block", md: "none" }}
@@ -94,7 +103,12 @@ const Home: NextPage = () => {
           >
             How it works?
           </Link>
-          <BlueButton ml="auto">Connect Wallet</BlueButton>
+          <Wallet
+            account={account}
+            connectWallet={connectWallet}
+            disconnect={disconnect}
+            isLoading={isWalletLoading}
+          />
         </Flex>
         <Button
           backgroundColor="neutral.800"
@@ -104,7 +118,7 @@ const Home: NextPage = () => {
           display={{ base: "block", md: "none" }}
           onClick={() => setMenuOpen(true)}
         >
-          <Image w="20px" h="20px" mx="auto" src="hamburger-icon.svg" />
+          <Image w="20px" h="20px" mx="auto" src="icons/hamburger-icon.svg" />
         </Button>
       </Flex>
       <Flex mt="88px">
@@ -142,7 +156,8 @@ const Home: NextPage = () => {
       </Flex>
       <Box overflow="hidden" mt="56px" width="100%">
         <Image
-          src="landing-phones.svg"
+          src="images/landing-phones.png"
+          alt="jumbotron image"
           width={{
             base: "875px",
             sm: "875px",
@@ -243,14 +258,16 @@ const Home: NextPage = () => {
             >
               Get started
               <Image
-                src="blue-arrow-right-thin.svg"
+                src="icons/blue-arrow-right-thin.svg"
+                alt="blue arrow right"
                 display="inline-block"
                 ml="16px"
               />
             </Link>
           </Flex>
           <Image
-            src="how-it-works-wallet.svg"
+            src="images/how-it-works-wallet.svg"
+            alt="how it works wallet"
             w={{ base: "350px", md: "unset" }}
           />
         </Flex>
@@ -327,14 +344,16 @@ const Home: NextPage = () => {
             >
               Get started
               <Image
-                src="blue-arrow-right-thin.svg"
+                src="icons/blue-arrow-right-thin.svg"
+                alt="blue arrow right"
                 display="inline-block"
                 ml="16px"
               />
             </Link>
           </Flex>
           <Image
-            src="how-it-works-request.svg"
+            src="images/how-it-works-request.svg"
+            alt="how it works request"
             w={{ base: "350px", md: "unset" }}
           />
         </Flex>
@@ -411,20 +430,21 @@ const Home: NextPage = () => {
             >
               Get started
               <Image
-                src="blue-arrow-right-thin.svg"
+                src="icons/blue-arrow-right-thin.svg"
+                alt="blue arrow right"
                 display="inline-block"
                 ml="16px"
               />
             </Link>
           </Flex>
           <Image
-            src="how-it-works-link.svg"
+            src="images/how-it-works-link.svg"
+            alt="how it works link"
             w={{ base: "350px", md: "unset" }}
           />
         </Flex>
 
         {/*Steps*/}
-
         <Flex
           w="1"
           height="80%"
@@ -524,7 +544,7 @@ const Home: NextPage = () => {
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="why-wisp-wallet.svg" />
+          <Image src="images/why-wisp-wallet.svg" />
           <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
             Payment & Transaction
           </Text>
@@ -547,7 +567,7 @@ const Home: NextPage = () => {
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="why-wisp-liquidity.svg" />
+          <Image src="images/why-wisp-liquidity.svg" />
           <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
             Liquidity Pool
           </Text>
@@ -571,7 +591,7 @@ const Home: NextPage = () => {
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="why-wisp-docs.svg" />
+          <Image src="images/why-wisp-docs.svg" />
           <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
             Compliance docs
           </Text>
@@ -628,7 +648,7 @@ const Home: NextPage = () => {
               display={{ base: "block", md: "none" }}
               onClick={() => setMenuOpen(false)}
             >
-              <Image w="20px" h="20px" mx="auto" src="hamburger-icon.svg" />
+              <Image w="20px" h="20px" mx="auto" src="icons/hamburger-icon.svg" />
             </Button>
           </Flex>
           <Flex direction="column" width={contentWidths} gap="12px">
@@ -642,7 +662,7 @@ const Home: NextPage = () => {
               href="#"
             >
               <Flex align="center">
-                <Image src="home-icon.svg" mr="12px" />
+                <Image src="icons/home-icon.svg" mr="12px" />
                 Home
               </Flex>
             </Link>
@@ -656,7 +676,7 @@ const Home: NextPage = () => {
               href="#"
             >
               <Flex align="center">
-                <Image src="settings-icon.svg" mr="12px" />
+                <Image src="icons/settings-icon.svg" mr="12px" />
                 How it works
               </Flex>
             </Link>
@@ -670,8 +690,12 @@ const Home: NextPage = () => {
               href="#"
             >
               <Flex align="center">
-                <Image src="rocket-icon.svg" mr="12px" />
-                Get started
+                <Wallet
+                  account={account}
+                  connectWallet={connectWallet}
+                  disconnect={disconnect}
+                  isLoading={isWalletLoading}
+                />
               </Flex>
             </Link>
           </Flex>
