@@ -9,7 +9,9 @@ export const AuthContext = createContext({
   isWalletLoading: false
 });
 
-export const AuthContextProvider = ({ children }) => {
+export const AuthContextProvider = (props: any) => {
+  const { children } = props;
+
   const [account, setAccount] = useState<string | undefined>(undefined);
   const [provider, setProvider] = useState<any>(undefined);
   const [error, setError] = useState("");
