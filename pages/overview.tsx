@@ -198,7 +198,7 @@ const Overview = () => {
                 data={data}
                 width={400}
                 height={200}
-                options={options}
+                options={options as any}
               />
             </Box>
 
