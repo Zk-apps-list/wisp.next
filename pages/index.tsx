@@ -7,8 +7,6 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import BlueButton from "../components/BlueButton";
-import TransparentButton from "../components/TransparentButton";
 import Footer from "../components/Footer";
 import { useContext, useState } from "react";
 import Wallet from "../components/Wallet";
@@ -16,6 +14,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 import { providerOptions } from '../services/WalletConnect';
 import Web3Modal from "web3modal";
+import { useRouter } from "next/router";
 
 export let web3Modal: any;
 if (typeof window !== 'undefined') {
@@ -34,6 +33,7 @@ if (typeof window !== 'undefined') {
 }
 
 const Home: NextPage = () => {
+  const router = useRouter();
   const { account, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -63,18 +63,22 @@ const Home: NextPage = () => {
         py="12px"
         px="32px"
       >
-        <Image
-          src="icons/logo-md.svg"
-          alt="Wisp Logo"
-          display={{ base: "none", md: "block" }}
-          width="70px"
-          mr="55px"
-        />
-        <Image
-          src="icons/logo-sm.svg"
-          alt="Wisp Logo"
-          display={{ base: "block", md: "none" }}
-        />
+        <Link mr="55px" onClick={() => router.push(`/`)}>
+          <Image
+            src="icons/logo-md.svg"
+            alt="Wisp Logo"
+            display={{ base: "none", md: "block" }}
+            width="70px"
+          />
+        </Link>
+        <Link onClick={() => router.push(`/`)}>
+          <Image
+            src="icons/logo-sm.svg"
+            alt="Wisp Logo"
+            display={{ base: "block", md: "none" }}
+            onClick={() => router.push(`/`)}
+          />
+        </Link>
         <Text
           textStyle="app_med_18"
           display={{ base: "block", md: "none" }}
@@ -93,7 +97,7 @@ const Home: NextPage = () => {
             Home
           </Link>
           <Link
-            href="#"
+            href="#how"
             textStyle="land_reg_14"
             color="neutral.0"
             mr="24px"
@@ -101,7 +105,18 @@ const Home: NextPage = () => {
             _hover={{ textDecoration: "none" }}
             display="inline-block"
           >
-            How it works?
+            How It Works
+          </Link>
+          <Link
+            href="#why"
+            textStyle="land_reg_14"
+            color="neutral.0"
+            mr="24px"
+            textDecoration="none"
+            _hover={{ textDecoration: "none" }}
+            display="inline-block"
+          >
+            Why Wisp
           </Link>
           <Wallet
             account={account}
@@ -127,14 +142,14 @@ const Home: NextPage = () => {
           textAlign="center"
           color="neutral.0"
         >
-          Pay with{" "}
+          Turn your public wallet {" "}
           <Box as="span" fontWeight="medium">
-            a new way
+            into a
           </Box>
           <br />
-          in{" "}
+          a{" "}
           <Box as="span" fontWeight="medium">
-            a new world
+            private bank.
           </Box>
         </Text>
       </Flex>
@@ -150,10 +165,10 @@ const Home: NextPage = () => {
           private payment using cryptocurrency without revealing address.
         </Text>
       </Flex>
-      <Flex justify="center" gap="32px" mt="24px">
+      {/* <Flex justify="center" gap="32px" mt="24px">
         <BlueButton>Get Started</BlueButton>
         <TransparentButton>How it works?</TransparentButton>
-      </Flex>
+      </Flex> */}
       <Box overflow="hidden" mt="56px" width="100%">
         <Image
           src="images/landing-phones.png"
@@ -174,6 +189,7 @@ const Home: NextPage = () => {
         />
       </Box>
       <Text
+        id="how"
         mt="100px"
         textStyle={{ base: "land_reg_32", md: "land_reg_40" }}
         color="neutral.0"
@@ -236,7 +252,7 @@ const Home: NextPage = () => {
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
-              Like a piece of cake
+              Start by connecting <br />your wallet of choice
             </Text>
             <Text
               textStyle="land_light_14_175"
@@ -321,7 +337,7 @@ const Home: NextPage = () => {
               textAlign={{ base: "center", md: "unset" }}
             >
               Make a payment <br />
-              request within a click
+              request with one click
             </Text>
             <Text
               textStyle="land_light_14_175"
@@ -406,8 +422,7 @@ const Home: NextPage = () => {
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
-              Send a link to make <br />
-              request payment
+              Send link
             </Text>
             <Text
               textStyle="land_light_14_175"
@@ -415,8 +430,8 @@ const Home: NextPage = () => {
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
-              Ready to get paid? Copy and send link to <br />
-              recipient to easily request payment
+              Copy and send link to the <br />
+              recipient to request payment
             </Text>
             <Link
               href="#"
@@ -500,6 +515,7 @@ const Home: NextPage = () => {
         </Flex>
       </Flex>
       <Box
+        id="why"
         backgroundColor="block"
         padding="4px 12px"
         borderRadius="6px"
@@ -523,10 +539,10 @@ const Home: NextPage = () => {
         mt="8px"
         textAlign="center"
       >
-        End-to-end private crypto payments without revealing address <br /> and
-        financial management in a single solution.
+        End-to-end private crypto payments, <br /> and
+        financial management in one single solution.
       </Text>
-      <BlueButton mt="32px">Try us out for free</BlueButton>
+      {/* <BlueButton mt="32px">Try us out for free</BlueButton> */}
       <Flex
         mt="56px"
         mb="154px"
@@ -538,15 +554,15 @@ const Home: NextPage = () => {
       >
         <Flex
           backgroundColor="block"
-          padding="24px 16px"
+          padding="28px"
           direction="column"
           alignItems="center"
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="images/why-wisp-wallet.svg" />
+          <Image src="images/why-wisp-wallet.svg" alt="Wisp wallet" width="120px" />
           <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
-            Payment & Transaction
+            Payment & Transactions
           </Text>
           <Text
             textStyle="land_light_14_175"
@@ -554,20 +570,20 @@ const Home: NextPage = () => {
             color="neutral.400"
             textAlign="center"
           >
-            Payment & Request payments have never <br />
-            been so easy. Wisp Finance keep all your
-            <br /> transaction history next to your hand.
+            Paying & requesting payments have never
+            <br />been easier. Wisp Finance keeps
+            <br />a record of all your transactions.
           </Text>
         </Flex>
         <Flex
           backgroundColor="block"
-          padding="24px 16px"
+          padding="28px"
           direction="column"
           alignItems="center"
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="images/why-wisp-liquidity.svg" />
+          <Image src="images/why-wisp-liquidity.svg" alt="Wisp liquidity" width="120px" />
           <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
             Liquidity Pool
           </Text>
@@ -577,23 +593,20 @@ const Home: NextPage = () => {
             color="neutral.400"
             textAlign="center"
           >
-            Wisp Finance guarantee a profit <br /> from reinvestment APY of your{" "}
-            <br />
-            money that you haven&apos;t withdraw <br />
-            yet.
+            Wisp Finance passively reinvests <br /> your money for APY gains.
           </Text>
         </Flex>
         <Flex
           backgroundColor="block"
-          padding="24px 16px"
+          padding="28px"
           direction="column"
           alignItems="center"
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="images/why-wisp-docs.svg" />
+          <Image src="images/why-wisp-docs.svg" alt="Wisp docs" width="120px" />
           <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
-            Compliance docs
+            Compliance
           </Text>
           <Text
             textStyle="land_light_14_175"
@@ -601,10 +614,8 @@ const Home: NextPage = () => {
             color="neutral.400"
             textAlign="center"
           >
-            Wisp Finance helps you compliant <br />
-            with law for all transactions. <br />
-            Generate, send, and collect signed <br />
-            legal docs within click.
+            Wisp Finance helps you stay compliant <br />
+            with the law for all transactions.
           </Text>
         </Flex>
       </Flex>
