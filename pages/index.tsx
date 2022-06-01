@@ -118,12 +118,12 @@ const Home: NextPage = () => {
           >
             Why Wisp
           </Link>
-          <Wallet
+          {/* <Wallet
             account={account}
             connectWallet={connectWallet}
             disconnect={disconnect}
             isLoading={isWalletLoading}
-          />
+          /> */}
         </Flex>
         <Button
           backgroundColor="neutral.800"
@@ -700,14 +700,14 @@ const Home: NextPage = () => {
               p="15px"
               href="#"
             >
-              <Flex align="center">
+              {/* <Flex align="center">
                 <Wallet
                   account={account}
                   connectWallet={connectWallet}
                   disconnect={disconnect}
                   isLoading={isWalletLoading}
                 />
-              </Flex>
+              </Flex> */}
             </Link>
           </Flex>
         </Flex>
