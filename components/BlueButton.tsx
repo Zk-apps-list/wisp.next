@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Text } from "@chakra-ui/react";
 
-function BlueButton({ children, ...rest }) {
+function BlueButton(props: any) {
+  const { children, ...rest } = props;
+
   return (
     <Button
       {...rest}
