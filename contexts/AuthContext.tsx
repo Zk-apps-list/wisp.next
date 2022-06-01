@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import { web3Modal } from '../pages';
 
 export const AuthContext = createContext({
-  account: undefined,
+  account: "",
   connectWallet: async () => {},
   disconnect: async () => {},
   isWalletLoading: false
@@ -12,7 +12,7 @@ export const AuthContext = createContext({
 export const AuthContextProvider = (props: any) => {
   const { children } = props;
 
-  const [account, setAccount] = useState<string | undefined>(undefined);
+  const [account, setAccount] = useState<string>("");
   const [provider, setProvider] = useState<any>(undefined);
   const [error, setError] = useState("");
   const [isWalletLoading, setIsWalletLoading] = useState(false);
