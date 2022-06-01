@@ -33,7 +33,7 @@ export const AuthContextProvider = (props: any) => {
   };
 
   const refreshState = () => {
-    setAccount(undefined);
+    setAccount("");
   };
 
   const disconnect = async () => {
