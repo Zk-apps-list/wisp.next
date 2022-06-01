@@ -11,7 +11,6 @@ import Footer from "../components/Footer";
 import { useContext, useState } from "react";
 import Wallet from "../components/Wallet";
 import { AuthContext } from "../contexts/AuthContext";
-
 import { providerOptions } from '../services/WalletConnect';
 import Web3Modal from "web3modal";
 import { useRouter } from "next/router";
@@ -63,7 +62,7 @@ const Home: NextPage = () => {
         py="12px"
         px="32px"
       >
-        <Link mr="55px" onClick={() => router.push(`/`)}>
+        <Link onClick={() => router.push(`/`)}>
           <Image
             src="icons/logo-md.svg"
             alt="Wisp Logo"
@@ -71,22 +70,14 @@ const Home: NextPage = () => {
             width="70px"
           />
         </Link>
-        <Link onClick={() => router.push(`/`)}>
+        <Link onClick={() => router.push(`/`)} mr='auto'>
           <Image
             src="icons/logo-sm.svg"
             alt="Wisp Logo"
             display={{ base: "block", md: "none" }}
-            onClick={() => router.push(`/`)}
           />
         </Link>
-        <Text
-          textStyle="app_med_18"
-          display={{ base: "block", md: "none" }}
-          color="neutral.0"
-        >
-          Home
-        </Text>
-        <Flex align="center" flex="1" display={{ base: "none", md: "flex" }}>
+        <Flex align="center" flex="1" display={{ base: "none", md: "flex" }} ml="24px">
           <Link
             href="#"
             textStyle="land_reg_14"
@@ -138,31 +129,27 @@ const Home: NextPage = () => {
       </Flex>
       <Flex mt="88px">
         <Text
+          maxWidth="800px"
+          mx="24px"
           textStyle={{ base: "land_reg_35", md: "land_reg_56" }}
           textAlign="center"
           color="neutral.0"
         >
-          Turn your public wallet {" "}
+          Turn your public wallet into {" "}
           <Box as="span" fontWeight="medium">
-            into a
-          </Box>
-          <br />
-          a{" "}
-          <Box as="span" fontWeight="medium">
-            private bank.
+            a private bank.
           </Box>
         </Text>
       </Flex>
       <Flex mt="32px">
         <Text
+          maxWidth="600px"
           textStyle="land_light_14_200"
           textAlign="center"
           color="neutral.400"
-          marginX="30px"
+          mx="30px"
         >
-          Wisp Finance is the easiest, safest, and fastest way to request secure
-          and <br />
-          private payment using cryptocurrency without revealing address.
+          Wisp Finance is the easiest, safest, and fastest way to request secure and private payment using cryptocurrency without revealing address.
         </Text>
       </Flex>
       {/* <Flex justify="center" gap="32px" mt="24px">
@@ -641,15 +628,16 @@ const Home: NextPage = () => {
             borderRadius="6px"
             align="center"
             justify="space-between"
-            padding="12px"
+            py="12px"
+            px="32px"
           >
-            <Image src="logo-sm.svg" display={{ base: "block", md: "none" }} />
+            <Image src="icons/logo-sm.svg" alt="logo" display={{ base: "block", md: "none" }} />
             <Text
               textStyle="app_med_18"
               display={{ base: "block", md: "none" }}
               color="neutral.0"
             >
-              Home
+              Menu
             </Text>
             <Button
               backgroundColor="neutral.800"
@@ -691,7 +679,7 @@ const Home: NextPage = () => {
                 How it works
               </Flex>
             </Link>
-            <Link
+            {/* <Link
               textStyle="app_reg_14"
               color="neutral.0"
               backgroundColor="primary.700"
@@ -700,15 +688,15 @@ const Home: NextPage = () => {
               p="15px"
               href="#"
             >
-              {/* <Flex align="center">
+              <Flex align="center">
                 <Wallet
                   account={account}
                   connectWallet={connectWallet}
                   disconnect={disconnect}
                   isLoading={isWalletLoading}
                 />
-              </Flex> */}
-            </Link>
+              </Flex>
+            </Link> */}
           </Flex>
         </Flex>
       )}
