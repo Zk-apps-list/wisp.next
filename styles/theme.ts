@@ -22,6 +22,19 @@ const appTheme = extendTheme({
       50: "#f9fcff",
       0: "#ffffff",
     },
+    light_neutral: {
+      900: "#161616",
+      800: "#363636",
+      700: "#545454",
+      600: "#676767",
+      500: "#8f8f8f",
+      400: "#b0b0b0",
+      300: "#d4d4d4",
+      200: "#e5e5e5",
+      100: "#f0f0f0",
+      50: "#f7f7f7",
+      0: "#ffffff",
+    },
     block: "#27292b",
     background: {
       start: "#242628",
@@ -194,5 +207,7 @@ const appTheme = extendTheme({
     xl: "1200px",
     xxl: "1400px",
   },
+  initialColorMode: "light",
+  useSystemColorMode: false,
 });
 export default appTheme;

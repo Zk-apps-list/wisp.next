@@ -1,25 +1,28 @@
-import { Box, Button, Text } from '@chakra-ui/react';
-import React from 'react';
+import { Box, Button, Text } from "@chakra-ui/react";
+import React from "react";
 
 const Wallet = (props: any) => {
-  const { account, connectWallet, disconnect, isLoading } = props;
+  const { account, connectWallet, disconnect, isLoading, ml } = props;
 
   return (
     <>
-      <Box ml="auto">
+      <Box>
         {!account ? (
-          <Box as={Button}
+          <Box
+            as={Button}
             backgroundColor={"primary.800"}
             borderRadius="6px"
             py="12px"
             height="34px"
             textAlign="center"
-            ml="36px"
+            ml={ml || "36px"}
             _hover={{ bg: "primary.700" }}
             onClick={connectWallet}
             isLoading={isLoading}
           >
-            <Text ml="auto" mr="auto" color="white" textStyle="app_reg_12">Connect Wallet</Text>
+            <Text ml="auto" mr="auto" color="white" textStyle="app_reg_12">
+              Connect Wallet
+            </Text>
           </Box>
         ) : (
           <Box
@@ -33,13 +36,14 @@ const Wallet = (props: any) => {
             onClick={disconnect}
             isLoading={isLoading}
           >
-            <Text ml="auto" mr="auto" color="white" textStyle="app_reg_12">Disconnect</Text>
+            <Text ml="auto" mr="auto" color="white" textStyle="app_reg_12">
+              Disconnect
+            </Text>
           </Box>
-          )
-        }
+        )}
       </Box>
     </>
-  )
-}
+  );
+};
 
 export default Wallet;
