@@ -88,6 +88,8 @@ const Home: NextPage = () => {
         justify="space-between"
         py="12px"
         px="32px"
+        position="fixed"
+        zIndex={1}
       >
         <Image
           src={logoMd}
@@ -106,7 +108,7 @@ const Home: NextPage = () => {
           display={{ base: "block", md: "none" }}
           color={contrastText}
         >
-          Home
+          Menu
         </Text>
         <Flex align="center" flex="1" display={{ base: "none", md: "flex" }}>
           <Link
@@ -161,7 +163,7 @@ const Home: NextPage = () => {
           h="36px"
           p="0"
           display={{ base: "block", md: "none" }}
-          onClick={() => setMenuOpen(true)}
+          onClick={() => setMenuOpen(!menuOpen)}
         >
           <Image
             w="20px"
@@ -175,13 +177,14 @@ const Home: NextPage = () => {
       <Flex mt="88px">
         <Text
           maxWidth="800px"
+          mx="24px"
           textStyle={{ base: "land_reg_35", md: "land_reg_56" }}
           textAlign="center"
           color={contrastText}
         >
-          Turn your public wallet into {" "}
+            Turn your public wallet<br />into a {" "}
           <Box as="span" fontWeight="medium">
-            a private bank.
+            private bank.
           </Box>
         </Text>
       </Flex>
@@ -191,7 +194,7 @@ const Home: NextPage = () => {
           textStyle="land_light_14_200"
           textAlign="center"
           color={dimText}
-          marginX="30px"
+          mx="30px"
         >
           Wisp Finance is the easiest, safest, and fastest way to request secure and private payment using cryptocurrency without revealing your wallet address.
         </Text>
@@ -608,7 +611,7 @@ const Home: NextPage = () => {
       >
         <Flex
           backgroundColor={blocks}
-          padding="24px 16px"
+          padding="28px"
           direction="column"
           alignItems="center"
           justify="space-between"
@@ -635,7 +638,7 @@ const Home: NextPage = () => {
         </Flex>
         <Flex
           backgroundColor={blocks}
-          padding="24px 16px"
+          padding="28px"
           direction="column"
           alignItems="center"
           justify="space-between"
@@ -660,7 +663,7 @@ const Home: NextPage = () => {
         </Flex>
         <Flex
           backgroundColor={blocks}
-          padding="24px 16px"
+          padding="28px"
           direction="column"
           alignItems="center"
           justify="space-between"
@@ -668,6 +671,7 @@ const Home: NextPage = () => {
         >
           <Image
             src={docsIcon}
+            width="120px"
             alt="Wisp docs"
           />
           <Text textStyle="land_reg_20" mt="28px" color={contrastText}>
@@ -728,7 +732,7 @@ const Home: NextPage = () => {
               h="36px"
               p="0"
               display={{ base: "block", md: "none" }}
-              onClick={() => setMenuOpen(false)}
+              onClick={() => setMenuOpen(!menuOpen)}
             >
               <Image
                 w="20px"
