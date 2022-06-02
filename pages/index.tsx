@@ -1,40 +1,60 @@
 import type { NextPage } from "next";
 import {
+  background,
   Box,
   Button,
   Flex,
   Image,
   Link,
   Text,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
+import BlueButton from "../components/BlueButton";
+import TransparentButton from "../components/TransparentButton";
 import Footer from "../components/Footer";
 import { useContext, useState } from "react";
 import Wallet from "../components/Wallet";
 import { AuthContext } from "../contexts/AuthContext";
-import { providerOptions } from '../services/WalletConnect';
+
+import { providerOptions } from "../services/WalletConnect";
 import Web3Modal from "web3modal";
-import { useRouter } from "next/router";
 
 export let web3Modal: any;
-if (typeof window !== 'undefined') {
+if (typeof window !== "undefined") {
   web3Modal = new Web3Modal({
-    network: 'mainnet',
+    network: "mainnet",
     cacheProvider: true,
     providerOptions,
     theme: {
-      background: 'rgb(39, 49, 56)',
-      main: 'rgb(199, 199, 199)',
-      secondary: 'rgb(136, 136, 136)',
-      border: 'rgba(195, 195, 195, 0.14)',
-      hover: 'rgb(16, 26, 32)'
-    }
-  })
+      background: "rgb(39, 49, 56)",
+      main: "rgb(199, 199, 199)",
+      secondary: "rgb(136, 136, 136)",
+      border: "rgba(195, 195, 195, 0.14)",
+      hover: "rgb(16, 26, 32)",
+    },
+  });
 }
 
 const Home: NextPage = () => {
-  const router = useRouter();
-  const { account, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
+  const { account, connectWallet, disconnect, isWalletLoading } =
+    useContext(AuthContext);
+  const { colorMode, toggleColorMode } = useColorMode();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const landingBG = useColorModeValue( "light_neutral.50", "landingBG");
+  const navigationBG = useColorModeValue("neutral.0", "block");
+  const landingPhones = useColorModeValue(
+    "images/landing-phones-light.png",
+    "images/landing-phones.png"
+  );
+  const contrastText = useColorModeValue("light_neutral.800", "neutral.0");
+  const reverseContrastText = useColorModeValue(
+    "light_neutral.800",
+    "neutral.800"
+  );
+  const dimText = useColorModeValue("light_neutral.600", "neutral.400",);
+  const blocks = useColorModeValue("neutral.0", "block");
 
   const contentWidths = {
     base: "343px",
@@ -50,58 +70,68 @@ const Home: NextPage = () => {
       align="center"
       direction="column"
       paddingTop="24px"
-      backgroundColor="landingBG"
+      backgroundColor={landingBG}
     >
       <Flex
         width={contentWidths}
         height={58}
-        backgroundColor="block"
+        backgroundColor={navigationBG}
         borderRadius="6px"
         align="center"
         justify="space-between"
         py="12px"
         px="32px"
       >
-        <Link onClick={() => router.push(`/`)}>
-          <Image
-            src="icons/logo-md.svg"
-            alt="Wisp Logo"
-            display={{ base: "none", md: "block" }}
-            width="70px"
-          />
-        </Link>
-        <Link onClick={() => router.push(`/`)} mr='auto'>
-          <Image
-            src="icons/logo-sm.svg"
-            alt="Wisp Logo"
-            display={{ base: "block", md: "none" }}
-          />
-        </Link>
-        <Flex align="center" flex="1" display={{ base: "none", md: "flex" }} ml="24px">
+        <Image
+          src={useColorModeValue(
+            "icons/logo-md-light.svg",
+            "icons/logo-md.svg"
+          )}
+          alt="Wisp Logo"
+          display={{ base: "none", md: "block" }}
+          width="70px"
+          mr="55px"
+        />
+        <Image
+          src={useColorModeValue(
+            "icons/logo-sm-light.svg",
+            "icons/logo-sm.svg"
+          )}
+          alt="Wisp Logo"
+          display={{ base: "block", md: "none" }}
+        />
+        <Text
+          textStyle="app_med_18"
+          display={{ base: "block", md: "none" }}
+          color={contrastText}
+        >
+          Home
+        </Text>
+        <Flex align="center" flex="1" display={{ base: "none", md: "flex" }}>
           <Link
             href="#"
             textStyle="land_reg_14"
-            color="neutral.0"
+            color={contrastText}
             mr="24px"
             _hover={{ textDecoration: "none" }}
           >
             Home
           </Link>
           <Link
-            href="#how"
+            href="#how-it-works"
             textStyle="land_reg_14"
-            color="neutral.0"
+            color={contrastText}
             mr="24px"
             textDecoration="none"
             _hover={{ textDecoration: "none" }}
             display="inline-block"
           >
-            How It Works
+            How it works
           </Link>
           <Link
-            href="#why"
+            href="#why-wisp"
             textStyle="land_reg_14"
-            color="neutral.0"
+            color={contrastText}
             mr="24px"
             textDecoration="none"
             _hover={{ textDecoration: "none" }}
@@ -109,31 +139,52 @@ const Home: NextPage = () => {
           >
             Why Wisp
           </Link>
-          {/* <Wallet
+          <Button
+            onClick={toggleColorMode}
+            ml="auto"
+            background="none"
+            variant="link"
+          >
+            <Image
+              src={useColorModeValue(
+                "icons/icon-sun.svg",
+                "icons/icon-moon.svg"
+              )}
+            />
+          </Button>
+          <Wallet
             account={account}
             connectWallet={connectWallet}
             disconnect={disconnect}
             isLoading={isWalletLoading}
-          /> */}
+          />
         </Flex>
         <Button
-          backgroundColor="neutral.800"
+          backgroundColor={useColorModeValue("light_neutral.50", "neutral.800")}
           w="36px"
           h="36px"
           p="0"
           display={{ base: "block", md: "none" }}
           onClick={() => setMenuOpen(true)}
         >
-          <Image w="20px" h="20px" mx="auto" src="icons/hamburger-icon.svg" />
+          <Image
+            w="20px"
+            h="20px"
+            mx="auto"
+            src={useColorModeValue(
+              "icons/hamburger-icon-light.svg",
+              "icons/hamburger-icon.svg"
+            )}
+            alt="Hamburger menu"
+          />
         </Button>
       </Flex>
       <Flex mt="88px">
         <Text
           maxWidth="800px"
-          mx="24px"
           textStyle={{ base: "land_reg_35", md: "land_reg_56" }}
           textAlign="center"
-          color="neutral.0"
+          color={contrastText}
         >
           Turn your public wallet into {" "}
           <Box as="span" fontWeight="medium">
@@ -146,19 +197,21 @@ const Home: NextPage = () => {
           maxWidth="600px"
           textStyle="land_light_14_200"
           textAlign="center"
-          color="neutral.400"
-          mx="30px"
+          color={dimText}
+          marginX="30px"
         >
-          Wisp Finance is the easiest, safest, and fastest way to request secure and private payment using cryptocurrency without revealing address.
+          Wisp Finance is the easiest, safest, and fastest way to request secure and private payment using cryptocurrency without revealing your wallet address.
         </Text>
       </Flex>
       {/* <Flex justify="center" gap="32px" mt="24px">
         <BlueButton>Get Started</BlueButton>
-        <TransparentButton>How it works?</TransparentButton>
+        <TransparentButton color={contrastText}>
+          How it works?
+        </TransparentButton>
       </Flex> */}
       <Box overflow="hidden" mt="56px" width="100%">
         <Image
-          src="images/landing-phones.png"
+          src={landingPhones}
           alt="jumbotron image"
           width={{
             base: "875px",
@@ -176,10 +229,10 @@ const Home: NextPage = () => {
         />
       </Box>
       <Text
-        id="how"
+        id="how-it-works"
         mt="100px"
         textStyle={{ base: "land_reg_32", md: "land_reg_40" }}
-        color="neutral.0"
+        color={contrastText}
       >
         How it works
       </Text>
@@ -220,6 +273,12 @@ const Home: NextPage = () => {
                   verticalAlign="center"
                   fontSize="18px"
                   transform="translateX(-50%)"
+                  color={reverseContrastText}
+                  borderWidth="1px"
+                  borderColor={useColorModeValue(
+                    "light_neutral.200",
+                    "transparent"
+                  )}
                 >
                   1
                 </Box>
@@ -235,7 +294,7 @@ const Home: NextPage = () => {
             </Text>
             <Text
               textStyle={{ base: "land_reg_24_150", sm: "land_reg_24" }}
-              color="neutral.0"
+              color={contrastText}
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -243,7 +302,7 @@ const Home: NextPage = () => {
             </Text>
             <Text
               textStyle="land_light_14_175"
-              color="neutral.400"
+              color={dimText}
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -269,7 +328,10 @@ const Home: NextPage = () => {
             </Link>
           </Flex>
           <Image
-            src="images/how-it-works-wallet.svg"
+            src={useColorModeValue(
+              "images/how-it-works-wallet-light.svg",
+              "images/how-it-works-wallet.svg"
+            )}
             alt="how it works wallet"
             w={{ base: "350px", md: "unset" }}
           />
@@ -304,6 +366,12 @@ const Home: NextPage = () => {
                   verticalAlign="center"
                   fontSize="18px"
                   transform="translateX(-50%)"
+                  color={reverseContrastText}
+                  borderWidth="1px"
+                  borderColor={useColorModeValue(
+                    "light_neutral.200",
+                    "transparent"
+                  )}
                 >
                   2
                 </Box>
@@ -319,7 +387,7 @@ const Home: NextPage = () => {
             </Text>
             <Text
               textStyle={{ base: "land_reg_24_150", sm: "land_reg_24" }}
-              color="neutral.0"
+              color={contrastText}
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -328,12 +396,12 @@ const Home: NextPage = () => {
             </Text>
             <Text
               textStyle="land_light_14_175"
-              color="neutral.400"
+              color={dimText}
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
-              Choose cryptocurency, enter amount you want <br />
-              to get and get link to request payment
+              Choose cryptocurency, and enter amount you want <br />
+              to get the link to request payment
             </Text>
             <Link
               href="#"
@@ -355,7 +423,10 @@ const Home: NextPage = () => {
             </Link>
           </Flex>
           <Image
-            src="images/how-it-works-request.svg"
+            src={useColorModeValue(
+              "images/how-it-works-request-light.svg",
+              "images/how-it-works-request.svg"
+            )}
             alt="how it works request"
             w={{ base: "350px", md: "unset" }}
           />
@@ -390,6 +461,12 @@ const Home: NextPage = () => {
                   verticalAlign="center"
                   fontSize="18px"
                   transform="translateX(-50%)"
+                  color={reverseContrastText}
+                  borderWidth="1px"
+                  borderColor={useColorModeValue(
+                    "light_neutral.200",
+                    "transparent"
+                  )}
                 >
                   3
                 </Box>
@@ -405,7 +482,7 @@ const Home: NextPage = () => {
             </Text>
             <Text
               textStyle={{ base: "land_reg_24_150", sm: "land_reg_24" }}
-              color="neutral.0"
+              color={contrastText}
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -413,7 +490,7 @@ const Home: NextPage = () => {
             </Text>
             <Text
               textStyle="land_light_14_175"
-              color="neutral.400"
+              color={dimText}
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -440,7 +517,10 @@ const Home: NextPage = () => {
             </Link>
           </Flex>
           <Image
-            src="images/how-it-works-link.svg"
+            src={useColorModeValue(
+              "images/how-it-works-link-light.svg",
+              "images/how-it-works-link.svg"
+            )}
             alt="how it works link"
             w={{ base: "350px", md: "unset" }}
           />
@@ -470,6 +550,9 @@ const Home: NextPage = () => {
             verticalAlign="center"
             fontSize="18px"
             transform="translateX(-50%)"
+            color={reverseContrastText}
+            borderWidth="1px"
+            borderColor={useColorModeValue("light_neutral.200", "transparent")}
           >
             1
           </Box>
@@ -483,6 +566,9 @@ const Home: NextPage = () => {
             verticalAlign="center"
             fontSize="18px"
             transform="translateX(-50%)"
+            color={reverseContrastText}
+            borderWidth="1px"
+            borderColor={useColorModeValue("light_neutral.200", "transparent")}
           >
             2
           </Box>
@@ -496,25 +582,31 @@ const Home: NextPage = () => {
             verticalAlign="center"
             fontSize="18px"
             transform="translateX(-50%)"
+            color={reverseContrastText}
+            borderWidth="1px"
+            borderColor={useColorModeValue("light_neutral.200", "transparent")}
           >
             3
           </Box>
         </Flex>
       </Flex>
       <Box
-        id="why"
-        backgroundColor="block"
+        id="why-wisp"
+        backgroundColor={useColorModeValue("light_neutral.100", "block")}
         padding="4px 12px"
         borderRadius="6px"
         mt="160px"
       >
-        <Text textStyle="land_light_14_175" color="neutral.0">
+        <Text
+          textStyle="land_light_14_175"
+          color={useColorModeValue("light_neutral.500", "neutral.0")}
+        >
           Why Wisp Finance
         </Text>
       </Box>
       <Text
         textStyle={{ base: "land_reg_32", md: "land_reg_40" }}
-        color="neutral.0"
+        color={contrastText}
         mt="8px"
         textAlign="center"
       >
@@ -522,12 +614,12 @@ const Home: NextPage = () => {
       </Text>
       <Text
         textStyle="land_light_14_175"
-        color="neutral.400"
+        color={dimText}
         mt="8px"
         textAlign="center"
       >
-        End-to-end private crypto payments, <br /> and
-        financial management in one single solution.
+        End-to-end private crypto payments without revealing your address <br /> and
+        financial management in a single solution.
       </Text>
       {/* <BlueButton mt="32px">Try us out for free</BlueButton> */}
       <Flex
@@ -540,21 +632,28 @@ const Home: NextPage = () => {
         gap={{ base: "24px", md: "0px" }}
       >
         <Flex
-          backgroundColor="block"
-          padding="28px"
+          backgroundColor={blocks}
+          padding="24px 16px"
           direction="column"
           alignItems="center"
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="images/why-wisp-wallet.svg" alt="Wisp wallet" width="120px" />
-          <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
+          <Image
+            src={useColorModeValue(
+              "images/why-wisp-wallet-light.svg",
+              "images/why-wisp-wallet.svg"
+            )}
+            alt="Wisp wallet"
+            width="120px"
+          />
+          <Text textStyle="land_reg_20" mt="28px" color={contrastText}>
             Payment & Transactions
           </Text>
           <Text
             textStyle="land_light_14_175"
             mt="16px"
-            color="neutral.400"
+            color={dimText}
             textAlign="center"
           >
             Paying & requesting payments have never
@@ -563,42 +662,55 @@ const Home: NextPage = () => {
           </Text>
         </Flex>
         <Flex
-          backgroundColor="block"
-          padding="28px"
+          backgroundColor={blocks}
+          padding="24px 16px"
           direction="column"
           alignItems="center"
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="images/why-wisp-liquidity.svg" alt="Wisp liquidity" width="120px" />
-          <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
+          <Image
+            src={useColorModeValue(
+              "images/why-wisp-liquidity-light.svg",
+              "images/why-wisp-liquidity.svg"
+            )}
+            alt="Wisp liquidity"
+            width="120px"
+          />
+          <Text textStyle="land_reg_20" mt="28px" color={contrastText}>
             Liquidity Pool
           </Text>
           <Text
             textStyle="land_light_14_175"
             mt="16px"
-            color="neutral.400"
+            color={dimText}
             textAlign="center"
           >
             Wisp Finance passively reinvests <br /> your money for APY gains.
           </Text>
         </Flex>
         <Flex
-          backgroundColor="block"
-          padding="28px"
+          backgroundColor={blocks}
+          padding="24px 16px"
           direction="column"
           alignItems="center"
           justify="space-between"
           borderRadius="6px"
         >
-          <Image src="images/why-wisp-docs.svg" alt="Wisp docs" width="120px" />
-          <Text textStyle="land_reg_20" mt="28px" color="neutral.0">
+          <Image
+            src={useColorModeValue(
+              "images/why-wisp-docs-light.svg",
+              "images/why-wisp-docs.svg"
+            )}
+            alt="Wisp docs"
+          />
+          <Text textStyle="land_reg_20" mt="28px" color={contrastText}>
             Compliance
           </Text>
           <Text
             textStyle="land_light_14_175"
             mt="16px"
-            color="neutral.400"
+            color={dimText}
             textAlign="center"
           >
             Wisp Finance helps you stay compliant <br />
@@ -606,7 +718,7 @@ const Home: NextPage = () => {
           </Text>
         </Flex>
       </Flex>
-      <Footer />
+      <Footer bg={blocks} />
       {menuOpen && (
         <Flex
           w="100vw"
@@ -614,7 +726,7 @@ const Home: NextPage = () => {
           position="fixed"
           top="0"
           left="0"
-          backgroundColor="landingBG"
+          backgroundColor={landingBG}
           direction="column"
           paddingX="16px"
           paddingY="24px"
@@ -624,64 +736,98 @@ const Home: NextPage = () => {
           <Flex
             width={contentWidths}
             height={58}
-            backgroundColor="block"
+            backgroundColor={blocks}
             borderRadius="6px"
             align="center"
             justify="space-between"
             py="12px"
             px="32px"
           >
-            <Image src="icons/logo-sm.svg" alt="logo" display={{ base: "block", md: "none" }} />
+            <Button onClick={toggleColorMode} background="none" variant="link">
+              <Image
+                src={useColorModeValue(
+                  "icons/icon-sun.svg",
+                  "icons/icon-moon.svg"
+                )}
+                alt="Toggle color mode"
+              />
+            </Button>
             <Text
               textStyle="app_med_18"
               display={{ base: "block", md: "none" }}
-              color="neutral.0"
+              color={contrastText}
             >
-              Menu
+              Home
             </Text>
             <Button
-              backgroundColor="neutral.800"
+              backgroundColor={useColorModeValue(
+                "light_neutral.50",
+                "neutral.800"
+              )}
               w="36px"
               h="36px"
               p="0"
               display={{ base: "block", md: "none" }}
               onClick={() => setMenuOpen(false)}
             >
-              <Image w="20px" h="20px" mx="auto" src="icons/hamburger-icon.svg" />
+              <Image
+                w="20px"
+                h="20px"
+                mx="auto"
+                src={useColorModeValue(
+                  "icons/hamburger-icon-light.svg",
+                  "icons/hamburger-icon.svg",
+                )}
+                alt="Hamburger icon"
+              />
             </Button>
           </Flex>
           <Flex direction="column" width={contentWidths} gap="12px">
             <Link
               textStyle="app_reg_14"
-              color="neutral.0"
-              backgroundColor="block"
+              color={contrastText}
+              backgroundColor={blocks}
               borderRadius="6px"
               w="100%"
               p="15px"
               href="#"
             >
               <Flex align="center">
-                <Image src="icons/home-icon.svg" mr="12px" />
+                <Image
+                  src={useColorModeValue(
+                    "icons/home-icon-light.svg",
+                    "icons/home-icon.svg",
+                  )}
+                  mr="12px"
+                  alt="Home icon"
+                />
                 Home
               </Flex>
             </Link>
             <Link
               textStyle="app_reg_14"
-              color="neutral.0"
-              backgroundColor="block"
+              color={contrastText}
+              backgroundColor={blocks}
               borderRadius="6px"
               w="100%"
               p="15px"
               href="#"
             >
               <Flex align="center">
-                <Image src="icons/settings-icon.svg" mr="12px" />
+                <Image
+                  src={useColorModeValue(
+                    "icons/settings-icon-light.svg",
+                    "icons/settings-icon.svg"
+                  )}
+                  mr="12px"
+                  alt="Settings icon"
+                />
                 How it works
               </Flex>
             </Link>
-            {/* <Link
+            <Link
               textStyle="app_reg_14"
-              color="neutral.0"
+              color={contrastText}
               backgroundColor="primary.700"
               borderRadius="6px"
               w="100%"
@@ -689,14 +835,16 @@ const Home: NextPage = () => {
               href="#"
             >
               <Flex align="center">
+                {/*<Image src="icons/rocket-icon.svg" mr="12px" />*/}
                 <Wallet
+                  ml="0px"
                   account={account}
                   connectWallet={connectWallet}
                   disconnect={disconnect}
                   isLoading={isWalletLoading}
                 />
               </Flex>
-            </Link> */}
+            </Link>
           </Flex>
         </Flex>
       )}
