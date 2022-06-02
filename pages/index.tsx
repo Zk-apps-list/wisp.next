@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import {
-  background,
   Box,
   Button,
   Flex,
@@ -10,8 +9,6 @@ import {
   useColorMode,
   useColorModeValue,
 } from "@chakra-ui/react";
-import BlueButton from "../components/BlueButton";
-import TransparentButton from "../components/TransparentButton";
 import Footer from "../components/Footer";
 import { useContext, useState } from "react";
 import Wallet from "../components/Wallet";
@@ -44,17 +41,27 @@ const Home: NextPage = () => {
 
   const landingBG = useColorModeValue( "light_neutral.50", "landingBG");
   const navigationBG = useColorModeValue("neutral.0", "block");
-  const landingPhones = useColorModeValue(
-    "images/landing-phones-light.png",
-    "images/landing-phones.png"
-  );
+  const landingPhones = useColorModeValue("images/landing-phones-light.png", "images/landing-phones.png");
   const contrastText = useColorModeValue("light_neutral.800", "neutral.0");
-  const reverseContrastText = useColorModeValue(
-    "light_neutral.800",
-    "neutral.800"
-  );
+  const reverseContrastText = useColorModeValue("light_neutral.800", "neutral.800");
+  const reverseContractTextBorder = useColorModeValue("light_neutral.200", "transparent");
   const dimText = useColorModeValue("light_neutral.600", "neutral.400",);
   const blocks = useColorModeValue("neutral.0", "block");
+  const logoMd = useColorModeValue("icons/logo-md-light.svg", "icons/logo-md.svg");
+  const logoSm = useColorModeValue("icons/logo-sm-light.svg", "icons/logo-sm.svg");
+  const lightToggle = useColorModeValue("icons/icon-sun.svg", "icons/icon-moon.svg");
+  const buttonBg = useColorModeValue("light_neutral.50", "neutral.800");
+  const hamburgerIcon = useColorModeValue("icons/hamburger-icon-light.svg", "icons/hamburger-icon.svg");
+  const howItWorksWallet = useColorModeValue("images/how-it-works-wallet-light.svg", "images/how-it-works-wallet.svg");
+  const settingsIcon = useColorModeValue("icons/settings-icon-light.svg", "icons/settings-icon.svg");
+  const homeIcon = useColorModeValue("icons/home-icon-light.svg", "icons/home-icon.svg");
+  const howItWorksRequest = useColorModeValue("images/how-it-works-request-light.svg", "images/how-it-works-request.svg");
+  const howItWorksLink = useColorModeValue("images/how-it-works-link-light.svg", "images/how-it-works-link.svg");
+  const walletIcon = useColorModeValue("images/why-wisp-wallet-light.svg", "images/why-wisp-wallet.svg");
+  const liquidityIcon = useColorModeValue("images/why-wisp-liquidity-light.svg", "images/why-wisp-liquidity.svg");
+  const docsIcon = useColorModeValue("images/why-wisp-docs-light.svg", "images/why-wisp-docs.svg");
+  const whyWispBackground = useColorModeValue("light_neutral.100", "block");
+  const whyWispText = useColorModeValue("light_neutral.500", "neutral.0");
 
   const contentWidths = {
     base: "343px",
@@ -83,20 +90,14 @@ const Home: NextPage = () => {
         px="32px"
       >
         <Image
-          src={useColorModeValue(
-            "icons/logo-md-light.svg",
-            "icons/logo-md.svg"
-          )}
+          src={logoMd}
           alt="Wisp Logo"
           display={{ base: "none", md: "block" }}
           width="70px"
           mr="55px"
         />
         <Image
-          src={useColorModeValue(
-            "icons/logo-sm-light.svg",
-            "icons/logo-sm.svg"
-          )}
+          src={logoSm}
           alt="Wisp Logo"
           display={{ base: "block", md: "none" }}
         />
@@ -145,12 +146,7 @@ const Home: NextPage = () => {
             background="none"
             variant="link"
           >
-            <Image
-              src={useColorModeValue(
-                "icons/icon-sun.svg",
-                "icons/icon-moon.svg"
-              )}
-            />
+            <Image src={lightToggle} alt="Light toogle"/>
           </Button>
           <Wallet
             account={account}
@@ -160,7 +156,7 @@ const Home: NextPage = () => {
           />
         </Flex>
         <Button
-          backgroundColor={useColorModeValue("light_neutral.50", "neutral.800")}
+          backgroundColor={buttonBg}
           w="36px"
           h="36px"
           p="0"
@@ -171,10 +167,7 @@ const Home: NextPage = () => {
             w="20px"
             h="20px"
             mx="auto"
-            src={useColorModeValue(
-              "icons/hamburger-icon-light.svg",
-              "icons/hamburger-icon.svg"
-            )}
+            src={hamburgerIcon}
             alt="Hamburger menu"
           />
         </Button>
@@ -275,10 +268,7 @@ const Home: NextPage = () => {
                   transform="translateX(-50%)"
                   color={reverseContrastText}
                   borderWidth="1px"
-                  borderColor={useColorModeValue(
-                    "light_neutral.200",
-                    "transparent"
-                  )}
+                  borderColor={reverseContractTextBorder}
                 >
                   1
                 </Box>
@@ -328,10 +318,7 @@ const Home: NextPage = () => {
             </Link>
           </Flex>
           <Image
-            src={useColorModeValue(
-              "images/how-it-works-wallet-light.svg",
-              "images/how-it-works-wallet.svg"
-            )}
+            src={howItWorksWallet}
             alt="how it works wallet"
             w={{ base: "350px", md: "unset" }}
           />
@@ -368,10 +355,7 @@ const Home: NextPage = () => {
                   transform="translateX(-50%)"
                   color={reverseContrastText}
                   borderWidth="1px"
-                  borderColor={useColorModeValue(
-                    "light_neutral.200",
-                    "transparent"
-                  )}
+                  borderColor={reverseContractTextBorder}
                 >
                   2
                 </Box>
@@ -423,10 +407,7 @@ const Home: NextPage = () => {
             </Link>
           </Flex>
           <Image
-            src={useColorModeValue(
-              "images/how-it-works-request-light.svg",
-              "images/how-it-works-request.svg"
-            )}
+            src={howItWorksRequest}
             alt="how it works request"
             w={{ base: "350px", md: "unset" }}
           />
@@ -463,10 +444,7 @@ const Home: NextPage = () => {
                   transform="translateX(-50%)"
                   color={reverseContrastText}
                   borderWidth="1px"
-                  borderColor={useColorModeValue(
-                    "light_neutral.200",
-                    "transparent"
-                  )}
+                  borderColor={reverseContractTextBorder}
                 >
                   3
                 </Box>
@@ -517,10 +495,7 @@ const Home: NextPage = () => {
             </Link>
           </Flex>
           <Image
-            src={useColorModeValue(
-              "images/how-it-works-link-light.svg",
-              "images/how-it-works-link.svg"
-            )}
+            src={howItWorksLink}
             alt="how it works link"
             w={{ base: "350px", md: "unset" }}
           />
@@ -552,7 +527,7 @@ const Home: NextPage = () => {
             transform="translateX(-50%)"
             color={reverseContrastText}
             borderWidth="1px"
-            borderColor={useColorModeValue("light_neutral.200", "transparent")}
+            borderColor={reverseContractTextBorder}
           >
             1
           </Box>
@@ -568,7 +543,7 @@ const Home: NextPage = () => {
             transform="translateX(-50%)"
             color={reverseContrastText}
             borderWidth="1px"
-            borderColor={useColorModeValue("light_neutral.200", "transparent")}
+            borderColor={reverseContractTextBorder}
           >
             2
           </Box>
@@ -584,7 +559,7 @@ const Home: NextPage = () => {
             transform="translateX(-50%)"
             color={reverseContrastText}
             borderWidth="1px"
-            borderColor={useColorModeValue("light_neutral.200", "transparent")}
+            borderColor={reverseContractTextBorder}
           >
             3
           </Box>
@@ -592,14 +567,14 @@ const Home: NextPage = () => {
       </Flex>
       <Box
         id="why-wisp"
-        backgroundColor={useColorModeValue("light_neutral.100", "block")}
+        backgroundColor={whyWispBackground}
         padding="4px 12px"
         borderRadius="6px"
         mt="160px"
       >
         <Text
           textStyle="land_light_14_175"
-          color={useColorModeValue("light_neutral.500", "neutral.0")}
+          color={whyWispText}
         >
           Why Wisp Finance
         </Text>
@@ -640,10 +615,7 @@ const Home: NextPage = () => {
           borderRadius="6px"
         >
           <Image
-            src={useColorModeValue(
-              "images/why-wisp-wallet-light.svg",
-              "images/why-wisp-wallet.svg"
-            )}
+            src={walletIcon}
             alt="Wisp wallet"
             width="120px"
           />
@@ -670,10 +642,7 @@ const Home: NextPage = () => {
           borderRadius="6px"
         >
           <Image
-            src={useColorModeValue(
-              "images/why-wisp-liquidity-light.svg",
-              "images/why-wisp-liquidity.svg"
-            )}
+            src={liquidityIcon}
             alt="Wisp liquidity"
             width="120px"
           />
@@ -698,10 +667,7 @@ const Home: NextPage = () => {
           borderRadius="6px"
         >
           <Image
-            src={useColorModeValue(
-              "images/why-wisp-docs-light.svg",
-              "images/why-wisp-docs.svg"
-            )}
+            src={docsIcon}
             alt="Wisp docs"
           />
           <Text textStyle="land_reg_20" mt="28px" color={contrastText}>
@@ -745,10 +711,7 @@ const Home: NextPage = () => {
           >
             <Button onClick={toggleColorMode} background="none" variant="link">
               <Image
-                src={useColorModeValue(
-                  "icons/icon-sun.svg",
-                  "icons/icon-moon.svg"
-                )}
+                src={lightToggle}
                 alt="Toggle color mode"
               />
             </Button>
@@ -760,10 +723,7 @@ const Home: NextPage = () => {
               Home
             </Text>
             <Button
-              backgroundColor={useColorModeValue(
-                "light_neutral.50",
-                "neutral.800"
-              )}
+              backgroundColor={buttonBg}
               w="36px"
               h="36px"
               p="0"
@@ -774,10 +734,7 @@ const Home: NextPage = () => {
                 w="20px"
                 h="20px"
                 mx="auto"
-                src={useColorModeValue(
-                  "icons/hamburger-icon-light.svg",
-                  "icons/hamburger-icon.svg",
-                )}
+                src={hamburgerIcon}
                 alt="Hamburger icon"
               />
             </Button>
@@ -794,10 +751,7 @@ const Home: NextPage = () => {
             >
               <Flex align="center">
                 <Image
-                  src={useColorModeValue(
-                    "icons/home-icon-light.svg",
-                    "icons/home-icon.svg",
-                  )}
+                  src={homeIcon}
                   mr="12px"
                   alt="Home icon"
                 />
@@ -815,10 +769,7 @@ const Home: NextPage = () => {
             >
               <Flex align="center">
                 <Image
-                  src={useColorModeValue(
-                    "icons/settings-icon-light.svg",
-                    "icons/settings-icon.svg"
-                  )}
+                  src={settingsIcon}
                   mr="12px"
                   alt="Settings icon"
                 />
