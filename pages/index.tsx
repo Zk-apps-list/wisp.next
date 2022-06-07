@@ -150,12 +150,12 @@ const Home: NextPage = () => {
           >
             <Image src={lightToggle} alt="Light toogle"/>
           </Button>
-          <Wallet
+          {/* <Wallet
             account={account}
             connectWallet={connectWallet}
             disconnect={disconnect}
             isLoading={isWalletLoading}
-          />
+          /> */}
         </Flex>
         <Button
           backgroundColor={buttonBg}
@@ -791,13 +791,13 @@ const Home: NextPage = () => {
             >
               <Flex align="center">
                 {/*<Image src="icons/rocket-icon.svg" mr="12px" />*/}
-                <Wallet
+                {/* <Wallet
                   ml="0px"
                   account={account}
                   connectWallet={connectWallet}
                   disconnect={disconnect}
                   isLoading={isWalletLoading}
-                />
+                /> */}
               </Flex>
             </Link>
           </Flex>
