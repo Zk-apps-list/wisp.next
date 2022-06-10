@@ -207,7 +207,7 @@ const appTheme = extendTheme({
     xl: "1200px",
     xxl: "1400px",
   },
-  initialColorMode: "light",
+  initialColorMode: "dark",
   useSystemColorMode: false,
 });
 export default appTheme;
