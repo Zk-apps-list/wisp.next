@@ -789,7 +789,7 @@ const Home: NextPage = () => {
                 How it works
               </Flex>
             </Link>
-            <Link
+            {/* <Link
               textStyle="app_reg_14"
               color={contrastText}
               backgroundColor="primary.700"
@@ -799,16 +799,16 @@ const Home: NextPage = () => {
               href="#"
             >
               <Flex align="center">
-                {/*<Image src="icons/rocket-icon.svg" mr="12px" />*/}
-                {/* <Wallet
+                <Image src="icons/rocket-icon.svg" mr="12px" />
+                <Wallet
                   ml="0px"
                   account={account}
                   connectWallet={connectWallet}
                   disconnect={disconnect}
                   isLoading={isWalletLoading}
-                /> */}
+                />
               </Flex>
-            </Link>
+            </Link> */}
           </Flex>
         </Flex>
       )}
