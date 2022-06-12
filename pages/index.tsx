@@ -13,6 +13,7 @@ import Footer from "../components/Footer";
 import { useContext, useState } from "react";
 import Wallet from "../components/Wallet";
 import { AuthContext } from "../contexts/AuthContext";
+import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
 import { providerOptions } from "../services/WalletConnect";
 import Web3Modal from "web3modal";
@@ -38,11 +39,14 @@ const Home: NextPage = () => {
     useContext(AuthContext);
   const { colorMode, toggleColorMode } = useColorMode();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [menu, setMenu] = useState('HOME');
 
   const landingBG = useColorModeValue( "light_neutral.50", "landingBG");
   const navigationBG = useColorModeValue("neutral.0", "block");
   const landingPhones = useColorModeValue("images/landing-phones-light.png", "images/landing-phones.png");
   const contrastText = useColorModeValue("light_neutral.800", "neutral.0");
+  const menuText = useColorModeValue("light_neutral.800", "neutral.0");
+  const selectedMenuText = useColorModeValue("light_neutral.800", "neutral.500");
   const reverseContrastText = useColorModeValue("light_neutral.800", "neutral.800");
   const reverseContractTextBorder = useColorModeValue("light_neutral.200", "transparent");
   const dimText = useColorModeValue("light_neutral.600", "neutral.400",);
@@ -114,31 +118,34 @@ const Home: NextPage = () => {
           <Link
             href="#"
             textStyle="land_reg_14"
-            color={contrastText}
+            color={menu === "HOME" ? menuText : selectedMenuText}
             mr="24px"
             _hover={{ textDecoration: "none" }}
+            onClick={() => setMenu('HOME')}
           >
             Home
           </Link>
           <Link
             href="#how-it-works"
             textStyle="land_reg_14"
-            color={contrastText}
+            color={menu === "HOW_IT_WORKS" ? menuText : selectedMenuText}
             mr="24px"
             textDecoration="none"
             _hover={{ textDecoration: "none" }}
             display="inline-block"
+            onClick={() => setMenu('HOW_IT_WORKS')}
           >
             How it works
           </Link>
           <Link
             href="#why-wisp"
             textStyle="land_reg_14"
-            color={contrastText}
+            color={menu === "WHY_WISP" ? menuText : selectedMenuText}
             mr="24px"
             textDecoration="none"
             _hover={{ textDecoration: "none" }}
             display="inline-block"
+            onClick={() => setMenu('WHY_WISP')}
           >
             Why Wisp
           </Link>
@@ -174,7 +181,7 @@ const Home: NextPage = () => {
           />
         </Button>
       </Flex>
-      <Flex mt="88px">
+      <Flex mt="138px">
         <Text
           maxWidth="800px"
           mx="24px"
@@ -182,9 +189,9 @@ const Home: NextPage = () => {
           textAlign="center"
           color={contrastText}
         >
-            Turn your public wallet<br />into a {" "}
+            Turn your <Box as="span" fontWeight="medium">public wallet</Box><br />into {" "}
           <Box as="span" fontWeight="medium">
-            private bank.
+            a private bank.
           </Box>
         </Text>
       </Flex>
@@ -387,8 +394,8 @@ const Home: NextPage = () => {
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
-              Choose cryptocurency, and enter amount you want <br />
-              to get the link to request payment
+              Choose cryptocurency, and enter amount <br />
+              you want to get the link to request payment
             </Text>
             <Link
               href="#"
@@ -605,9 +612,9 @@ const Home: NextPage = () => {
         mb="154px"
         width={contentWidths}
         justifyContent="space-between"
-        direction={{ base: "column", md: "row" }}
+        direction={{ base: "column", lg: "row" }}
         maxW={contentWidths}
-        gap={{ base: "24px", md: "0px" }}
+        gap={{ base: "24px", lg: "0px" }}
       >
         <Flex
           backgroundColor={blocks}
@@ -616,6 +623,7 @@ const Home: NextPage = () => {
           alignItems="center"
           justify="space-between"
           borderRadius="6px"
+          minWidth="330px"
         >
           <Image
             src={walletIcon}
@@ -631,9 +639,9 @@ const Home: NextPage = () => {
             color={dimText}
             textAlign="center"
           >
-            Paying & requesting payments have never
-            <br />been easier. Wisp Finance keeps
-            <br />a record of all your transactions.
+            Paying & requesting payments have 
+            <br />never been easier. Wisp Finance 
+            <br />keeps a record of all your transactions.
           </Text>
         </Flex>
         <Flex
@@ -643,6 +651,7 @@ const Home: NextPage = () => {
           alignItems="center"
           justify="space-between"
           borderRadius="6px"
+          minWidth="330px"
         >
           <Image
             src={liquidityIcon}
@@ -668,6 +677,7 @@ const Home: NextPage = () => {
           alignItems="center"
           justify="space-between"
           borderRadius="6px"
+          minWidth="330px"
         >
           <Image
             src={docsIcon}
