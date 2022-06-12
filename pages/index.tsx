@@ -13,7 +13,6 @@ import Footer from "../components/Footer";
 import { useContext, useState } from "react";
 import Wallet from "../components/Wallet";
 import { AuthContext } from "../contexts/AuthContext";
-import { Link as ScrollLink, animateScroll as scroll } from "react-scroll";
 
 import { providerOptions } from "../services/WalletConnect";
 import Web3Modal from "web3modal";
