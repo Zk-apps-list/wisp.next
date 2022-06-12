@@ -4,29 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab35a535-8f8e-454d-b670-27f801257895" name="Changes" comment="Responsiveness finished">
-      <change afterPath="$PROJECT_DIR$/public/icons/hamburger-icon-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/icons/home-icon-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/icons/icon-moon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/icons/icon-sun.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/icons/logo-md-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/icons/logo-sm-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/icons/rocket-icon-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/icons/settings-icon-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/how-it-works-link-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/how-it-works-request-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/how-it-works-wallet-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/landing-phones-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/landing-phones.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/why-wisp-docs-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/why-wisp-liquidity-light.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/public/images/why-wisp-wallet-light.svg" afterDir="false" />
+    <list default="true" id="ab35a535-8f8e-454d-b670-27f801257895" name="Changes" comment="Added light theme for landing">
+      <change afterPath="$PROJECT_DIR$/public/icons/chevron_down_light.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/icons/dashboard-default-light.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/icons/transactions-default-light.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Footer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Footer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/TransparentButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/TransparentButton.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Wallet.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Wallet.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/images/landing-phones.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/LeftPanel.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/LeftPanel.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/RequestOneTimeModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/RequestOneTimeModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/overview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/overview.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/request.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/request.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/transactions.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/transactions.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/icons/logo-md-light.svg" beforeDir="false" afterPath="$PROJECT_DIR$/public/icons/logo-md-light.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/styles/theme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/styles/theme.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -100,6 +89,8 @@
       <updated>1653659820166</updated>
       <workItem from="1653659823052" duration="12628000" />
       <workItem from="1654097629743" duration="5571000" />
+      <workItem from="1654486579217" duration="9000" />
+      <workItem from="1654859847404" duration="9173000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed broken images">
       <created>1653661593795</created>
