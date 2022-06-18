@@ -156,12 +156,12 @@ const Home: NextPage = () => {
           >
             <Image src={lightToggle} alt="Light toogle"/>
           </Button>
-          {/* <Wallet
+          <Wallet
             account={account}
             connectWallet={connectWallet}
             disconnect={disconnect}
             isLoading={isWalletLoading}
-          /> */}
+          />
         </Flex>
         <Button
           backgroundColor={buttonBg}
@@ -789,7 +789,7 @@ const Home: NextPage = () => {
                 How it works
               </Flex>
             </Link>
-            {/* <Link
+            <Link
               textStyle="app_reg_14"
               color={contrastText}
               backgroundColor="primary.700"
@@ -808,7 +808,7 @@ const Home: NextPage = () => {
                   isLoading={isWalletLoading}
                 />
               </Flex>
-            </Link> */}
+            </Link>
           </Flex>
         </Flex>
       )}
