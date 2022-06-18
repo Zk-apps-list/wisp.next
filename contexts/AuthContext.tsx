@@ -6,13 +6,15 @@ export const AuthContext = createContext({
   account: "",
   connectWallet: async () => {},
   disconnect: async () => {},
-  isWalletLoading: false
+  isWalletLoading: false,
+  signature: ""
 });
 
 export const AuthContextProvider = (props: any) => {
   const { children } = props;
 
   const [account, setAccount] = useState<string>("");
+  const [signature, setSignature] = useState<string>("");
   const [provider, setProvider] = useState<any>(undefined);
   const [error, setError] = useState("");
   const [isWalletLoading, setIsWalletLoading] = useState(false);
@@ -23,6 +25,8 @@ export const AuthContextProvider = (props: any) => {
       const provider = await web3Modal.connect();
       const library = new ethers.providers.Web3Provider(provider);
       const accounts = await library.listAccounts();
+      const signature = await library.getSigner().signMessage("some message");
+      setSignature(signature);
       setProvider(provider);
       if (accounts) setAccount(accounts[0]);
     } catch (error: any) {
@@ -40,12 +44,6 @@ export const AuthContextProvider = (props: any) => {
     await web3Modal.clearCachedProvider();
     refreshState();
   };
-
-  useEffect(() => {
-    if (web3Modal?.cachedProvider) {
-      connectWallet();
-    }
-  }, [web3Modal]);
 
   useEffect(() => {
     if (provider?.on) {
@@ -83,7 +81,8 @@ export const AuthContextProvider = (props: any) => {
         account,
         connectWallet,
         disconnect,
-        isWalletLoading
+        isWalletLoading,
+        signature
       }}>
       {children}
     </AuthContext.Provider>
