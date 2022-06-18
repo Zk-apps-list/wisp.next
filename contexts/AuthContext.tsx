@@ -46,12 +46,6 @@ export const AuthContextProvider = (props: any) => {
   };
 
   useEffect(() => {
-    if (web3Modal?.cachedProvider) {
-      connectWallet();
-    }
-  }, [web3Modal]);
-
-  useEffect(() => {
     if (provider?.on) {
       const handleAccountsChanged = (accounts: string[]) => {
         console.log("accountsChanged", accounts);
