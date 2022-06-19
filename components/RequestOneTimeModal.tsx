@@ -19,12 +19,13 @@ import {
   Tooltip,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { Token, tokens } from "../util/tokens";
 
 const RequestOneTimeModal = (props: any) => {
   const { isOpen, onClose } = props;
 
   const [value, setValue] = useState<number | undefined>(undefined);
-  const [selectedToken, setSelectedToken] = useState<string | undefined>(
+  const [selectedToken, setSelectedToken] = useState<Token | undefined>(
     undefined
   );
   const [generatedLink, setGeneratedLink] = useState<string | undefined>(
@@ -51,58 +52,22 @@ const RequestOneTimeModal = (props: any) => {
 
   const handleValueChange = (event: any) => setValue(event.target.value);
 
-  const token = (symbol: string) => {
-    switch (symbol) {
-      case "ETH":
-        return (
-          <Box flexDirection="row" display="flex">
-            <Box>
-              <Image
-                src="icons/eth_logo.svg"
-                alt="Ethereum Logo"
-                width="24px"
-                height="24px"
-              />
-            </Box>
-            <Text color={textColor} textStyle="app_reg_14" ml="8px" mt="2px">
-              Ethereum (ETH)
-            </Text>
-          </Box>
-        );
-      case "USDC":
-        return (
-          <Box flexDirection="row" display="flex">
-            <Box>
-              <Image
-                src="icons/usdc_logo.svg"
-                alt="USDC Logo"
-                width="24px"
-                height="24px"
-              />
-            </Box>
-            <Text color={textColor} textStyle="app_reg_14" ml="8px" mt="2px">
-              USDC Coin (USDC)
-            </Text>
-          </Box>
-        );
-      case "UNI":
-      default:
-        return (
-          <Box flexDirection="row" display="flex">
-            <Box>
-              <Image
-                src="icons/uniswap_logo.svg"
-                alt="Uniswap Logo"
-                width="24px"
-                height="24px"
-              />
-            </Box>
-            <Text color={textColor} textStyle="app_reg_14" ml="8px" mt="2px">
-              Uniswap (UNI)
-            </Text>
-          </Box>
-        );
-    }
+  const token = (token: Token) => {
+    return (
+      <Box flexDirection="row" display="flex">
+        <Box>
+          <Image
+            src={`icons/${token.symbol.toLowerCase()}_logo.svg`}
+            alt={`${token.name} Logo`}
+            width="24px"
+            height="24px"
+          />
+        </Box>
+        <Text color={textColor} textStyle="app_reg_14" ml="8px" mt="2px">
+          {token.name + ` (${token.symbol})`}
+        </Text>
+      </Box>
+    );
   };
 
   return (
@@ -145,27 +110,20 @@ const RequestOneTimeModal = (props: any) => {
               {!!selectedToken ? token(selectedToken) : "Select Token"}
             </MenuButton>
             <MenuList backgroundColor={inputColor} borderWidth="0px">
-              <MenuItem
-                _hover={{ bg: inputHover }}
-                _focus={{ bg: "neutral_800" }}
-                onClick={() => setSelectedToken("ETH")}
-              >
-                {token("ETH")}
-              </MenuItem>
-              <MenuItem
-                _hover={{ bg: inputHover }}
-                _focus={{ bg: "neutral_800" }}
-                onClick={() => setSelectedToken("USDC")}
-              >
-                {token("USDC")}
-              </MenuItem>
-              <MenuItem
-                _hover={{ bg: inputHover }}
-                _focus={{ bg: "neutral_800" }}
-                onClick={() => setSelectedToken("UNI")}
-              >
-                {token("UNI")}
-              </MenuItem>
+              {
+                tokens.map(it => {
+                  return (
+                    <MenuItem
+                      key={it.address}
+                      _hover={{ bg: inputHover }}
+                      _focus={{ bg: "neutral_800" }}
+                      onClick={() => setSelectedToken(it)}
+                    >
+                      { token(it) }
+                    </MenuItem>
+                  );
+                })
+              }
             </MenuList>
           </Menu>
 
