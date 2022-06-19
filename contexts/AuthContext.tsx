@@ -1,20 +1,34 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { ethers } from "ethers";
 import { web3Modal } from '../pages';
+import { Keypair } from "../util/keypair";
 
-export const AuthContext = createContext({
+type AuthContextType = {
+  account: string,
+  connectWallet: () => {},
+  disconnect: () => {},
+  isWalletLoading: boolean,
+  personalKeypair: Keypair | undefined,
+  sharedKeypair: Keypair | undefined
+}
+
+export const AuthContext = createContext<AuthContextType>({
   account: "",
-  connectWallet: async () => {},
-  disconnect: async () => {},
+  connectWallet: async () => {
+  },
+  disconnect: async () => {
+  },
   isWalletLoading: false,
-  signature: ""
+  personalKeypair: undefined,
+  sharedKeypair: undefined
 });
 
 export const AuthContextProvider = (props: any) => {
   const { children } = props;
 
   const [account, setAccount] = useState<string>("");
-  const [signature, setSignature] = useState<string>("");
+  const [personalKeypair, setPersonalKeypair] = useState<Keypair | undefined>();
+  const [sharedKeypair, setSharedKeypair] = useState<Keypair | undefined>();
   const [provider, setProvider] = useState<any>(undefined);
   const [error, setError] = useState("");
   const [isWalletLoading, setIsWalletLoading] = useState(false);
@@ -26,7 +40,8 @@ export const AuthContextProvider = (props: any) => {
       const library = new ethers.providers.Web3Provider(provider);
       const accounts = await library.listAccounts();
       const signature = await library.getSigner().signMessage("some message");
-      setSignature(signature);
+      setPersonalKeypair(new Keypair(ethers.utils.id(signature + "0")));
+      setSharedKeypair(new Keypair(ethers.utils.id(signature + "1")));
       setProvider(provider);
       if (accounts) setAccount(accounts[0]);
     } catch (error: any) {
@@ -82,7 +97,8 @@ export const AuthContextProvider = (props: any) => {
         connectWallet,
         disconnect,
         isWalletLoading,
-        signature
+        personalKeypair,
+        sharedKeypair
       }}>
       {children}
     </AuthContext.Provider>
