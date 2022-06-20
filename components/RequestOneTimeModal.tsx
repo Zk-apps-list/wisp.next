@@ -17,9 +17,9 @@ import {
   MenuItem,
   Input,
   Tooltip,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { Token, tokens } from "../util/tokens";
+import { useColor } from "../hooks/useColor";
 
 const RequestOneTimeModal = (props: any) => {
   const { isOpen, onClose } = props;
@@ -33,14 +33,7 @@ const RequestOneTimeModal = (props: any) => {
   );
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
-  const blockColor = useColorModeValue("light_neutral.100", "block");
-  const textColor = useColorModeValue("light_neutral.800", "light_neutral.0");
-  const inputColor = useColorModeValue("light_neutral.0", "neutral.800");
-  const inputHover = useColorModeValue("light_neutral.50", "neutral.700");
-  const chevronIcon = useColorModeValue(
-    "icons/chevron_down_light.svg",
-    "icons/chevron_down.svg"
-  );
+  const { blockColor, textColor, inputColor, inputHover, chevronIcon } = useColor();
 
   const reset = () => {
     setValue(undefined);

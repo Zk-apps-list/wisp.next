@@ -1,8 +1,6 @@
 import {
   Box,
-  Button,
   Image,
-  Link,
   Table,
   TableContainer,
   Tbody,
@@ -11,16 +9,16 @@ import {
   Th,
   Thead,
   Tr,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { truncateWallet } from "../util/truncateWallet";
 import Header from "../components/Header";
 import LeftPanel from "../components/LeftPanel";
+import { useColor } from "../hooks/useColor";
 
 const TransactionRow = (props: any) => {
   const { token, transactionId, status, amount, value, date } = props;
-  const textColor = useColorModeValue("light_neutral.800", "white");
+  const { textColor } = useColor();
 
   const tokenToLogo = () => {
     switch (token) {
@@ -88,16 +86,8 @@ const TransactionRow = (props: any) => {
 };
 
 const Transactions = () => {
-  const transactionsBG = useColorModeValue(
-    "light_neutral.50",
-    "background.start"
-  );
-  const blockColor = useColorModeValue("light_neutral.0", "block");
-  const textColor = useColorModeValue("light_neutral.800", "white");
-  const borderColor = useColorModeValue(
-    "light_neutral.200",
-    "light_neutral.800"
-  );
+  const { transactionsBG, blockColor, borderColor } = useColor();
+
   return (
     <Box backgroundColor={transactionsBG} height="100%" minHeight="100vh">
       <Box display="flex" flexDirection="row">

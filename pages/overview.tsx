@@ -11,8 +11,6 @@ import {
   Th,
   Thead,
   Tr,
-  useColorMode,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { truncateWallet } from "../util/truncateWallet";
@@ -30,6 +28,7 @@ import {
   LineElement,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { useColor } from "../hooks/useColor";
 
 ChartJS.register(
   CategoryScale,
@@ -102,7 +101,8 @@ const data = {
 
 const TransactionRow = (props: any) => {
   const { token, transactionId, status, amount, value, date } = props;
-  const textColor = useColorModeValue("light_neutral.800", "white");
+
+  const { textColor } = useColor();
 
   const tokenToLogo = () => {
     switch (token) {
@@ -172,14 +172,7 @@ const TransactionRow = (props: any) => {
 const Overview = () => {
   const router = useRouter();
 
-  const { colorMode, toggleColorMode } = useColorMode();
-  const overviewBG = useColorModeValue("light_neutral.50", "background.start");
-  const textColor = useColorModeValue("light_neutral.800", "white");
-  const borderColor = useColorModeValue(
-    "light_neutral.200",
-    "light_neutral.800"
-  );
-  const blockColor = useColorModeValue("light_neutral.0", "block");
+  const { overviewBG, textColor, borderColor, blockColor } = useColor();
 
   return (
     <Box backgroundColor={overviewBG} height="100%" minHeight="100vh">
@@ -282,7 +275,7 @@ const Overview = () => {
               <Box flexDirection="row" display="flex" ml="36px" mt="2px">
                 <Box>
                   <Image
-                    src="icons/uniswap_logo.svg"
+                    src="icons/uni_logo.svg"
                     alt="UniSwap Logo"
                     width="36px"
                     height="36px"
