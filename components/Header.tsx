@@ -4,11 +4,11 @@ import {
   Box,
   Image,
   Text,
-  useColorMode,
-  useColorModeValue,
+  useColorMode
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import RequestOneTimeModal from "./RequestOneTimeModal";
+import { useColor } from "../hooks/useColor";
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -16,17 +16,7 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const pathname = router.pathname;
-  const textColor = useColorModeValue("light_neutral.800", "white");
-  const blockColor = useColorModeValue("light_neutral.0", "block");
-  const addressHoverBG = useColorModeValue("light_neutral.100", "neutral.800");
-  const chevronIcon = useColorModeValue(
-    "icons/chevron_down_light.svg",
-    "icons/chevron_down.svg"
-  );
-  const lightToggle = useColorModeValue(
-    "icons/icon-sun.svg",
-    "icons/icon-moon.svg"
-  );
+  const { textColor, blockColor, addressHoverBG, chevronIcon, lightToggle} = useColor();
 
   const title = () => {
     switch (pathname) {

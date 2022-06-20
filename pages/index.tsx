@@ -7,7 +7,6 @@ import {
   Link,
   Text,
   useColorMode,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import Footer from "../components/Footer";
 import { useContext, useState } from "react";
@@ -16,6 +15,7 @@ import { AuthContext } from "../contexts/AuthContext";
 
 import { providerOptions } from "../services/WalletConnect";
 import Web3Modal from "web3modal";
+import { useColor } from "../hooks/useColor";
 
 export let web3Modal: any;
 if (typeof window !== "undefined") {
@@ -40,31 +40,33 @@ const Home: NextPage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [menu, setMenu] = useState('HOME');
 
-  const landingBG = useColorModeValue( "light_neutral.50", "landingBG");
-  const navigationBG = useColorModeValue("neutral.0", "block");
-  const landingPhones = useColorModeValue("images/landing-phones-light.png", "images/landing-phones.png");
-  const contrastText = useColorModeValue("light_neutral.800", "neutral.0");
-  const menuText = useColorModeValue("light_neutral.800", "neutral.0");
-  const selectedMenuText = useColorModeValue("light_neutral.800", "neutral.500");
-  const reverseContrastText = useColorModeValue("light_neutral.800", "neutral.800");
-  const reverseContractTextBorder = useColorModeValue("light_neutral.200", "transparent");
-  const dimText = useColorModeValue("light_neutral.600", "neutral.400",);
-  const blocks = useColorModeValue("neutral.0", "block");
-  const logoMd = useColorModeValue("icons/logo-md-light.svg", "icons/logo-md.svg");
-  const logoSm = useColorModeValue("icons/logo-sm-light.svg", "icons/logo-sm.svg");
-  const lightToggle = useColorModeValue("icons/icon-sun.svg", "icons/icon-moon.svg");
-  const buttonBg = useColorModeValue("light_neutral.50", "neutral.800");
-  const hamburgerIcon = useColorModeValue("icons/hamburger-icon-light.svg", "icons/hamburger-icon.svg");
-  const howItWorksWallet = useColorModeValue("images/how-it-works-wallet-light.svg", "images/how-it-works-wallet.svg");
-  const settingsIcon = useColorModeValue("icons/settings-icon-light.svg", "icons/settings-icon.svg");
-  const homeIcon = useColorModeValue("icons/home-icon-light.svg", "icons/home-icon.svg");
-  const howItWorksRequest = useColorModeValue("images/how-it-works-request-light.svg", "images/how-it-works-request.svg");
-  const howItWorksLink = useColorModeValue("images/how-it-works-link-light.svg", "images/how-it-works-link.svg");
-  const walletIcon = useColorModeValue("images/why-wisp-wallet-light.svg", "images/why-wisp-wallet.svg");
-  const liquidityIcon = useColorModeValue("images/why-wisp-liquidity-light.svg", "images/why-wisp-liquidity.svg");
-  const docsIcon = useColorModeValue("images/why-wisp-docs-light.svg", "images/why-wisp-docs.svg");
-  const whyWispBackground = useColorModeValue("light_neutral.100", "block");
-  const whyWispText = useColorModeValue("light_neutral.500", "neutral.0");
+  const {
+    landingBG,
+    navigationBG,
+    landingPhones,
+    contrastText,
+    menuText,
+    selectedMenuText,
+    reverseContrastText,
+    reverseContractTextBorder,
+    dimText,
+    blocks,
+    logoMd,
+    logoSm,
+    lightToggle,
+    buttonBg,
+    hamburgerIcon,
+    howItWorksWallet,
+    settingsIcon,
+    homeIcon,
+    howItWorksRequest,
+    howItWorksLink,
+    walletIcon,
+    liquidityIcon,
+    docsIcon,
+    whyWispBackground,
+    whyWispText,
+  } = useColor();
 
   const contentWidths = {
     base: "343px",

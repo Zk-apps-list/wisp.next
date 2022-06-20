@@ -1,15 +1,13 @@
-import { Box, Button, Image, Link, useColorModeValue } from "@chakra-ui/react";
+import { Box, Button, Image, Link } from "@chakra-ui/react";
 import React from "react";
 import { useRouter } from "next/router";
+import { useColor } from "../hooks/useColor";
 
 const LeftPanel = () => {
   const router = useRouter();
   const pathname = router.pathname;
-  const logo = useColorModeValue(
-    "icons/logo-sm-light.svg",
-    "icons/logo-sm.svg"
-  );
-  const blockColor = useColorModeValue("light_neutral.0", "block");
+
+  const { logoMd, blockColor } = useColor();
 
   return (
     <Box
@@ -23,7 +21,7 @@ const LeftPanel = () => {
       <Link onClick={() => router.push(`/`)}>
         <Box textAlign="center" m="12px" p="8px">
           <Image
-            src={logo}
+            src={logoMd}
             alt="Wisp Logo"
             width="30px"
             height="30px"
