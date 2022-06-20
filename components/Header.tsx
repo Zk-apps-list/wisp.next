@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Box,
@@ -9,9 +9,13 @@ import {
 import { useRouter } from "next/router";
 import RequestOneTimeModal from "./RequestOneTimeModal";
 import { useColor } from "../hooks/useColor";
+import Wallet from "./Wallet";
+import { AuthContext } from "../contexts/AuthContext";
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const { account, connectWallet, disconnect, isWalletLoading } =
+    useContext(AuthContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -66,7 +70,8 @@ const Header = () => {
             </Text>
           </Box>
         </Box>
-        <Box
+        {/* TODO: Add correct component */}
+        {/* <Box
           as={Button}
           color={textColor}
           px="16px"
@@ -86,7 +91,13 @@ const Header = () => {
           textStyle="app_reg_14"
         >
           0xa0223x...49fv859
-        </Box>
+        </Box> */}
+        <Wallet
+          account={account}
+          connectWallet={connectWallet}
+          disconnect={disconnect}
+          isLoading={isWalletLoading}
+        />
       </Box>
       <Button
         ml="16px"
