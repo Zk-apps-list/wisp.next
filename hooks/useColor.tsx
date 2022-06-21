@@ -10,7 +10,6 @@ export const useColor = () => {
   const requestBG = useColorModeValue("light_neutral.100", "background.end");
   const landingBG = useColorModeValue( "light_neutral.50", "landingBG");
   const navigationBG = useColorModeValue("neutral.0", "block");
-  const landingPhones = useColorModeValue("images/landing-phones-light.png", "images/landing-phones.png");
   const contrastText = useColorModeValue("light_neutral.800", "neutral.0");
   const menuText = useColorModeValue("light_neutral.800", "neutral.0");
   const selectedMenuText = useColorModeValue("light_neutral.800", "neutral.500");
@@ -33,6 +32,7 @@ export const useColor = () => {
   /*
    * Images
   */
+  const landingPhones = useColorModeValue("/images/landing-phones-light.png", "/images/landing-phones.png");
   const logoMd = useColorModeValue("/icons/logo-md-light.svg", "/icons/logo-md.svg");
   const logoSm = useColorModeValue("/icons/logo-sm-light.svg", "/icons/logo-sm.svg");
   const lightToggle = useColorModeValue("/icons/icon-sun.svg", "/icons/icon-moon.svg");

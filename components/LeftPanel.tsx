@@ -7,7 +7,7 @@ const LeftPanel = () => {
   const router = useRouter();
   const pathname = router.pathname;
 
-  const { logoMd, blockColor } = useColor();
+  const { logoSm, blockColor } = useColor();
 
   return (
     <Box
@@ -21,7 +21,7 @@ const LeftPanel = () => {
       <Link onClick={() => router.push(`/`)}>
         <Box textAlign="center" m="12px" p="8px">
           <Image
-            src={logoMd}
+            src={logoSm}
             alt="Wisp Logo"
             width="30px"
             height="30px"
