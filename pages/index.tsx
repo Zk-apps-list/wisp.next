@@ -8,7 +8,7 @@ import { useState } from "react";
 import { providerOptions } from "../services/WalletConnect";
 import Web3Modal from "web3modal";
 import { useColor } from "../hooks/useColor";
-import Menu from "../components/Menu";
+import Navbar from "../components/Navbar";
 import Jumbotron from "../components/Landing/Jumbotron";
 import HowItWorks from "../components/Landing/HowItWorks";
 import WhyWisp from "../components/Landing/WhyWisp";
@@ -29,14 +29,32 @@ if (typeof window !== "undefined") {
   });
 }
 
-const Home: NextPage = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [menu, setMenu] = useState('HOME');
+export type MenuItem = {
+  name: string,
+  href: string,
+  icon: string
+}
 
-  const {
-    landingBG,
-    blocks,
-  } = useColor();
+const Home: NextPage = () => {
+  const { landingBG, blocks, homeIcon, settingsIcon } = useColor();
+
+  const MenuItems: MenuItem[] = [
+    {
+      name: 'Home',
+      href: '#',
+      icon: homeIcon
+    },
+    {
+      name: 'How it works',
+      href: '#how-it-works',
+      icon: settingsIcon
+    },
+    {
+      name: 'Why Wisp',
+      href: '#why-wisp',
+      icon: settingsIcon
+    }
+  ]
 
   return (
     <Flex
@@ -45,13 +63,7 @@ const Home: NextPage = () => {
       paddingTop="24px"
       backgroundColor={landingBG}
     >
-      <Menu
-        showMenu={true}
-        menu={menu}
-        setMenu={setMenu}
-        menuOpen={menuOpen}
-        setMenuOpen={setMenuOpen}
-      />
+      <Navbar menuItems={MenuItems} />
       <Jumbotron />
       <HowItWorks />
       <WhyWisp />

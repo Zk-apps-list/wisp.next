@@ -1,12 +1,15 @@
 import { Flex, Text, Image, Link, Button, useColorMode } from '@chakra-ui/react';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { useColor } from '../hooks/useColor';
+import { MenuItem } from '../pages';
 import Wallet from './Wallet';
 
-const Menu = (props: any) => {
+const Navbar = (props: any) => {
   const { account, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
-  const { menu, setMenu, menuOpen, setMenuOpen, showMenu} = props;
+  const { menuItems, isMobileOnly} = props;
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [menu, setMenu] = useState(menuItems[0]);
   const { toggleColorMode } = useColorMode();
 
   const {
@@ -34,7 +37,7 @@ const Menu = (props: any) => {
 
   return (
     <>
-      {showMenu && <Flex
+      {!isMobileOnly && <Flex
         width={contentWidths}
         height={58}
         backgroundColor={blocks}
@@ -66,7 +69,22 @@ const Menu = (props: any) => {
           Menu
         </Text>
         <Flex align="center" flex="1" display={{ base: "none", md: "flex" }}>
-          <Link
+          {menuItems.map((el: MenuItem, index: number) => {
+            return (
+              <Link
+                key={index}
+                href={el.href}
+                textStyle="land_reg_14"
+                color={menu === el.name ? contrastText : selectedMenuText}
+                mr="24px"
+                _hover={{ textDecoration: "none" }}
+                onClick={() => setMenu(el.name)}
+              >
+                {el.name}
+              </Link>
+            )
+          })}
+          {/* <Link
             href="#"
             textStyle="land_reg_14"
             color={menu === "HOME" ? contrastText : selectedMenuText}
@@ -75,8 +93,8 @@ const Menu = (props: any) => {
             onClick={() => setMenu('HOME')}
           >
             Home
-          </Link>
-          <Link
+          </Link> */}
+          {/* <Link
             href="#how-it-works"
             textStyle="land_reg_14"
             color={menu === "HOW_IT_WORKS" ? contrastText : selectedMenuText}
@@ -99,7 +117,7 @@ const Menu = (props: any) => {
             onClick={() => setMenu('WHY_WISP')}
           >
             Why Wisp
-          </Link>
+          </Link> */}
           <Button
             onClick={toggleColorMode}
             ml="auto"
@@ -132,7 +150,7 @@ const Menu = (props: any) => {
           />
         </Button>
       </Flex>}
-      {menuOpen && showMenu && (
+      {menuOpen && (
         <Flex
           w="100vw"
           h="100vh"
@@ -188,42 +206,29 @@ const Menu = (props: any) => {
             </Button>
           </Flex>
           <Flex direction="column" width={contentWidths} gap="12px">
-            <Link
-              textStyle="app_reg_14"
-              color={contrastText}
-              backgroundColor={blocks}
-              borderRadius="6px"
-              w="100%"
-              p="15px"
-              href="#"
-            >
-              <Flex align="center">
-                <Image
-                  src={homeIcon}
-                  mr="12px"
-                  alt="Home icon"
-                />
-                Home
-              </Flex>
-            </Link>
-            <Link
-              textStyle="app_reg_14"
-              color={contrastText}
-              backgroundColor={blocks}
-              borderRadius="6px"
-              w="100%"
-              p="15px"
-              href="#"
-            >
-              <Flex align="center">
-                <Image
-                  src={settingsIcon}
-                  mr="12px"
-                  alt="Settings icon"
-                />
-                How it works
-              </Flex>
-            </Link>
+            {menuItems.map((el: MenuItem, index: number) => {
+              return (
+                <Link
+                  key={index}
+                  textStyle="app_reg_14"
+                  color={contrastText}
+                  backgroundColor={blocks}
+                  borderRadius="6px"
+                  w="100%"
+                  p="15px"
+                  href={el.href}
+                >
+                  <Flex align="center">
+                    <Image
+                      src={el.icon}
+                      mr="12px"
+                      alt="Home icon"
+                    />
+                    {el.name}
+                  </Flex>
+                </Link>
+              )
+            })}
             <Link
               textStyle="app_reg_14"
               color={contrastText}
@@ -251,4 +256,4 @@ const Menu = (props: any) => {
   )
 }
 
-export default Menu;
+export default Navbar;
