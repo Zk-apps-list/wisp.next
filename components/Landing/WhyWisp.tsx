@@ -61,7 +61,6 @@ const WhyWisp = () => {
         End-to-end private crypto payments without revealing your address <br /> and
         financial management in a single solution.
       </Text>
-      {/* <BlueButton mt="32px">Try us out for free</BlueButton> */}
       <Flex
         mt="56px"
         mb="154px"
