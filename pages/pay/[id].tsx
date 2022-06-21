@@ -17,6 +17,8 @@ import { Token, tokens } from "../../util/tokens";
 import { useColor } from "../../hooks/useColor";
 
 const PaymentOneTime = () => {
+  const router = useRouter();
+  const id = router.query.id;
   const [error, setError] = useState<string>(""); 
 
   const { chevronIcon, textColor, inputColor } = useColor();
