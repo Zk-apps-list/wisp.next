@@ -29,6 +29,8 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useColor } from "../hooks/useColor";
+import TransactionRow from "../components/Transactions/TransactionRow";
+import Transactions from "../components/Transactions/Transactions";
 
 ChartJS.register(
   CategoryScale,
@@ -99,77 +101,7 @@ const data = {
   ],
 };
 
-const TransactionRow = (props: any) => {
-  const { token, transactionId, status, amount, value, date } = props;
-
-  const { textColor } = useColor();
-
-  const tokenToLogo = () => {
-    switch (token) {
-      case "ETH":
-        return "icons/eth_logo.svg";
-      case "USDC":
-        return "icons/usdc_logo.svg";
-      case "UNI":
-      default:
-        return "icons/uniswap_logo.svg";
-    }
-  };
-
-  const tokenToText = () => {
-    switch (token) {
-      case "ETH":
-        return "Ethereum (ETH)";
-      case "USDC":
-        return "USD Coin (USDC)";
-      case "UNI":
-      default:
-        return "Uniswap (UNI)";
-    }
-  };
-
-  return (
-    <Tr>
-      <Td>
-        <Box flexDirection="row" display="flex">
-          <Box>
-            <Image
-              src={tokenToLogo()}
-              alt="Ethereum Logo"
-              width="24px"
-              height="24px"
-            />
-          </Box>
-          <Text color={textColor} textStyle="app_reg_14" ml="8px" mt="2px">
-            {tokenToText()}
-          </Text>
-        </Box>
-      </Td>
-
-      <Td color={textColor} textStyle="app_reg_14">
-        {truncateWallet(transactionId, 15)}
-      </Td>
-
-      <Td color={textColor} textStyle="app_reg_14">
-        {status}
-      </Td>
-
-      <Td color={textColor} textStyle="app_reg_14">
-        {amount}
-      </Td>
-
-      <Td color={textColor} textStyle="app_reg_14" isNumeric>
-        {value}
-      </Td>
-
-      <Td color={textColor} textStyle="app_reg_14" isNumeric>
-        {date}
-      </Td>
-    </Tr>
-  );
-};
-
-const Overview = () => {
+const OverviewPage = () => {
   const router = useRouter();
 
   const { overviewBG, textColor, borderColor, blockColor } = useColor();
@@ -311,100 +243,7 @@ const Overview = () => {
               />
             </Box>
 
-            <Box
-              my="32px"
-              borderRadius="4px"
-              backgroundColor={blockColor}
-              p="24px"
-            >
-              <Box
-                mt="16px"
-                display="flex"
-                flexDirection="row"
-                justifyContent="space-between"
-              >
-                <Text color={textColor} textStyle="app_med_16">
-                  Transaction History
-                </Text>
-                <Link onClick={() => router.push("/transactions")}>
-                  <Text color="neutral.500" textStyle="app_reg_14">
-                    View all
-                  </Text>
-                </Link>
-              </Box>
-
-              <TableContainer>
-                <Table variant="unstyled">
-                  {/* {submissions.length != 0 && ( */}
-                  <>
-                    <Thead borderBottomWidth="1px" borderColor={borderColor}>
-                      <Tr>
-                        <Th textStyle="app_light_14" color="neutral.500">
-                          Token
-                        </Th>
-
-                        <Th textStyle="app_light_14" color="neutral.500">
-                          Transaction ID
-                        </Th>
-
-                        <Th textStyle="app_light_14" color="neutral.500">
-                          Status
-                        </Th>
-
-                        <Th textStyle="app_light_14" color="neutral.500">
-                          Amount
-                        </Th>
-
-                        <Th
-                          textStyle="app_light_14"
-                          color="neutral.500"
-                          isNumeric
-                        >
-                          Value
-                        </Th>
-
-                        <Th
-                          textStyle="app_light_14"
-                          color="neutral.500"
-                          isNumeric
-                        >
-                          Date
-                        </Th>
-                      </Tr>
-                    </Thead>
-                    <Tbody>
-                      <TransactionRow
-                        token="ETH"
-                        transactionId="0x24A2d17147F177F5a5d3e50C7717eC58Ccf59Ef3"
-                        status="Received"
-                        amount="3.52 ETH"
-                        value="11,054.09 USD"
-                        date="15/05/2022 3:25PM"
-                      />
-
-                      <TransactionRow
-                        token="ETH"
-                        transactionId="0x24A2d17147F177F5a5d3e50C7717eC58Ccf59Ef3"
-                        status="Received"
-                        amount="3.52 ETH"
-                        value="11,054.09 USD"
-                        date="15/05/2022 3:25PM"
-                      />
-
-                      <TransactionRow
-                        token="ETH"
-                        transactionId="0x24A2d17147F177F5a5d3e50C7717eC58Ccf59Ef3"
-                        status="Received"
-                        amount="3.52 ETH"
-                        value="11,054.09 USD"
-                        date="15/05/2022 3:25PM"
-                      />
-                    </Tbody>
-                  </>
-                  {/* )} */}
-                </Table>
-              </TableContainer>
-            </Box>
+            <Transactions />
           </Box>
         </Box>
       </Box>
@@ -412,4 +251,4 @@ const Overview = () => {
   );
 };
 
-export default Overview;
+export default OverviewPage;

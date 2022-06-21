@@ -40,11 +40,9 @@ const Header = () => {
       flexDirection="row"
       justifyContent="start"
     >
-      <Box>
-        <Text color={textColor} textStyle="app_med_28">
-          {title()}
-        </Text>
-      </Box>
+      <Text color={textColor} textStyle="app_med_28">
+        {title()}
+      </Text>
       <Box display="flex" flexDirection="row" ml="auto">
         <Box>
           <Box
@@ -70,28 +68,6 @@ const Header = () => {
             </Text>
           </Box>
         </Box>
-        {/* TODO: Add correct component */}
-        {/* <Box
-          as={Button}
-          color={textColor}
-          px="16px"
-          py="8px"
-          ml="16px"
-          backgroundColor={blockColor}
-          borderRadius="6px"
-          rightIcon={
-            <Image
-              src={chevronIcon}
-              alt="Chevron Down"
-              width="16px"
-              height="16px"
-            />
-          }
-          _hover={{ bg: addressHoverBG }}
-          textStyle="app_reg_14"
-        >
-          0xa0223x...49fv859
-        </Box> */}
         <Wallet
           account={account}
           connectWallet={connectWallet}
