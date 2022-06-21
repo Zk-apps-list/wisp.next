@@ -12,10 +12,10 @@ const WhyWisp = () => {
     contrastText,
     dimText,
     blocks,
+    blockColor,
     walletIcon,
     liquidityIcon,
     docsIcon,
-    whyWispBackground,
     whyWispText,
   } = useColor();
 
@@ -32,7 +32,7 @@ const WhyWisp = () => {
     <>
       <Box
         id="why-wisp"
-        backgroundColor={whyWispBackground}
+        backgroundColor={blockColor}
         padding="4px 12px"
         borderRadius="6px"
         mt="160px"

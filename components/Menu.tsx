@@ -11,9 +11,7 @@ const Menu = (props: any) => {
 
   const {
     landingBG,
-    navigationBG,
     contrastText,
-    menuText,
     selectedMenuText,
     blocks,
     logoMd,
@@ -39,7 +37,7 @@ const Menu = (props: any) => {
       {showMenu && <Flex
         width={contentWidths}
         height={58}
-        backgroundColor={navigationBG}
+        backgroundColor={blocks}
         borderRadius="6px"
         align="center"
         justify="space-between"
@@ -71,7 +69,7 @@ const Menu = (props: any) => {
           <Link
             href="#"
             textStyle="land_reg_14"
-            color={menu === "HOME" ? menuText : selectedMenuText}
+            color={menu === "HOME" ? contrastText : selectedMenuText}
             mr="24px"
             _hover={{ textDecoration: "none" }}
             onClick={() => setMenu('HOME')}
@@ -81,7 +79,7 @@ const Menu = (props: any) => {
           <Link
             href="#how-it-works"
             textStyle="land_reg_14"
-            color={menu === "HOW_IT_WORKS" ? menuText : selectedMenuText}
+            color={menu === "HOW_IT_WORKS" ? contrastText : selectedMenuText}
             mr="24px"
             textDecoration="none"
             _hover={{ textDecoration: "none" }}
@@ -93,7 +91,7 @@ const Menu = (props: any) => {
           <Link
             href="#why-wisp"
             textStyle="land_reg_14"
-            color={menu === "WHY_WISP" ? menuText : selectedMenuText}
+            color={menu === "WHY_WISP" ? contrastText : selectedMenuText}
             mr="24px"
             textDecoration="none"
             _hover={{ textDecoration: "none" }}

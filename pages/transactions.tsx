@@ -86,10 +86,10 @@ const TransactionRow = (props: any) => {
 };
 
 const Transactions = () => {
-  const { transactionsBG, blockColor, borderColor } = useColor();
+  const { overviewBG, blockColor, borderColor } = useColor();
 
   return (
-    <Box backgroundColor={transactionsBG} height="100%" minHeight="100vh">
+    <Box backgroundColor={overviewBG} height="100%" minHeight="100vh">
       <Box display="flex" flexDirection="row">
         {/* Left Panel */}
         <LeftPanel />
