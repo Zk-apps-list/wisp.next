@@ -40,8 +40,8 @@ export const AuthContextProvider = (props: any) => {
       const library = new ethers.providers.Web3Provider(provider);
       const accounts = await library.listAccounts();
       const signature = await library.getSigner().signMessage("some message");
-      setPersonalKeypair(new Keypair(ethers.utils.id(signature + "0")));
-      setSharedKeypair(new Keypair(ethers.utils.id(signature + "1")));
+      setPersonalKeypair(Keypair.fromPrivateKey(ethers.utils.id(signature + "0")));
+      setSharedKeypair(Keypair.fromPrivateKey(ethers.utils.id(signature + "1")));
       setProvider(provider);
       if (accounts) setAccount(accounts[0]);
     } catch (error: any) {

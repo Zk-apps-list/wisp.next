@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Button,
   Box,
@@ -18,11 +18,16 @@ import {
   Input,
   Tooltip,
 } from "@chakra-ui/react";
+import { AuthContext } from "../contexts/AuthContext";
+import { ethers } from "ethers";
 import { Token, tokens } from "../util/tokens";
 import { useColor } from "../hooks/useColor";
+import { LinkCodec } from "../util/linkCodec";
 
 const RequestOneTimeModal = (props: any) => {
   const { isOpen, onClose } = props;
+
+  const { sharedKeypair } = useContext(AuthContext);
 
   const [value, setValue] = useState<number | undefined>(undefined);
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(
@@ -62,6 +67,20 @@ const RequestOneTimeModal = (props: any) => {
       </Box>
     );
   };
+
+  const generateLink = () => {
+    if (!sharedKeypair) {
+      alert("Please connect wallet");
+      return;
+    } else if (!selectedToken || !value) {
+      return;
+    }
+
+    const amount = ethers.utils.parseEther(value.toString()).toHexString();
+    const linkCodec = new LinkCodec(sharedKeypair, selectedToken.address, amount);
+
+    setGeneratedLink(window.location.origin + "/pay/" + linkCodec.encode());
+  }
 
   return (
     <Modal
@@ -213,11 +232,7 @@ const RequestOneTimeModal = (props: any) => {
               color="neutral.0"
               textStyle="app_reg_14"
               isDisabled={!selectedToken || !value}
-              onClick={() =>
-                setGeneratedLink(
-                  "https://www.wisp.finance/28gdf93jf9dsfDjdf9gfFIQPWmpoqpmIekfdE8q013985De5"
-                )
-              }
+              onClick={generateLink}
             >
               Generate link to request payment
             </Box>
