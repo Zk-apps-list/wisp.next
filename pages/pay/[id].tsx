@@ -1,27 +1,50 @@
-import {
-  Button,
-  Box,
-  Image,
-  Text,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  Input,
-} from "@chakra-ui/react";
-import React, { useContext, useState } from "react";
+import { Box, Button, Image, Input, Menu, MenuButton, MenuItem, MenuList, Text, } from "@chakra-ui/react";
+import React, { useContext, useEffect, useState } from "react";
 import Wallet from "../../components/Wallet";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useRouter } from 'next/router'
 import { Token, tokens } from "../../util/tokens";
 import { useColor } from "../../hooks/useColor";
+import { LinkCodec } from "../../util/linkCodec";
+import { BigNumber, ethers } from "ethers";
+import { ERC20, ERC20__factory } from "../../contracts";
 
 const PaymentOneTime = () => {
   const router = useRouter();
   const id = router.query.id;
-  const [error, setError] = useState<string>(""); 
+
+  const { account, web3Provider } = useContext(AuthContext);
+
+  const [error, setError] = useState<string>("");
 
   const { chevronIcon, textColor, inputColor } = useColor();
+  const [balance, setBalance] = useState<string | undefined>();
+  const [requestedAmount, setRequestedAmount] = useState<string | undefined>();
+  const [requestedToken, setRequestedToken] = useState<Token | undefined>();
+  const [tokenContract, setTokenContract] = useState<ERC20 | undefined>();
+
+  useEffect(() => {
+    if (!id) {
+      return;
+    }
+
+    const linkCodec = LinkCodec.decode(id as string);
+    setRequestedAmount(ethers.utils.formatEther(BigNumber.from(linkCodec.amount)));
+    setRequestedToken(tokens.find(it => it.address === linkCodec.token));
+  }, [id]);
+
+  useEffect(() => {
+    if (!requestedToken || !web3Provider) {
+      return;
+    }
+
+    const tokenContract = ERC20__factory.connect(requestedToken.address, web3Provider.getSigner(0));
+    setTokenContract(tokenContract);
+
+    tokenContract.balanceOf(account)
+      .then(balance => setBalance(ethers.utils.formatEther(balance)))
+      .catch(console.log);
+  }, [requestedToken, account, web3Provider]);
 
   return (
     <Box>
@@ -33,19 +56,19 @@ const PaymentOneTime = () => {
       </Text>
       <Box borderRadius="6px" backgroundColor={inputColor} p="16px" mt="16px">
         <Text color={textColor} textStyle="app_reg_12" textAlign="center">
-          Your balance: 3.25ETH
+          Your balance: {balance} {requestedToken?.symbol}
         </Text>
         <Box display="flex" flexDirection="row" justifyContent="center">
           <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
             <Image
-              src={"/icons/eth_logo.svg"}
+              src={`/icons/${requestedToken?.symbol.toLowerCase()}_logo.svg`}
               alt="Token Logo"
               width="32px"
               height="32px"
             />
           </Box>
           <Box ml="8px">
-            <Text color={textColor} textStyle="app_reg_32">3 ETH</Text>
+            <Text color={textColor} textStyle="app_reg_32">{requestedAmount} {requestedToken?.symbol}</Text>
           </Box>
         </Box>
         <Box mt="4px" textAlign="center">
@@ -95,7 +118,7 @@ const PaymentPermanent = () => {
   );
 
   const { textColor, inputColor, inputHover, chevronIcon } = useColor();
-  
+
 
   const handleValueChange = (event: any) => {
     setValue(event.target.value);
@@ -163,7 +186,7 @@ const PaymentPermanent = () => {
                     _focus={{ bg: "neutral_800" }}
                     onClick={() => setSelectedToken(it)}
                   >
-                    { token(it) }
+                    {token(it)}
                   </MenuItem>
                 );
               })
@@ -224,7 +247,7 @@ const WalletRequest = () => {
 
   const { textColor } = useColor();
 
-  
+
   return (
     <>
       <Box>
@@ -275,7 +298,7 @@ const Request = () => {
       >
         <Box>
           <Box display="flex" justifyContent="center">
-            <Image src={logoMd} alt="logo" />
+            <Image src={logoMd} alt="logo"/>
           </Box>
           <Box
             p="24px"
@@ -284,9 +307,9 @@ const Request = () => {
             borderRadius="6px"
             mt="32px"
           >
-            {!account ? 
-              <WalletRequest />
-              : <PaymentOneTime />
+            {!account ?
+              <WalletRequest/>
+              : <PaymentOneTime/>
             }
           </Box>
         </Box>
