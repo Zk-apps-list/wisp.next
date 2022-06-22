@@ -63,7 +63,7 @@ const Home: NextPage = () => {
       paddingTop="24px"
       backgroundColor={landingBG}
     >
-      <Navbar menuItems={MenuItems} />
+      <Navbar title="Home" menuItems={MenuItems} />
       <Jumbotron />
       <HowItWorks />
       <WhyWisp />

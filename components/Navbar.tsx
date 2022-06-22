@@ -7,7 +7,7 @@ import Wallet from './Wallet';
 
 const Navbar = (props: any) => {
   const { account, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
-  const { menuItems, isMobileOnly} = props;
+  const { menuItems, isMobileOnly, title} = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [menu, setMenu] = useState(menuItems[0]);
   const { toggleColorMode } = useColorMode();
@@ -21,9 +21,7 @@ const Navbar = (props: any) => {
     logoSm,
     lightToggle,
     buttonBg,
-    hamburgerIcon,
-    settingsIcon,
-    homeIcon
+    hamburgerIcon
   } = useColor();
 
   const contentWidths = {
@@ -37,7 +35,7 @@ const Navbar = (props: any) => {
 
   return (
     <>
-      {!isMobileOnly && <Flex
+      <Flex
         width={contentWidths}
         height={58}
         backgroundColor={blocks}
@@ -48,6 +46,7 @@ const Navbar = (props: any) => {
         px="32px"
         position="fixed"
         zIndex={1}
+        display={isMobileOnly ? { base: "flex", md: "none" } : "flex"}
       >
         <Image
           src={logoMd}
@@ -66,7 +65,7 @@ const Navbar = (props: any) => {
           display={{ base: "block", md: "none" }}
           color={contrastText}
         >
-          Menu
+          {title}
         </Text>
         <Flex align="center" flex="1" display={{ base: "none", md: "flex" }}>
           {menuItems.map((el: MenuItem, index: number) => {
@@ -84,40 +83,6 @@ const Navbar = (props: any) => {
               </Link>
             )
           })}
-          {/* <Link
-            href="#"
-            textStyle="land_reg_14"
-            color={menu === "HOME" ? contrastText : selectedMenuText}
-            mr="24px"
-            _hover={{ textDecoration: "none" }}
-            onClick={() => setMenu('HOME')}
-          >
-            Home
-          </Link> */}
-          {/* <Link
-            href="#how-it-works"
-            textStyle="land_reg_14"
-            color={menu === "HOW_IT_WORKS" ? contrastText : selectedMenuText}
-            mr="24px"
-            textDecoration="none"
-            _hover={{ textDecoration: "none" }}
-            display="inline-block"
-            onClick={() => setMenu('HOW_IT_WORKS')}
-          >
-            How it works
-          </Link>
-          <Link
-            href="#why-wisp"
-            textStyle="land_reg_14"
-            color={menu === "WHY_WISP" ? contrastText : selectedMenuText}
-            mr="24px"
-            textDecoration="none"
-            _hover={{ textDecoration: "none" }}
-            display="inline-block"
-            onClick={() => setMenu('WHY_WISP')}
-          >
-            Why Wisp
-          </Link> */}
           <Button
             onClick={toggleColorMode}
             ml="auto"
@@ -149,7 +114,7 @@ const Navbar = (props: any) => {
             alt="Hamburger menu"
           />
         </Button>
-      </Flex>}
+      </Flex>
       {menuOpen && (
         <Flex
           w="100vw"
