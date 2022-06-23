@@ -42,6 +42,7 @@ const Navbar = (props: any) => {
         borderRadius="6px"
         align="center"
         justify="space-between"
+        mt="24px"
         py="12px"
         px="32px"
         position="fixed"

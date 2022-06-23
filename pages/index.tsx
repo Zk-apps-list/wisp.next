@@ -60,7 +60,6 @@ const Home: NextPage = () => {
     <Flex
       align="center"
       direction="column"
-      paddingTop="24px"
       backgroundColor={landingBG}
     >
       <Navbar title="Home" menuItems={MenuItems} />

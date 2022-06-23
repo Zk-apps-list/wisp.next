@@ -11,11 +11,13 @@ const LeftPanel = () => {
 
   return (
     <Box
-      position="fixed"
       width="80px"
       height="100vh"
       backgroundColor={blockColor}
-      display="flex"
+      display={{
+        base: "none",
+        md: "flex"
+      }}
       flexDirection="column"
     >
       <Link onClick={() => router.push(`/`)}>
