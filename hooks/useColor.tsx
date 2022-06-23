@@ -7,32 +7,28 @@ export const useColor = () => {
   /*
    * Colors
   */
-  const requestBG = useColorModeValue("light_neutral.100", "background.end");
-  const landingBG = useColorModeValue( "light_neutral.50", "landingBG");
-  const navigationBG = useColorModeValue("neutral.0", "block");
-  const landingPhones = useColorModeValue("images/landing-phones-light.png", "images/landing-phones.png");
-  const contrastText = useColorModeValue("light_neutral.800", "neutral.0");
-  const menuText = useColorModeValue("light_neutral.800", "neutral.0");
-  const selectedMenuText = useColorModeValue("light_neutral.800", "neutral.500");
-  const reverseContrastText = useColorModeValue("light_neutral.800", "neutral.800");
-  const reverseContractTextBorder = useColorModeValue("light_neutral.200", "transparent");
-  const dimText = useColorModeValue("light_neutral.600", "neutral.400",);
   const blocks = useColorModeValue("neutral.0", "block");
-  const whyWispBackground = useColorModeValue("light_neutral.100", "block");
-  const whyWispText = useColorModeValue("light_neutral.500", "neutral.0");
-  const blockColor = useColorModeValue("light_neutral.100", "block");
-  const textColor = useColorModeValue("light_neutral.800", "light_neutral.0");
   const inputColor = useColorModeValue("light_neutral.0", "neutral.800");
+  const landingBG = useColorModeValue( "light_neutral.50", "landingBG");
   const inputHover = useColorModeValue("light_neutral.50", "neutral.700");
   const buttonBg = useColorModeValue("light_neutral.50", "neutral.800");
-  const addressHoverBG = useColorModeValue("light_neutral.100", "neutral.800");
   const overviewBG = useColorModeValue("light_neutral.50", "background.start");
+  const requestBG = useColorModeValue("light_neutral.100", "background.end");
+  const blockColor = useColorModeValue("light_neutral.100", "block");
+  const addressHoverBG = useColorModeValue("light_neutral.100", "neutral.800");
   const borderColor = useColorModeValue("light_neutral.200", "light_neutral.800");
-  const transactionsBG = useColorModeValue("light_neutral.50", "background.start");
+  const reverseContractTextBorder = useColorModeValue("light_neutral.200", "transparent");
+  const whyWispText = useColorModeValue("light_neutral.500", "neutral.0");
+  const dimText = useColorModeValue("light_neutral.600", "neutral.400",);
+  const contrastText = useColorModeValue("light_neutral.800", "neutral.0");
+  const selectedMenuText = useColorModeValue("light_neutral.800", "neutral.500");
+  const reverseContrastText = useColorModeValue("light_neutral.800", "neutral.800");
+  const textColor = useColorModeValue("light_neutral.800", "light_neutral.0");
 
   /*
    * Images
   */
+  const landingPhones = useColorModeValue("/images/landing-phones-light.png", "/images/landing-phones.png");
   const logoMd = useColorModeValue("/icons/logo-md-light.svg", "/icons/logo-md.svg");
   const logoSm = useColorModeValue("/icons/logo-sm-light.svg", "/icons/logo-sm.svg");
   const lightToggle = useColorModeValue("/icons/icon-sun.svg", "/icons/icon-moon.svg");
@@ -53,16 +49,13 @@ export const useColor = () => {
   return {
     requestBG,
     landingBG,
-    navigationBG,
     landingPhones,
     contrastText,
-    menuText,
     selectedMenuText,
     reverseContrastText,
     reverseContractTextBorder,
     dimText,
     blocks,
-    whyWispBackground,
     whyWispText,
     blockColor,
     textColor,
@@ -71,7 +64,6 @@ export const useColor = () => {
     addressHoverBG,
     overviewBG,
     borderColor,
-    transactionsBG,
 
     logoMd,
     logoSm,

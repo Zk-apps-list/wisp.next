@@ -11,6 +11,7 @@ import RequestOneTimeModal from "./RequestOneTimeModal";
 import { useColor } from "../hooks/useColor";
 import Wallet from "./Wallet";
 import { AuthContext } from "../contexts/AuthContext";
+import CreateALink from "./CreateALink";
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -35,69 +36,22 @@ const Header = () => {
   return (
     <Box
       py="32px"
-      px="64px"
-      display="flex"
+      px="32px"
+      display={{ base: "none", sm: "flex" }}
       flexDirection="row"
       justifyContent="start"
     >
-      <Box>
-        <Text color={textColor} textStyle="app_med_28">
-          {title()}
-        </Text>
-      </Box>
+      <Text color={textColor} textStyle="app_med_28">
+        {title()}
+      </Text>
+      <Wallet
+        account={account}
+        connectWallet={connectWallet}
+        disconnect={disconnect}
+        isLoading={isWalletLoading}
+      />
       <Box display="flex" flexDirection="row" ml="auto">
-        <Box>
-          <Box
-            as={Button}
-            backgroundColor="primary.800"
-            borderRadius="6px"
-            py="12px"
-            textAlign="center"
-            ml="36px"
-            leftIcon={
-              <Image
-                src="icons/chain.svg"
-                alt="Ethereum Logo"
-                width="16px"
-                height="16px"
-              />
-            }
-            _hover={{ bg: "primary.700" }}
-            onClick={() => setIsOpen(true)}
-          >
-            <Text ml="auto" mr="auto" color="white" textStyle="app_reg_14">
-              Create a Link
-            </Text>
-          </Box>
-        </Box>
-        {/* TODO: Add correct component */}
-        {/* <Box
-          as={Button}
-          color={textColor}
-          px="16px"
-          py="8px"
-          ml="16px"
-          backgroundColor={blockColor}
-          borderRadius="6px"
-          rightIcon={
-            <Image
-              src={chevronIcon}
-              alt="Chevron Down"
-              width="16px"
-              height="16px"
-            />
-          }
-          _hover={{ bg: addressHoverBG }}
-          textStyle="app_reg_14"
-        >
-          0xa0223x...49fv859
-        </Box> */}
-        <Wallet
-          account={account}
-          connectWallet={connectWallet}
-          disconnect={disconnect}
-          isLoading={isWalletLoading}
-        />
+        <CreateALink />
       </Box>
       <Button
         ml="16px"
@@ -107,7 +61,6 @@ const Header = () => {
       >
         <Image src={lightToggle} />
       </Button>
-      <RequestOneTimeModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </Box>
   );
 };
