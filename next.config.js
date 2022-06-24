@@ -3,6 +3,9 @@ const nextConfig = {
   reactStrictMode: true,
   webpack: (config) => {
     config.experiments = { topLevelAwait: true };
+    config.resolve = config.resolve || {}
+    config.resolve.fallback = config.resolve.fallback || {}
+    config.resolve.fallback.fs = false;
     return config;
   }
 }

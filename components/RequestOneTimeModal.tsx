@@ -1,28 +1,28 @@
 import React, { useContext, useState } from "react";
 import {
-  Button,
   Box,
+  Button,
   Image,
-  Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
+  Input,
   Menu,
   MenuButton,
-  MenuList,
   MenuItem,
-  Input,
+  MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Text,
   Tooltip,
 } from "@chakra-ui/react";
 import { AuthContext } from "../contexts/AuthContext";
 import { ethers } from "ethers";
 import { Token, tokens } from "../util/tokens";
 import { useColor } from "../hooks/useColor";
-import { LinkCodec } from "../util/linkCodec";
+import { generateLinkPath } from "../util/linkPathCodec";
 
 const RequestOneTimeModal = (props: any) => {
   const { isOpen, onClose } = props;
@@ -68,7 +68,7 @@ const RequestOneTimeModal = (props: any) => {
     );
   };
 
-  const generateLink = () => {
+  const generateLink = async () => {
     if (!sharedKeypair) {
       alert("Please connect wallet");
       return;
@@ -76,10 +76,10 @@ const RequestOneTimeModal = (props: any) => {
       return;
     }
 
-    const amount = ethers.utils.parseEther(value.toString()).toHexString();
-    const linkCodec = new LinkCodec(sharedKeypair, selectedToken.address, amount);
-
-    setGeneratedLink(window.location.origin + "/pay/" + linkCodec.encode());
+    // todo: spinner for link generation
+    const amount = ethers.utils.parseEther(value.toString());
+    const path = await generateLinkPath(sharedKeypair, amount, selectedToken.address);
+    setGeneratedLink(window.location.origin + "/pay/" + path);
   }
 
   return (

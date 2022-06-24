@@ -5,8 +5,8 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useRouter } from 'next/router'
 import { Token, tokens } from "../../util/tokens";
 import { useColor } from "../../hooks/useColor";
-import { LinkCodec } from "../../util/linkCodec";
-import { BigNumber, ethers } from "ethers";
+import { decodeLinkPath } from "../../util/linkPathCodec";
+import { ethers } from "ethers";
 import { ERC20, ERC20__factory } from "../../contracts";
 import { WISP_CONTRACT } from "../../util/contracts";
 
@@ -30,9 +30,9 @@ const PaymentOneTime = () => {
       return;
     }
 
-    const linkCodec = LinkCodec.decode(id as string);
-    setRequestedAmount(ethers.utils.formatEther(BigNumber.from(linkCodec.amount)));
-    setRequestedToken(tokens.find(it => it.address === linkCodec.token));
+    const decodedPath = decodeLinkPath(id as string);
+    setRequestedAmount(ethers.utils.formatEther(decodedPath.amount));
+    setRequestedToken(tokens.find(it => it.address === decodedPath.token));
   }, [id]);
 
   useEffect(() => {
