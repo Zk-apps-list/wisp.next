@@ -14,14 +14,16 @@ export type { IERC20Metadata } from "./@openzeppelin/contracts/token/ERC20/exten
 export { IERC20Metadata__factory } from "./factories/@openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata__factory";
 export type { IERC20 } from "./@openzeppelin/contracts/token/ERC20/IERC20";
 export { IERC20__factory } from "./factories/@openzeppelin/contracts/token/ERC20/IERC20__factory";
+export type { DepositVerifier } from "./contracts/DepositVerifier";
+export { DepositVerifier__factory } from "./factories/contracts/DepositVerifier__factory";
 export type { IPoseidonHasher } from "./contracts/MerkleTree.sol/IPoseidonHasher";
 export { IPoseidonHasher__factory } from "./factories/contracts/MerkleTree.sol/IPoseidonHasher__factory";
 export type { MerkleTree } from "./contracts/MerkleTree.sol/MerkleTree";
 export { MerkleTree__factory } from "./factories/contracts/MerkleTree.sol/MerkleTree__factory";
 export type { PoseidonHasher } from "./contracts/PoseidonHasher";
 export { PoseidonHasher__factory } from "./factories/contracts/PoseidonHasher__factory";
-export type { Verifier } from "./contracts/Verifier";
-export { Verifier__factory } from "./factories/contracts/Verifier__factory";
+export type { TransactionVerifier } from "./contracts/TransactionVerifier";
+export { TransactionVerifier__factory } from "./factories/contracts/TransactionVerifier__factory";
 export type { Wisp } from "./contracts/Wisp";
 export { Wisp__factory } from "./factories/contracts/Wisp__factory";
 export type { WispToken } from "./contracts/WispToken";

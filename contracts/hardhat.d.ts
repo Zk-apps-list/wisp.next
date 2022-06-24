@@ -29,6 +29,10 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IERC20__factory>;
     getContractFactory(
+      name: "DepositVerifier",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.DepositVerifier__factory>;
+    getContractFactory(
       name: "IPoseidonHasher",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IPoseidonHasher__factory>;
@@ -41,9 +45,9 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.PoseidonHasher__factory>;
     getContractFactory(
-      name: "Verifier",
+      name: "TransactionVerifier",
       signerOrOptions?: ethers.Signer | FactoryOptions
-    ): Promise<Contracts.Verifier__factory>;
+    ): Promise<Contracts.TransactionVerifier__factory>;
     getContractFactory(
       name: "Wisp",
       signerOrOptions?: ethers.Signer | FactoryOptions
@@ -74,6 +78,11 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.IERC20>;
     getContractAt(
+      name: "DepositVerifier",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.DepositVerifier>;
+    getContractAt(
       name: "IPoseidonHasher",
       address: string,
       signer?: ethers.Signer
@@ -89,10 +98,10 @@ declare module "hardhat/types/runtime" {
       signer?: ethers.Signer
     ): Promise<Contracts.PoseidonHasher>;
     getContractAt(
-      name: "Verifier",
+      name: "TransactionVerifier",
       address: string,
       signer?: ethers.Signer
-    ): Promise<Contracts.Verifier>;
+    ): Promise<Contracts.TransactionVerifier>;
     getContractAt(
       name: "Wisp",
       address: string,

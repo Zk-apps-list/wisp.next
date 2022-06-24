@@ -3,7 +3,8 @@
 /* eslint-disable */
 import type * as merkleTreeSol from "./MerkleTree.sol";
 export type { merkleTreeSol };
+export type { DepositVerifier } from "./DepositVerifier";
 export type { PoseidonHasher } from "./PoseidonHasher";
-export type { Verifier } from "./Verifier";
+export type { TransactionVerifier } from "./TransactionVerifier";
 export type { Wisp } from "./Wisp";
 export type { WispToken } from "./WispToken";

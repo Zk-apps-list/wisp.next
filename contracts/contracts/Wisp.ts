@@ -31,16 +31,16 @@ export interface WispInterface extends utils.Interface {
   functions: {
     "FIELD_SIZE()": FunctionFragment;
     "ROOT_HISTORY_SIZE()": FunctionFragment;
+    "deposit(uint256[2],uint256[2][2],uint256[2],uint256,uint256,uint256,address,bytes)": FunctionFragment;
+    "depositVerifier()": FunctionFragment;
     "hasher()": FunctionFragment;
     "index()": FunctionFragment;
     "isValidRoot(uint256)": FunctionFragment;
     "levelHashes(uint8)": FunctionFragment;
     "levels()": FunctionFragment;
     "maxSize()": FunctionFragment;
-    "pay(bytes32,uint256,address,uint256,bytes)": FunctionFragment;
     "roots(uint256)": FunctionFragment;
     "tokens(address)": FunctionFragment;
-    "verifier()": FunctionFragment;
     "zeros(uint256)": FunctionFragment;
   };
 
@@ -48,16 +48,16 @@ export interface WispInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | "FIELD_SIZE"
       | "ROOT_HISTORY_SIZE"
+      | "deposit"
+      | "depositVerifier"
       | "hasher"
       | "index"
       | "isValidRoot"
       | "levelHashes"
       | "levels"
       | "maxSize"
-      | "pay"
       | "roots"
       | "tokens"
-      | "verifier"
       | "zeros"
   ): FunctionFragment;
 
@@ -67,6 +67,26 @@ export interface WispInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "ROOT_HISTORY_SIZE",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "deposit",
+    values: [
+      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      [
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+      ],
+      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "depositVerifier",
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "hasher", values?: undefined): string;
@@ -82,16 +102,6 @@ export interface WispInterface extends utils.Interface {
   encodeFunctionData(functionFragment: "levels", values?: undefined): string;
   encodeFunctionData(functionFragment: "maxSize", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "pay",
-    values: [
-      PromiseOrValue<BytesLike>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BytesLike>
-    ]
-  ): string;
-  encodeFunctionData(
     functionFragment: "roots",
     values: [PromiseOrValue<BigNumberish>]
   ): string;
@@ -99,7 +109,6 @@ export interface WispInterface extends utils.Interface {
     functionFragment: "tokens",
     values: [PromiseOrValue<string>]
   ): string;
-  encodeFunctionData(functionFragment: "verifier", values?: undefined): string;
   encodeFunctionData(
     functionFragment: "zeros",
     values: [PromiseOrValue<BigNumberish>]
@@ -108,6 +117,11 @@ export interface WispInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "FIELD_SIZE", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "ROOT_HISTORY_SIZE",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "deposit", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "depositVerifier",
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "hasher", data: BytesLike): Result;
@@ -122,29 +136,25 @@ export interface WispInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "levels", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "maxSize", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "pay", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "roots", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "tokens", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "verifier", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "zeros", data: BytesLike): Result;
 
   events: {
-    "Payment(bytes32,uint256,address,uint256,bytes,uint32)": EventFragment;
+    "Payment(uint256,uint256,bytes,uint32)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Payment"): EventFragment;
 }
 
 export interface PaymentEventObject {
-  publicKey: string;
-  amount: BigNumber;
-  token: string;
+  publicKey: BigNumber;
   commitment: BigNumber;
   encryptedData: string;
   index: number;
 }
 export type PaymentEvent = TypedEvent<
-  [string, BigNumber, string, BigNumber, string, number],
+  [BigNumber, BigNumber, string, number],
   PaymentEventObject
 >;
 
@@ -181,6 +191,23 @@ export interface Wisp extends BaseContract {
 
     ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<[number]>;
 
+    deposit(
+      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      b: [
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+      ],
+      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      commitment: PromiseOrValue<BigNumberish>,
+      publicKey: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      encryptedData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    depositVerifier(overrides?: CallOverrides): Promise<[string]>;
+
     hasher(overrides?: CallOverrides): Promise<[string]>;
 
     index(overrides?: CallOverrides): Promise<[number]>;
@@ -199,15 +226,6 @@ export interface Wisp extends BaseContract {
 
     maxSize(overrides?: CallOverrides): Promise<[number]>;
 
-    pay(
-      publicKey: PromiseOrValue<BytesLike>,
-      amount: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      commitment: PromiseOrValue<BigNumberish>,
-      encryptedData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     roots(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -218,8 +236,6 @@ export interface Wisp extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[boolean]>;
 
-    verifier(overrides?: CallOverrides): Promise<[string]>;
-
     zeros(
       i: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -229,6 +245,23 @@ export interface Wisp extends BaseContract {
   FIELD_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
   ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<number>;
+
+  deposit(
+    a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    b: [
+      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+    ],
+    c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    commitment: PromiseOrValue<BigNumberish>,
+    publicKey: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    token: PromiseOrValue<string>,
+    encryptedData: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  depositVerifier(overrides?: CallOverrides): Promise<string>;
 
   hasher(overrides?: CallOverrides): Promise<string>;
 
@@ -248,15 +281,6 @@ export interface Wisp extends BaseContract {
 
   maxSize(overrides?: CallOverrides): Promise<number>;
 
-  pay(
-    publicKey: PromiseOrValue<BytesLike>,
-    amount: PromiseOrValue<BigNumberish>,
-    token: PromiseOrValue<string>,
-    commitment: PromiseOrValue<BigNumberish>,
-    encryptedData: PromiseOrValue<BytesLike>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   roots(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -267,8 +291,6 @@ export interface Wisp extends BaseContract {
     overrides?: CallOverrides
   ): Promise<boolean>;
 
-  verifier(overrides?: CallOverrides): Promise<string>;
-
   zeros(
     i: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
@@ -278,6 +300,23 @@ export interface Wisp extends BaseContract {
     FIELD_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
     ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<number>;
+
+    deposit(
+      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      b: [
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+      ],
+      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      commitment: PromiseOrValue<BigNumberish>,
+      publicKey: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      encryptedData: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    depositVerifier(overrides?: CallOverrides): Promise<string>;
 
     hasher(overrides?: CallOverrides): Promise<string>;
 
@@ -297,15 +336,6 @@ export interface Wisp extends BaseContract {
 
     maxSize(overrides?: CallOverrides): Promise<number>;
 
-    pay(
-      publicKey: PromiseOrValue<BytesLike>,
-      amount: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      commitment: PromiseOrValue<BigNumberish>,
-      encryptedData: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     roots(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -316,8 +346,6 @@ export interface Wisp extends BaseContract {
       overrides?: CallOverrides
     ): Promise<boolean>;
 
-    verifier(overrides?: CallOverrides): Promise<string>;
-
     zeros(
       i: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -325,18 +353,14 @@ export interface Wisp extends BaseContract {
   };
 
   filters: {
-    "Payment(bytes32,uint256,address,uint256,bytes,uint32)"(
+    "Payment(uint256,uint256,bytes,uint32)"(
       publicKey?: null,
-      amount?: null,
-      token?: null,
       commitment?: null,
       encryptedData?: null,
       index?: null
     ): PaymentEventFilter;
     Payment(
       publicKey?: null,
-      amount?: null,
-      token?: null,
       commitment?: null,
       encryptedData?: null,
       index?: null
@@ -347,6 +371,23 @@ export interface Wisp extends BaseContract {
     FIELD_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
     ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
+
+    deposit(
+      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      b: [
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+      ],
+      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      commitment: PromiseOrValue<BigNumberish>,
+      publicKey: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      encryptedData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    depositVerifier(overrides?: CallOverrides): Promise<BigNumber>;
 
     hasher(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -366,15 +407,6 @@ export interface Wisp extends BaseContract {
 
     maxSize(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pay(
-      publicKey: PromiseOrValue<BytesLike>,
-      amount: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      commitment: PromiseOrValue<BigNumberish>,
-      encryptedData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     roots(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -384,8 +416,6 @@ export interface Wisp extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    verifier(overrides?: CallOverrides): Promise<BigNumber>;
 
     zeros(
       i: PromiseOrValue<BigNumberish>,
@@ -397,6 +427,23 @@ export interface Wisp extends BaseContract {
     FIELD_SIZE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    deposit(
+      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      b: [
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
+      ],
+      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      commitment: PromiseOrValue<BigNumberish>,
+      publicKey: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      encryptedData: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    depositVerifier(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     hasher(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -416,15 +463,6 @@ export interface Wisp extends BaseContract {
 
     maxSize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pay(
-      publicKey: PromiseOrValue<BytesLike>,
-      amount: PromiseOrValue<BigNumberish>,
-      token: PromiseOrValue<string>,
-      commitment: PromiseOrValue<BigNumberish>,
-      encryptedData: PromiseOrValue<BytesLike>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     roots(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
@@ -434,8 +472,6 @@ export interface Wisp extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
-
-    verifier(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     zeros(
       i: PromiseOrValue<BigNumberish>,
