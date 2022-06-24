@@ -8,6 +8,7 @@ import { useColor } from "../../hooks/useColor";
 import { LinkCodec } from "../../util/linkCodec";
 import { BigNumber, ethers } from "ethers";
 import { ERC20, ERC20__factory } from "../../contracts";
+import { WISP_CONTRACT } from "../../util/contracts";
 
 const PaymentOneTime = () => {
   const router = useRouter();
@@ -22,6 +23,7 @@ const PaymentOneTime = () => {
   const [requestedAmount, setRequestedAmount] = useState<string | undefined>();
   const [requestedToken, setRequestedToken] = useState<Token | undefined>();
   const [tokenContract, setTokenContract] = useState<ERC20 | undefined>();
+  const [needsApproval, setNeedsApproval] = useState<boolean>();
 
   useEffect(() => {
     if (!id) {
@@ -45,6 +47,30 @@ const PaymentOneTime = () => {
       .then(balance => setBalance(ethers.utils.formatEther(balance)))
       .catch(console.log);
   }, [requestedToken, account, web3Provider]);
+
+  useEffect(() => {
+    if (!tokenContract || !requestedAmount) {
+      return;
+    }
+
+    tokenContract.allowance(account, WISP_CONTRACT)
+      .then(allowance => setNeedsApproval(ethers.utils.parseEther(requestedAmount).gt(allowance)))
+      .catch(console.log);
+  }, [tokenContract, account, requestedAmount]);
+
+  const approvePayment = async () => {
+    if (!tokenContract || !requestedAmount) {
+      return;
+    }
+
+    // todo: add spinner for transaction confirmations
+    const transaction = await tokenContract.approve(WISP_CONTRACT, ethers.utils.parseEther(requestedAmount));
+    await transaction.wait(1);
+  }
+
+  const executePayment = async () => {
+    console.log("Execute payment");
+  };
 
   return (
     <Box>
@@ -100,9 +126,9 @@ const PaymentOneTime = () => {
         _hover={{ bg: "primary.700" }}
         color="neutral.0"
         textStyle="app_reg_14"
-        onClick={() => console.log('Click Button')}
+        onClick={needsApproval ? approvePayment : executePayment}
       >
-        Approve Payment
+        {needsApproval ? "Approve Payment" : "Pay"}
       </Box>
     </Box>
   )
