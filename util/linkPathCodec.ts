@@ -38,7 +38,16 @@ export const generateLinkPath = async (keypair: Keypair, amount: BigNumber, toke
   ]).toString("hex");
 }
 
-export const decodeLinkPath = (path: string) => {
+export type DecodedPath = {
+  proof: string;
+  commitment: string;
+  publicKey: string;
+  token: string;
+  amount: BigNumber,
+  encryptedData: string;
+}
+
+export const decodeLinkPath = (path: string): DecodedPath => {
   const pathBuffer = Buffer.from(path, "hex");
 
   return {

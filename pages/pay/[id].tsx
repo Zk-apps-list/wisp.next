@@ -5,9 +5,9 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { useRouter } from 'next/router'
 import { Token, tokens } from "../../util/tokens";
 import { useColor } from "../../hooks/useColor";
-import { decodeLinkPath } from "../../util/linkPathCodec";
+import { DecodedPath, decodeLinkPath } from "../../util/linkPathCodec";
 import { ethers } from "ethers";
-import { ERC20, ERC20__factory } from "../../contracts";
+import { ERC20, ERC20__factory, Wisp__factory } from "../../contracts";
 import { WISP_CONTRACT } from "../../util/contracts";
 
 const PaymentOneTime = () => {
@@ -24,6 +24,7 @@ const PaymentOneTime = () => {
   const [requestedToken, setRequestedToken] = useState<Token | undefined>();
   const [tokenContract, setTokenContract] = useState<ERC20 | undefined>();
   const [needsApproval, setNeedsApproval] = useState<boolean>();
+  const [decodedPath, setDecodedPath] = useState<DecodedPath | undefined>();
 
   useEffect(() => {
     if (!id) {
@@ -31,6 +32,7 @@ const PaymentOneTime = () => {
     }
 
     const decodedPath = decodeLinkPath(id as string);
+    setDecodedPath(decodedPath);
     setRequestedAmount(ethers.utils.formatEther(decodedPath.amount));
     setRequestedToken(tokens.find(it => it.address === decodedPath.token));
   }, [id]);
@@ -69,7 +71,26 @@ const PaymentOneTime = () => {
   }
 
   const executePayment = async () => {
-    console.log("Execute payment");
+    if (!web3Provider || !decodedPath) {
+      return;
+    }
+
+    const wisp = Wisp__factory.connect(WISP_CONTRACT, web3Provider.getSigner(0));
+
+    const [proof] = ethers.utils.defaultAbiCoder.decode(["uint256[8]"], decodedPath.proof);
+    const transaction = await wisp.deposit(
+      [proof[0], proof[1]],
+      [[proof[2], proof[3]], [proof[4], proof[5]]],
+      [proof[6], proof[7]],
+      decodedPath.commitment,
+      decodedPath.publicKey,
+      decodedPath.amount,
+      decodedPath.token,
+      decodedPath.encryptedData
+    );
+    // todo: add spinner for transaction confirmations
+    await transaction.wait(1);
+    console.log(transaction);
   };
 
   return (
