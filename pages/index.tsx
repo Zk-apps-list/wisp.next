@@ -3,7 +3,7 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { providerOptions } from "../services/WalletConnect";
 import Web3Modal from "web3modal";
@@ -12,6 +12,8 @@ import Navbar from "../components/Navbar";
 import Jumbotron from "../components/Landing/Jumbotron";
 import HowItWorks from "../components/Landing/HowItWorks";
 import WhyWisp from "../components/Landing/WhyWisp";
+import { AuthContext } from "../contexts/AuthContext";
+import OverviewPage from "../components/Overview/Overview";
 
 export let web3Modal: any;
 if (typeof window !== "undefined") {
@@ -37,6 +39,7 @@ export type MenuItem = {
 
 const Home: NextPage = () => {
   const { landingBG, blocks, homeIcon, settingsIcon } = useColor();
+  const { account, isLoading } = useContext(AuthContext);
 
   const MenuItems: MenuItem[] = [
     {
@@ -54,20 +57,28 @@ const Home: NextPage = () => {
       href: '#why-wisp',
       icon: settingsIcon
     }
-  ]
+  ];
 
   return (
-    <Flex
-      align="center"
-      direction="column"
-      backgroundColor={landingBG}
-    >
-      <Navbar title="Home" menuItems={MenuItems} />
-      <Jumbotron />
-      <HowItWorks />
-      <WhyWisp />
-      <Footer bg={blocks} />
-    </Flex>
+    <>
+      {isLoading
+       ? null
+       : account ? (
+          <OverviewPage />
+        ) : (
+          <Flex
+            align="center"
+            direction="column"
+            backgroundColor={landingBG}
+          >
+            <Navbar title="Home" menuItems={MenuItems} />
+            <Jumbotron />
+            <HowItWorks />
+            <WhyWisp />
+            <Footer bg={blocks} />
+          </Flex>
+        )}
+    </>
   );
 };
 

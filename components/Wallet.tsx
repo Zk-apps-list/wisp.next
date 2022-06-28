@@ -2,7 +2,7 @@ import { Box, Button, Text } from "@chakra-ui/react";
 import React from "react";
 
 const Wallet = (props: any) => {
-  const { account, connectWallet, disconnect, isLoading, ml } = props;
+  const { account, connectWallet, disconnect, isLoading } = props;
 
   return (
     <>
@@ -15,7 +15,6 @@ const Wallet = (props: any) => {
             py="12px"
             height="34px"
             textAlign="center"
-            ml={ml || "36px"}
             _hover={{ bg: "primary.700" }}
             onClick={connectWallet}
             isLoading={isLoading}

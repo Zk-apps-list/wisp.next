@@ -6,17 +6,15 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { truncateWallet } from "../util/truncateWallet";
-import { useRouter } from "next/router";
-import Header from "../components/Header";
-import LeftPanel from "../components/LeftPanel";
-import { useColor } from "../hooks/useColor";
-import TransactionsTable from "../components/Transactions/TransactionsTable";
-import Navbar from "../components/Navbar";
-import { MenuItem } from "../pages";
-import { Token, tokens } from "../util/tokens";
-import CreateALink from "../components/CreateALink";
-import Dashboard from "../components/Dashboard";
+import Header from "../Header";
+import LeftPanel from "../LeftPanel";
+import { useColor } from "../../hooks/useColor";
+import TransactionsTable from "../Transactions/TransactionsTable";
+import Navbar from "../Navbar";
+import { MenuItem } from "../../pages";
+import { Token, tokens } from "../../util/tokens";
+import CreateALink from "../CreateALink";
+import Dashboard from "../Dashboard";
 
 const WithdrawButton = (props: any) => {
   return (

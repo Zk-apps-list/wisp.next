@@ -27,8 +27,6 @@ import { generateLinkPath } from "../util/linkPathCodec";
 const RequestOneTimeModal = (props: any) => {
   const { isOpen, onClose } = props;
 
-  const { sharedKeypair } = useContext(AuthContext);
-
   const [value, setValue] = useState<number | undefined>(undefined);
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(
     undefined
@@ -36,14 +34,14 @@ const RequestOneTimeModal = (props: any) => {
   const [generatedLink, setGeneratedLink] = useState<string | undefined>(
     undefined
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
   const { blockColor, textColor, inputColor, inputHover, chevronIcon } = useColor();
 
-  const reset = () => {
+  const resetFields = () => {
     setValue(undefined);
     setSelectedToken(undefined);
-    setGeneratedLink(undefined);
   };
 
   const closeTooltip = () => setTimeout(() => setIsCopied(false), 3000);
@@ -69,17 +67,17 @@ const RequestOneTimeModal = (props: any) => {
   };
 
   const generateLink = async () => {
-    if (!sharedKeypair) {
-      alert("Please connect wallet");
-      return;
-    } else if (!selectedToken || !value) {
+    if (!selectedToken || !value) {
       return;
     }
+    const sharedKeypairObj = JSON.parse(localStorage.getItem("sharedKeypair") as string);
 
-    // todo: spinner for link generation
+    setIsLoading(true);
     const amount = ethers.utils.parseEther(value.toString());
-    const path = await generateLinkPath(sharedKeypair, amount, selectedToken.address);
+    const path = await generateLinkPath(sharedKeypairObj, amount, selectedToken.address);
     setGeneratedLink(window.location.origin + "/pay/" + path);
+    resetFields();
+    setIsLoading(false);
   }
 
   return (
@@ -87,11 +85,12 @@ const RequestOneTimeModal = (props: any) => {
       isOpen={isOpen}
       onClose={() => {
         onClose();
-        reset();
+        resetFields();
+        setGeneratedLink(undefined);
       }}
     >
       <ModalOverlay />
-      <ModalContent backgroundColor={blockColor}>
+      <ModalContent backgroundColor={blockColor} pb="12px">
         <ModalHeader textStyle="app_med_18" color={textColor}>
           Request one time payment
         </ModalHeader>
@@ -149,15 +148,40 @@ const RequestOneTimeModal = (props: any) => {
             isDisabled={!selectedToken}
             onChange={handleValueChange}
           />
-
-          <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
+          {/* TODO: Add conversion to USD */}
+          {/* <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
             ~ 0 USD
-          </Text>
-        </ModalBody>
+          </Text> */}
 
-        <ModalFooter>
-          {!!generatedLink ? (
+          <Box
+            as={Button}
+            mt={"16px"}
+            backgroundColor="primary.800"
+            borderRadius="6px"
+            py="12px"
+            width="100%"
+            textAlign="center"
+            leftIcon={
+              <Image
+                src="icons/chain.svg"
+                alt="Chevron Down"
+                width="16px"
+                height="16px"
+              />
+            }
+            _hover={{ bg: "primary.700" }}
+            color="neutral.0"
+            textStyle="app_reg_14"
+            isDisabled={!selectedToken || !value}
+            isLoading={isLoading}
+            onClick={generateLink}
+          >
+            Generate link to request payment
+          </Box>
+
+          {!!generatedLink && (
             <Box
+              mt={"16px"}
               width="100%"
               p="8px"
               borderWidth="1px"
@@ -177,7 +201,7 @@ const RequestOneTimeModal = (props: any) => {
                 <Text
                   textStyle="app_reg_12"
                   color={textColor}
-                >{`${generatedLink.substring(0, 40)}...`}</Text>
+                >{`${generatedLink?.substring(0, 40)}...`}</Text>
               </Box>
               <Tooltip
                 label="Copied"
@@ -212,32 +236,8 @@ const RequestOneTimeModal = (props: any) => {
                 </Box>
               </Tooltip>
             </Box>
-          ) : (
-            <Box
-              as={Button}
-              backgroundColor="primary.800"
-              borderRadius="6px"
-              py="12px"
-              width="100%"
-              textAlign="center"
-              leftIcon={
-                <Image
-                  src="icons/chain.svg"
-                  alt="Chevron Down"
-                  width="16px"
-                  height="16px"
-                />
-              }
-              _hover={{ bg: "primary.700" }}
-              color="neutral.0"
-              textStyle="app_reg_14"
-              isDisabled={!selectedToken || !value}
-              onClick={generateLink}
-            >
-              Generate link to request payment
-            </Box>
           )}
-        </ModalFooter>
+        </ModalBody>
       </ModalContent>
     </Modal>
   );

@@ -38,16 +38,16 @@ const LeftPanel = () => {
         p="8px"
         borderRadius="6px"
         backgroundColor={
-          pathname === "/overview" ? "primary.800" : "transparent"
+          pathname === "/" ? "primary.800" : "transparent"
         }
         _hover={{
-          bg: pathname === "/overview" ? "primary.800" : "primary.100",
+          bg: pathname === "/" ? "primary.800" : "primary.100",
         }}
-        onClick={() => router.push(`/overview`)}
+        onClick={() => router.push(`/`)}
       >
         <Image
           src={
-            pathname === "/overview"
+            pathname === "/"
               ? "icons/dashboard.svg"
               : "icons/dashboard-default-light.svg"
           }

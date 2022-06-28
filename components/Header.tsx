@@ -44,12 +44,6 @@ const Header = () => {
       <Text color={textColor} textStyle="app_med_28">
         {title()}
       </Text>
-      <Wallet
-        account={account}
-        connectWallet={connectWallet}
-        disconnect={disconnect}
-        isLoading={isWalletLoading}
-      />
       <Box display="flex" flexDirection="row" ml="auto">
         <CreateALink />
       </Box>
@@ -61,6 +55,12 @@ const Header = () => {
       >
         <Image src={lightToggle} />
       </Button>
+      <Wallet
+        account={account}
+        connectWallet={connectWallet}
+        disconnect={disconnect}
+        isLoading={isWalletLoading}
+      />
     </Box>
   );
 };

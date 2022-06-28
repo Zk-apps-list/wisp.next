@@ -14,17 +14,18 @@ const PaymentOneTime = () => {
   const router = useRouter();
   const id = router.query.id;
 
-  const { account, web3Provider } = useContext(AuthContext);
+  const { account, connectWallet, disconnect, isWalletLoading, web3Provider } = useContext(AuthContext);
 
   const [error, setError] = useState<string>("");
 
-  const { chevronIcon, textColor, inputColor } = useColor();
+  const { textColor, inputColor } = useColor();
   const [balance, setBalance] = useState<string | undefined>();
   const [requestedAmount, setRequestedAmount] = useState<string | undefined>();
   const [requestedToken, setRequestedToken] = useState<Token | undefined>();
   const [tokenContract, setTokenContract] = useState<ERC20 | undefined>();
   const [needsApproval, setNeedsApproval] = useState<boolean>();
   const [decodedPath, setDecodedPath] = useState<DecodedPath | undefined>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!id) {
@@ -38,6 +39,10 @@ const PaymentOneTime = () => {
   }, [id]);
 
   useEffect(() => {
+    if(!web3Provider) {
+      connectWallet();
+    }
+
     if (!requestedToken || !web3Provider) {
       return;
     }
@@ -64,47 +69,63 @@ const PaymentOneTime = () => {
     if (!tokenContract || !requestedAmount) {
       return;
     }
-
-    // todo: add spinner for transaction confirmations
-    const transaction = await tokenContract.approve(WISP_CONTRACT, ethers.utils.parseEther(requestedAmount));
-    await transaction.wait(1);
+    
+    try {
+      setIsLoading(true);
+      const transaction = await tokenContract.approve(WISP_CONTRACT, ethers.utils.parseEther(requestedAmount));
+      await transaction.wait(1);
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const executePayment = async () => {
+    if(!web3Provider) {
+      connectWallet();
+    }
+
     if (!web3Provider || !decodedPath) {
       return;
     }
 
     const wisp = Wisp__factory.connect(WISP_CONTRACT, web3Provider.getSigner(0));
-
     const [proof] = ethers.utils.defaultAbiCoder.decode(["uint256[8]"], decodedPath.proof);
-    const transaction = await wisp.deposit(
-      [proof[0], proof[1]],
-      [[proof[2], proof[3]], [proof[4], proof[5]]],
-      [proof[6], proof[7]],
-      decodedPath.commitment,
-      decodedPath.publicKey,
-      decodedPath.amount,
-      decodedPath.token,
-      decodedPath.encryptedData
-    );
-    // todo: add spinner for transaction confirmations
-    await transaction.wait(1);
-    console.log(transaction);
+
+    try {
+      setIsLoading(true);
+      const transaction = await wisp.deposit(
+        [proof[0], proof[1]],
+        [[proof[2], proof[3]], [proof[4], proof[5]]],
+        [proof[6], proof[7]],
+        decodedPath.commitment,
+        decodedPath.publicKey,
+        decodedPath.amount,
+        decodedPath.token,
+        decodedPath.encryptedData
+      );
+      await transaction.wait(1);
+      console.log(transaction);
+    } catch (error: any) {
+      setError(error.reason);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <Box>
       <Text color={textColor} textStyle="app_med_18" textAlign="center">
-        Payment
+        Payment Request
       </Text>
-      <Text color={textColor} textStyle="app_reg_14" textAlign="center">
-        has been requested
-      </Text>
+      {!account && <Text color={textColor} textStyle="app_reg_14" textAlign="center">
+        Please connect your wallet to make payment
+      </Text>}
       <Box borderRadius="6px" backgroundColor={inputColor} p="16px" mt="16px">
-        <Text color={textColor} textStyle="app_reg_12" textAlign="center">
+        {account && <Text color={textColor} textStyle="app_reg_12" textAlign="center">
           Your balance: {balance} {requestedToken?.symbol}
-        </Text>
+        </Text>}
         <Box display="flex" flexDirection="row" justifyContent="center">
           <Box display="flex" flexDirection="row" justifyContent="center" alignItems="center">
             <Image
@@ -118,39 +139,55 @@ const PaymentOneTime = () => {
             <Text color={textColor} textStyle="app_reg_32">{requestedAmount} {requestedToken?.symbol}</Text>
           </Box>
         </Box>
-        <Box mt="4px" textAlign="center">
+        {/* TODO: Add conversion to USD */}
+        {/* <Box mt="4px" textAlign="center">
           <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
             ~ 0 USD
           </Text>
-        </Box>
+        </Box> */}
       </Box>
       {error && <Text mt="12px" color={"red"} textStyle="app_reg_14" textAlign="center">
-        {`You don't have enough token on your account`}
+        {`Error: ${error}`}
       </Text>}
 
-      <Box
-        as={Button}
-        backgroundColor="primary.800"
-        borderRadius="6px"
-        mt="32px"
-        py="12px"
-        width="100%"
-        textAlign="center"
-        leftIcon={
-          <Image
-            src="/icons/chain.svg"
-            alt="Chevron Down"
-            width="16px"
-            height="16px"
-          />
-        }
-        _hover={{ bg: "primary.700" }}
-        color="neutral.0"
-        textStyle="app_reg_14"
-        onClick={needsApproval ? approvePayment : executePayment}
-      >
-        {needsApproval ? "Approve Payment" : "Pay"}
-      </Box>
+      {!account
+        ? <Box
+            mt="32px"
+            textAlign="center"
+          >
+            <Wallet
+              account={account}
+              connectWallet={connectWallet}
+              disconnect={disconnect}
+              isLoading={isWalletLoading}
+            />
+          </Box>
+        : (
+          <Box
+            as={Button}
+            backgroundColor="primary.800"
+            borderRadius="6px"
+            mt="32px"
+            py="12px"
+            width="100%"
+            textAlign="center"
+            leftIcon={
+              <Image
+                src="/icons/chain.svg"
+                alt="Chevron Down"
+                width="16px"
+                height="16px"
+              />
+            }
+            _hover={{ bg: "primary.700" }}
+            color="neutral.0"
+            textStyle="app_reg_14"
+            isLoading={isLoading}
+            onClick={needsApproval ? approvePayment : executePayment}
+          >
+            {needsApproval ? "Approve Payment" : "Pay"}
+          </Box>
+        )}
     </Box>
   )
 };
@@ -252,9 +289,10 @@ const PaymentPermanent = () => {
           onChange={handleValueChange}
         />
 
-        <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
+        {/* TODO: Add conversion to USD */}
+        {/* <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
           ~ 0 USD
-        </Text>
+        </Text> */}
       </Box>
 
       {error && <Text mt="12px" color={textColor} textStyle="app_reg_14" textAlign="center">
@@ -289,47 +327,6 @@ const PaymentPermanent = () => {
   )
 };
 
-const WalletRequest = () => {
-  const { account, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
-
-  const { textColor } = useColor();
-
-
-  return (
-    <>
-      <Box>
-        <Text color={textColor} textStyle="app_med_18" textAlign="center">
-          Connect your wallet to pay
-        </Text>
-      </Box>
-      <Box mt="12px">
-        <Text
-          color="neutral.500"
-          textStyle="app_reg_12"
-          textAlign="center"
-        >{`By connecting your wallet, you agree to Wisp's Terms, Privacy Policy, and Community Standards.`}</Text>
-      </Box>
-      <Box mt="32px" textAlign="center">
-        <Wallet
-          account={account}
-          connectWallet={connectWallet}
-          disconnect={disconnect}
-          isLoading={isWalletLoading}
-          ml="0"
-        />
-      </Box>
-      <Box mt="32px" textAlign="center">
-        <Text color={textColor} textStyle="app_reg_14">
-          New to crypto?
-          <Text as="span" ml="5px" color="primary.700">
-            Learn more about wallets.
-          </Text>
-        </Text>
-      </Box>
-    </>
-  )
-};
-
 const Request = () => {
   const { account } = useContext(AuthContext);
 
@@ -354,10 +351,7 @@ const Request = () => {
             borderRadius="6px"
             mt="32px"
           >
-            {!account ?
-              <WalletRequest/>
-              : <PaymentOneTime/>
-            }
+            <PaymentOneTime/>
           </Box>
         </Box>
       </Box>
