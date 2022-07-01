@@ -49,10 +49,11 @@ const PaymentOneTime = () => {
 
     const tokenContract = ERC20__factory.connect(requestedToken.address, web3Provider.getSigner(0));
     setTokenContract(tokenContract);
-
-    tokenContract.balanceOf(account)
-      .then(balance => setBalance(ethers.utils.formatEther(balance)))
-      .catch(console.log);
+    if(account) {
+      tokenContract.balanceOf(account)
+        .then(balance => setBalance(ethers.utils.formatEther(balance)))
+        .catch(console.log);
+    }
   }, [requestedToken, account, web3Provider]);
 
   useEffect(() => {
@@ -60,9 +61,11 @@ const PaymentOneTime = () => {
       return;
     }
 
-    tokenContract.allowance(account, WISP_CONTRACT)
-      .then(allowance => setNeedsApproval(ethers.utils.parseEther(requestedAmount).gt(allowance)))
-      .catch(console.log);
+    if(account) {
+      tokenContract.allowance(account, WISP_CONTRACT)
+        .then(allowance => setNeedsApproval(ethers.utils.parseEther(requestedAmount).gt(allowance)))
+        .catch(console.log);
+    }
   }, [tokenContract, account, requestedAmount]);
 
   const approvePayment = async () => {
@@ -115,15 +118,15 @@ const PaymentOneTime = () => {
   };
 
   return (
-    <Box>
-      <Text color={textColor} textStyle="app_med_18" textAlign="center">
+    <Box backgroundColor="neutral.0" p="24px" borderRadius="12px" borderWidth="1px" borderColor="neutral.100">
+      <Text color="neutral.800" textStyle="app_med_18" textAlign="center">
         Payment Request
       </Text>
-      {!account && <Text color={textColor} textStyle="app_reg_14" textAlign="center">
+      {!account && <Text color="neutral.400" textStyle="app_reg_14" textAlign="center">
         Please connect your wallet to make payment
       </Text>}
-      <Box borderRadius="6px" backgroundColor={inputColor} p="16px" mt="16px">
-        {account && <Text color={textColor} textStyle="app_reg_12" textAlign="center">
+      <Box borderRadius="12px" backgroundColor="light_neutral.50" p="16px" mt="16px">
+        {account && <Text color="neutral.500" textStyle="app_reg_14" textAlign="center">
           Your balance: {balance} {requestedToken?.symbol}
         </Text>}
         <Box display="flex" flexDirection="row" justifyContent="center">
@@ -131,12 +134,12 @@ const PaymentOneTime = () => {
             <Image
               src={`/icons/${requestedToken?.symbol.toLowerCase()}_logo.svg`}
               alt="Token Logo"
-              width="32px"
-              height="32px"
+              width="30px"
+              height="30px"
             />
           </Box>
           <Box ml="8px">
-            <Text color={textColor} textStyle="app_reg_32">{requestedAmount} {requestedToken?.symbol}</Text>
+            <Text color="neutral.800" textStyle="app_reg_24">{requestedAmount} {requestedToken?.symbol}</Text>
           </Box>
         </Box>
         {/* TODO: Add conversion to USD */}
@@ -342,10 +345,9 @@ const Request = () => {
       >
         <Box>
           <Box display="flex" justifyContent="center">
-            <Image src={logoMd} alt="logo"/>
+            <Image src="/icons/logo-md.svg" alt="logo" width="72px" height="45px" />
           </Box>
           <Box
-            p="24px"
             width="400px"
             backgroundColor={blockColor}
             borderRadius="6px"

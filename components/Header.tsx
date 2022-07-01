@@ -7,16 +7,13 @@ import {
   useColorMode
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import RequestOneTimeModal from "./RequestOneTimeModal";
 import { useColor } from "../hooks/useColor";
-import Wallet from "./Wallet";
 import { AuthContext } from "../contexts/AuthContext";
-import CreateALink from "./CreateALink";
+import { truncateWallet } from "../util/truncateWallet";
 
 const Header = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const { account, connectWallet, disconnect, isWalletLoading } =
-    useContext(AuthContext);
+  const { toggleColorMode } = useColorMode();
+  const { account} = useContext(AuthContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -25,8 +22,8 @@ const Header = () => {
 
   const title = () => {
     switch (pathname) {
-      case "/overview":
-        return "Overview";
+      case "/":
+        return "Portfolio";
       case "/transactions":
       default:
         return "Transactions";
@@ -35,32 +32,15 @@ const Header = () => {
 
   return (
     <Box
-      py="32px"
-      px="32px"
+      p="32px"
       display={{ base: "none", sm: "flex" }}
       flexDirection="row"
-      justifyContent="start"
+      justifyContent="space-between"
     >
-      <Text color={textColor} textStyle="app_med_28">
+      <Text color={textColor} textStyle="app_bold_28">
         {title()}
       </Text>
-      <Box display="flex" flexDirection="row" ml="auto">
-        <CreateALink />
-      </Box>
-      <Button
-        ml="16px"
-        backgroundColor={blockColor}
-        _hover={{ bg: addressHoverBG }}
-        onClick={toggleColorMode}
-      >
-        <Image src={lightToggle} />
-      </Button>
-      <Wallet
-        account={account}
-        connectWallet={connectWallet}
-        disconnect={disconnect}
-        isLoading={isWalletLoading}
-      />
+      {account && <Text color="neutral.800" textStyle="app_med_14" mt="10px">{truncateWallet(account, 6)}</Text>}
     </Box>
   );
 };

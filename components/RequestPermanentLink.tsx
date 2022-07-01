@@ -1,13 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
   Image,
-  Input,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -17,19 +12,11 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import { AuthContext } from "../contexts/AuthContext";
-import { ethers } from "ethers";
-import { Token, tokens } from "../util/tokens";
 import { useColor } from "../hooks/useColor";
-import { generateLinkPath } from "../util/linkPathCodec";
 
-const RequestOneTimeModal = (props: any) => {
+const RequestPermanentLink = (props: any) => {
   const { isOpen, onClose } = props;
 
-  const [value, setValue] = useState<number | undefined>(undefined);
-  const [selectedToken, setSelectedToken] = useState<Token | undefined>(
-    undefined
-  );
   const [generatedLink, setGeneratedLink] = useState<string | undefined>(
     undefined
   );
@@ -38,44 +25,15 @@ const RequestOneTimeModal = (props: any) => {
 
   const { blockColor, textColor, inputColor, inputHover, chevronIcon } = useColor();
 
-  const resetFields = () => {
-    setValue(undefined);
-    setSelectedToken(undefined);
-  };
-
   const closeTooltip = () => setTimeout(() => setIsCopied(false), 3000);
 
-  const handleValueChange = (event: any) => setValue(event.target.value);
-
-  const token = (token: Token) => {
-    return (
-      <Box flexDirection="row" display="flex">
-        <Box>
-          <Image
-            src={`icons/${token.symbol.toLowerCase()}_logo.svg`}
-            alt={`${token.name} Logo`}
-            width="24px"
-            height="24px"
-          />
-        </Box>
-        <Text color={textColor} textStyle="app_reg_14" ml="8px" mt="2px">
-          {token.name + ` (${token.symbol})`}
-        </Text>
-      </Box>
-    );
-  };
-
   const generateLink = async () => {
-    if (!selectedToken || !value) {
-      return;
-    }
     const sharedKeypairObj = JSON.parse(localStorage.getItem("sharedKeypair") as string);
 
     setIsLoading(true);
-    const amount = ethers.utils.parseEther(value.toString());
-    const path = await generateLinkPath(sharedKeypairObj, amount, selectedToken.address);
-    setGeneratedLink(window.location.origin + "/pay/" + path);
-    resetFields();
+    // TODO: Generate Permanent Link
+    // const path = await generateLinkPath(sharedKeypairObj, amount, selectedToken.address);
+    // setGeneratedLink(window.location.origin + "/pay/" + path);
     setIsLoading(false);
   }
 
@@ -84,73 +42,19 @@ const RequestOneTimeModal = (props: any) => {
       isOpen={isOpen}
       onClose={() => {
         onClose();
-        resetFields();
         setGeneratedLink(undefined);
       }}
     >
       <ModalOverlay />
       <ModalContent backgroundColor={blockColor} pb="12px">
         <ModalHeader textStyle="app_med_18" color={textColor}>
-          Request one time payment
+          Permanent Link
         </ModalHeader>
         <ModalCloseButton color={textColor} />
         <ModalBody>
           <Text textStyle="app_reg_12" color={textColor}>
-            Invite to request payment by sharing link
+            Create a permanent payment link
           </Text>
-          <Menu>
-            <MenuButton
-              as={Button}
-              mt="32px"
-              width="100%"
-              textAlign={"left"}
-              color={textColor}
-              backgroundColor={inputColor}
-              _hover={{ bg: inputHover }}
-              _active={{ bg: "neutral_800" }}
-              rightIcon={
-                <Image
-                  src={chevronIcon}
-                  alt="Chevron Down"
-                  width="16px"
-                  height="16px"
-                />
-              }
-            >
-              {!!selectedToken ? token(selectedToken) : "Select Token"}
-            </MenuButton>
-            <MenuList backgroundColor={inputColor} borderWidth="0px">
-              {
-                tokens.map(it => {
-                  return (
-                    <MenuItem
-                      key={it.address}
-                      _hover={{ bg: inputHover }}
-                      _focus={{ bg: "neutral_800" }}
-                      onClick={() => setSelectedToken(it)}
-                    >
-                      { token(it) }
-                    </MenuItem>
-                  );
-                })
-              }
-            </MenuList>
-          </Menu>
-
-          <Input
-            mt="16px"
-            value={value}
-            placeholder="0"
-            color={textColor}
-            borderWidth="0px"
-            backgroundColor={inputColor}
-            isDisabled={!selectedToken}
-            onChange={handleValueChange}
-          />
-          {/* TODO: Add conversion to USD */}
-          {/* <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
-            ~ 0 USD
-          </Text> */}
 
           <Box
             as={Button}
@@ -171,7 +75,6 @@ const RequestOneTimeModal = (props: any) => {
             _hover={{ bg: "primary.700" }}
             color="neutral.0"
             textStyle="app_reg_14"
-            isDisabled={!selectedToken || !value}
             isLoading={isLoading}
             onClick={generateLink}
           >
@@ -242,4 +145,4 @@ const RequestOneTimeModal = (props: any) => {
   );
 };
 
-export default RequestOneTimeModal;
+export default RequestPermanentLink;

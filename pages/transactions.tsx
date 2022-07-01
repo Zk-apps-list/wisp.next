@@ -1,11 +1,12 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Image, Flex, Button, Text } from "@chakra-ui/react";
 import React from "react";
 import Header from "../components/Header";
 import LeftPanel from "../components/LeftPanel";
 import { useColor } from "../hooks/useColor";
-import TransactionsTable from '../components/Transactions/TransactionsTable';
+import TransactionTable from '../components/Transactions/Transactions';
 import Navbar from "../components/Navbar";
 import { MenuItem } from './index';
+import CTAButton from "../components/CTAButton";
 
 const TransactionsPage = () => {
   const { overviewBG, homeIcon, settingsIcon } = useColor();
@@ -42,9 +43,16 @@ const TransactionsPage = () => {
           <Box display={{ base: "none", md: "inline"}} width="100%">
             <Header />
           </Box>
-          <Box width="100%">
-            <Box width={{base:"100%", md: "90%"}} mt={{ base: "100px", md: "0px" }}>
-              <TransactionsTable showTitle />
+          <Box mx="32px" textAlign="right">
+            <CTAButton
+              name="Export"
+              icon="/icons/arrow_down.svg"
+              onClick={() => console.log('Export')}
+            />
+          </Box>
+          <Box width="100%" mt="16px">
+            <Box width={{base:"100%"}} mt={{ base: "100px", md: "0px" }}>
+              <TransactionTable />
             </Box>
           </Box>
         </Box>
