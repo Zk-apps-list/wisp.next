@@ -21,7 +21,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { ethers } from "ethers";
 import { Token, tokens } from "../util/tokens";
 import { useColor } from "../hooks/useColor";
-import { generateLinkPath } from "../util/linkPathCodec";
+import { generateOneTimeLinkPath } from "../util/linkPathCodec";
 
 const RequestOneTimeModal = (props: any) => {
   const { isOpen, onClose } = props;
@@ -73,7 +73,7 @@ const RequestOneTimeModal = (props: any) => {
 
     setIsLoading(true);
     const amount = ethers.utils.parseEther(value.toString());
-    const path = await generateLinkPath(sharedKeypairObj, amount, selectedToken.address);
+    const path = await generateOneTimeLinkPath(sharedKeypairObj, amount, selectedToken.address);
     setGeneratedLink(window.location.origin + "/pay/" + path);
     resetFields();
     setIsLoading(false);

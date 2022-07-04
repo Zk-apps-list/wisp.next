@@ -13,6 +13,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { useColor } from "../hooks/useColor";
+import { generatePermanentLinkPath } from "../util/linkPathCodec";
 
 const RequestPermanentLink = (props: any) => {
   const { isOpen, onClose } = props;
@@ -31,9 +32,7 @@ const RequestPermanentLink = (props: any) => {
     const sharedKeypairObj = JSON.parse(localStorage.getItem("sharedKeypair") as string);
 
     setIsLoading(true);
-    // TODO: Generate Permanent Link
-    // const path = await generateLinkPath(sharedKeypairObj, amount, selectedToken.address);
-    // setGeneratedLink(window.location.origin + "/pay/" + path);
+    setGeneratedLink(window.location.origin + "/pay/" + generatePermanentLinkPath(sharedKeypairObj));
     setIsLoading(false);
   }
 
@@ -45,12 +44,12 @@ const RequestPermanentLink = (props: any) => {
         setGeneratedLink(undefined);
       }}
     >
-      <ModalOverlay />
+      <ModalOverlay/>
       <ModalContent backgroundColor={blockColor} pb="12px">
         <ModalHeader textStyle="app_med_18" color={textColor}>
           Permanent Link
         </ModalHeader>
-        <ModalCloseButton color={textColor} />
+        <ModalCloseButton color={textColor}/>
         <ModalBody>
           <Text textStyle="app_reg_12" color={textColor}>
             Create a permanent payment link

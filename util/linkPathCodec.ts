@@ -1,40 +1,20 @@
 import { BigNumber, ethers } from "ethers";
-import { encryptData } from "./encryption";
-import { generateDepositProof } from "./proof";
-import { poseidonHash } from "./hasher";
 import { Keypair } from "./keypair";
-import { randomBN } from "./random";
+import { getDepositData } from "./deposit";
 
-export const generateLinkPath = async (keypair: Keypair, amount: BigNumber, token: string) => {
-  const blinding = randomBN().toHexString();
-  const publicKeyBuff = ethers.utils.arrayify(keypair.publicKey);
-  const amountBuff = ethers.utils.arrayify(amount.toHexString());
-  const tokenBuff = ethers.utils.arrayify(token);
-  const encryptedData = encryptData(keypair.encryptionKey, Buffer.concat([
-    publicKeyBuff,
-    ethers.utils.arrayify(blinding),
-    amountBuff,
-    tokenBuff,
-  ]));
-  const encryptedDataHash = ethers.utils.solidityKeccak256(["bytes"], [encryptedData]);
+export const generatePermanentLinkPath = (keypair: Keypair): string => {
+  return keypair.publicKey.slice(2) + Buffer.from(keypair.encryptionKey, "base64").toString("hex");
+}
 
-  const proof = await generateDepositProof({
-    publicKey: keypair.publicKey,
-    blinding: blinding,
-    amount: amount.toString(),
-    currency: token,
-    encryptedDataHash: encryptedDataHash
-  });
-
-  const commitment = poseidonHash([keypair.publicKey, blinding, amount, token]);
-
+export const generateOneTimeLinkPath = async (keypair: Keypair, amount: BigNumber, token: string) => {
+  const depositData = await getDepositData(keypair, amount, token);
   return Buffer.concat([
-    ethers.utils.arrayify(proof), // 256 bytes
-    ethers.utils.arrayify(commitment), // 32 bytes
-    publicKeyBuff, // 32 bytes
-    tokenBuff, // 20 bytes
-    Buffer.alloc(32 - amountBuff.length), amountBuff,  // 32 bytes
-    encryptedData //
+    ethers.utils.arrayify(depositData.proof), // 256 bytes
+    ethers.utils.arrayify(depositData.commitment), // 32 bytes
+    depositData.publicKey, // 32 bytes
+    depositData.token, // 20 bytes
+    Buffer.alloc(32 - depositData.amount.length), depositData.amount,  // 32 bytes
+    depositData.encryptedData // arbitrary length
   ]).toString("hex");
 }
 

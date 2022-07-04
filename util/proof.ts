@@ -15,8 +15,8 @@ export type DepositInput = {
 export const generateDepositProof = async (input: DepositInput): Promise<string> => {
   const { proof } = await groth16.fullProve(
     utils.stringifyBigInts(input),
-    "./circuits/deposit.wasm",
-    "./circuits/deposit.zkey");
+    "/circuits/deposit.wasm",
+    "/circuits/deposit.zkey");
 
   return ethers.utils.defaultAbiCoder.encode(["uint256[8]"],
     [[
