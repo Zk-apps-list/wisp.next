@@ -7,13 +7,12 @@ import { useContext, useEffect, useState } from "react";
 
 import { providerOptions } from "../services/WalletConnect";
 import Web3Modal from "web3modal";
-import { useColor } from "../hooks/useColor";
 import Navbar from "../components/Navbar";
 import Jumbotron from "../components/Landing/Jumbotron";
 import HowItWorks from "../components/Landing/HowItWorks";
 import WhyWisp from "../components/Landing/WhyWisp";
 import { AuthContext } from "../contexts/AuthContext";
-import OverviewPage from "../components/Overview/Overview";
+import PortfolioPage from "../components/Portfolio/Portfolio";
 
 export let web3Modal: any;
 if (typeof window !== "undefined") {
@@ -38,24 +37,23 @@ export type MenuItem = {
 }
 
 const Home: NextPage = () => {
-  const { landingBG, blocks, homeIcon, settingsIcon } = useColor();
   const { account, isLoading } = useContext(AuthContext);
 
   const MenuItems: MenuItem[] = [
     {
       name: 'Home',
       href: '#',
-      icon: homeIcon
+      icon: "/icons/home-icon-light.svg"
     },
     {
       name: 'How it works',
       href: '#how-it-works',
-      icon: settingsIcon
+      icon: "/icons/settings-icon-light.svg"
     },
     {
       name: 'Why Wisp',
       href: '#why-wisp',
-      icon: settingsIcon
+      icon: "/icons/settings-icon-light.svg"
     }
   ];
 
@@ -64,18 +62,18 @@ const Home: NextPage = () => {
       {isLoading
        ? null
        : account ? (
-          <OverviewPage />
+          <PortfolioPage />
         ) : (
           <Flex
             align="center"
             direction="column"
-            backgroundColor={landingBG}
+            backgroundColor="light_neutral.50"
           >
             <Navbar title="Home" menuItems={MenuItems} />
             <Jumbotron />
             <HowItWorks />
             <WhyWisp />
-            <Footer bg={blocks} />
+            <Footer bg="neutral.0" />
           </Flex>
         )}
     </>

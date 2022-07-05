@@ -6,11 +6,8 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import { useColor } from '../../hooks/useColor';
 
 const Jumbotron = () => {
-  const { landingPhones, contrastText, dimText } = useColor();
-
   return (
     <>
       <Flex mt="138px">
@@ -19,7 +16,7 @@ const Jumbotron = () => {
           mx="24px"
           textStyle={{ base: "land_reg_35", md: "land_reg_56" }}
           textAlign="center"
-          color={contrastText}
+          color="light_neutral.800"
         >
             Turn your <Box as="span" fontWeight="medium">public wallet</Box><br />into {" "}
           <Box as="span" fontWeight="medium">
@@ -32,7 +29,7 @@ const Jumbotron = () => {
           maxWidth="600px"
           textStyle="land_light_14_200"
           textAlign="center"
-          color={dimText}
+          color="light_neutral.600"
           mx="30px"
         >
           Wisp Finance is the easiest, safest, and fastest way to request secure and private payment using cryptocurrency without revealing your wallet address.
@@ -40,7 +37,7 @@ const Jumbotron = () => {
       </Flex>
       <Box overflow="hidden" mt="56px" width="100%">
         <Image
-          src={landingPhones}
+          src="/images/landing-phones-light.png"
           alt="jumbotron image"
           width={{
             base: "875px",

@@ -1,0 +1,184 @@
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Image,
+  Input,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalHeader,
+  ModalOverlay,
+  Text,
+} from "@chakra-ui/react";
+import { ethers } from "ethers";
+import { Token, tokens } from "../../util/tokens";
+
+const TransferModal = (props: any) => {
+  const { isOpen, onClose } = props;
+
+  const [value, setValue] = useState<number | undefined>(undefined);
+  const [wallet, setWallet] = useState<number | undefined>(undefined);
+  const [selectedToken, setSelectedToken] = useState<Token | undefined>(
+    undefined
+  );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const resetFields = () => {
+    setValue(undefined);
+    setSelectedToken(undefined);
+  };
+
+  const handleValueChange = (event: any) => setValue(event.target.value);
+  const handleWalletChange = (event: any) => setWallet(event.target.value);
+
+  const token = (token: Token) => {
+    return (
+      <Box flexDirection="row" display="flex">
+        <Box>
+          <Image
+            src={`icons/${token.symbol.toLowerCase()}_logo.svg`}
+            alt={`${token.name} Logo`}
+            width="24px"
+            height="24px"
+          />
+        </Box>
+        <Text color="light_neutral.800" textStyle="app_reg_14" ml="8px" mt="2px">
+          {token.name + ` (${token.symbol})`}
+        </Text>
+      </Box>
+    );
+  };
+
+  const transfer = async () => {
+    if (!selectedToken || !value) {
+      return;
+    }
+
+    setIsLoading(true);
+    const amount = ethers.utils.parseEther(value.toString());
+    resetFields();
+    setIsLoading(false);
+  }
+
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={() => {
+        onClose();
+        resetFields();
+      }}
+    >
+      <ModalOverlay />
+      <ModalContent backgroundColor="light_neutral.100" pb="12px">
+        <ModalHeader textStyle="app_med_18" color="light_neutral.800">
+          Transfer
+        </ModalHeader>
+        <ModalCloseButton color="light_neutral.800" />
+        <ModalBody>
+          <Text textStyle="app_reg_12" color="light_neutral.800">
+            Transfer funds to a wallet
+          </Text>
+          <Menu>
+            <MenuButton
+              as={Button}
+              mt="32px"
+              width="100%"
+              textAlign={"left"}
+              color="light_neutral.800"
+              backgroundColor="light_neutral.0"
+              _hover={{ bg: "light_neutral.50" }}
+              _active={{ bg: "neutral_800" }}
+              rightIcon={
+                <Image
+                  src="/icons/chevron_down.svg"
+                  alt="Chevron Down"
+                  width="16px"
+                  height="16px"
+                />
+              }
+            >
+              {!!selectedToken ? token(selectedToken) : "Select Token"}
+            </MenuButton>
+            <MenuList backgroundColor="light_neutral.0" borderWidth="0px">
+              {
+                tokens.map(it => {
+                  return (
+                    <MenuItem
+                      key={it.address}
+                      _hover={{ bg: "light_neutral.50" }}
+                      _focus={{ bg: "neutral_800" }}
+                      onClick={() => setSelectedToken(it)}
+                    >
+                      { token(it) }
+                    </MenuItem>
+                  );
+                })
+              }
+            </MenuList>
+          </Menu>
+
+          <Input
+            mt="16px"
+            value={value}
+            placeholder="0"
+            color="light_neutral.800"
+            borderWidth="0px"
+            backgroundColor="light_neutral.0"
+            isDisabled={!selectedToken}
+            onChange={handleValueChange}
+          />
+
+          <Input
+            mt="16px"
+            value={wallet}
+            placeholder="Wallet Address"
+            color="light_neutral.800"
+            borderWidth="0px"
+            backgroundColor="light_neutral.0"
+            isDisabled={!selectedToken}
+            onChange={handleWalletChange}
+          />
+          {/* TODO: Add conversion to USD */}
+          {/* <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
+            ~ 0 USD
+          </Text> */}
+
+          <Box
+            as={Button}
+            mt={"16px"}
+            backgroundColor="primary.800"
+            borderRadius="6px"
+            py="12px"
+            width="100%"
+            textAlign="center"
+            leftIcon={
+              <Image
+                src="icons/chain.svg"
+                alt="Chevron Down"
+                width="16px"
+                height="16px"
+              />
+            }
+            _hover={{ bg: "primary.700" }}
+            color="neutral.0"
+            textStyle="app_reg_14"
+            isDisabled={!selectedToken || !value || !wallet}
+            isLoading={isLoading}
+            onClick={transfer}
+          >
+            Transfer
+          </Box>
+
+        </ModalBody>
+      </ModalContent>
+    </Modal>
+  );
+};
+
+export default TransferModal;

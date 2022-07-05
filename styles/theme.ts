@@ -3,13 +3,22 @@ import { extendTheme } from "@chakra-ui/react";
 const appTheme = extendTheme({
   colors: {
     primary: {
-      900: "#094BA9",
-      800: "#1169C8",
-      700: "#147BDA",
+      900: "#0129a2",
+      800: "#1c3db6",
+      700: "#2748c1",
+      600: "#3252ce",
+      500: "#385bd9",
+      400: "#5A74E0",
+      300: "#7A8FE6",
+      200: "#A2AFED",
+      100: "#C7CEF4",
+      50: "#E9ECFB",
       0: "#F4F8FB",
     },
     red: "#DF5954",
+    dark_red: "#C53731",
     green: "#41BC5E",
+    light_green: "#EFF8F2",
     neutral: {
       900: "#27292b",
       800: "#333638",
@@ -115,6 +124,18 @@ const appTheme = extendTheme({
       fontFamily: `Urbanist, sans-serif`,
       fontSize: "14px",
       fontWeight: 300,
+      lineHeight: "150%",
+    },
+    app_med_10: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "10px",
+      fontWeight: 500,
+      lineHeight: "150%",
+    },
+    app_med_12: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "12px",
+      fontWeight: 500,
       lineHeight: "150%",
     },
     app_med_14: {

@@ -4,7 +4,6 @@ import Wallet from "../../components/Wallet";
 import { AuthContext } from "../../contexts/AuthContext";
 import { useRouter } from 'next/router'
 import { Token, tokens } from "../../util/tokens";
-import { useColor } from "../../hooks/useColor";
 import { DecodedPath, decodeLinkPath } from "../../util/linkPathCodec";
 import { BigNumber, ethers } from "ethers";
 import { ERC20, ERC20__factory, Wisp__factory } from "../../contracts";
@@ -19,7 +18,6 @@ const PaymentOneTime = ({ id }: Props) => {
 
   const [error, setError] = useState<string>("");
 
-  const { textColor, inputColor } = useColor();
   const [balance, setBalance] = useState<string | undefined>();
   const [requestedAmount, setRequestedAmount] = useState<string | undefined>();
   const [requestedToken, setRequestedToken] = useState<Token | undefined>();
@@ -205,8 +203,6 @@ const PaymentPermanent = ({ id }: Props) => {
   const [allowance, setAllowance] = useState<BigNumber | undefined>();
   const [sharedKeypair, setSharedKeypair] = useState<Keypair | undefined>();
 
-  const { textColor, inputColor, inputHover, chevronIcon } = useColor();
-
   useEffect(() => {
     if (!id) {
       return;
@@ -244,7 +240,7 @@ const PaymentPermanent = ({ id }: Props) => {
             height="24px"
           />
         </Box>
-        <Text color={textColor} textStyle="app_reg_14" ml="8px" mt="2px">
+        <Text color="light_neutral.800" textStyle="app_reg_14" ml="8px" mt="2px">
           {token.name + ` (${token.symbol})`}
         </Text>
       </Box>
@@ -324,12 +320,12 @@ const PaymentPermanent = ({ id }: Props) => {
   return (
     <Box>
       <Box>
-        <Text color={textColor} textStyle="app_med_18" textAlign="center">
+        <Text color="light_neutral.800" textStyle="app_med_18" textAlign="center">
           Payment
         </Text>
       </Box>
       <Box>
-        <Text color={textColor} textStyle="app_reg_14" textAlign="center">
+        <Text color="light_neutral.800" textStyle="app_reg_14" textAlign="center">
           You can make any contribution you want
         </Text>
       </Box>
@@ -340,13 +336,13 @@ const PaymentPermanent = ({ id }: Props) => {
             mt="32px"
             width="100%"
             textAlign={"left"}
-            color={textColor}
-            backgroundColor={inputColor}
-            _hover={{ bg: inputHover }}
+            color="light_neutral.800"
+            backgroundColor="light_neutral.0"
+            _hover={{ bg: "light_neutral.50" }}
             _active={{ bg: "neutral_800" }}
             rightIcon={
               <Image
-                src={chevronIcon}
+                src="/icons/chevron_down.svg"
                 alt="Chevron Down"
                 width="16px"
                 height="16px"
@@ -355,13 +351,13 @@ const PaymentPermanent = ({ id }: Props) => {
           >
             {!!selectedToken ? token(selectedToken) : "Select Token"}
           </MenuButton>
-          <MenuList backgroundColor={inputColor} borderWidth="0px">
+          <MenuList backgroundColor="light_neutral.0" borderWidth="0px">
             {
               tokens.map(it => {
                 return (
                   <MenuItem
                     key={it.address}
-                    _hover={{ bg: inputHover }}
+                    _hover={{ bg: "light_neutral.50" }}
                     _focus={{ bg: "neutral_800" }}
                     onClick={() => setSelectedToken(it)}
                   >
@@ -377,9 +373,9 @@ const PaymentPermanent = ({ id }: Props) => {
           mt="16px"
           value={value}
           placeholder="0"
-          color={textColor}
+          color="light_neutral.800"
           borderWidth="0px"
-          backgroundColor={inputColor}
+          backgroundColor="light_neutral.0"
           isDisabled={!selectedToken}
           onChange={handleValueChange}
         />
@@ -390,7 +386,7 @@ const PaymentPermanent = ({ id }: Props) => {
         </Text> */}
       </Box>
 
-      {error && <Text mt="12px" color={textColor} textStyle="app_reg_14" textAlign="center">
+      {error && <Text mt="12px" color="light_neutral.800" textStyle="app_reg_14" textAlign="center">
         {`You don't have enough token on your account`}
       </Text>}
 
@@ -407,10 +403,8 @@ const Request = () => {
   const router = useRouter();
   const id = router.query.id;
 
-  const { blockColor, logoMd, requestBG } = useColor();
-
   return (
-    <Box backgroundColor={requestBG} height="100vh">
+    <Box backgroundColor="light_neutral.100" height="100vh">
       <Box
         height="100%"
         display="flex"
@@ -423,7 +417,7 @@ const Request = () => {
           </Box>
           <Box
             width="400px"
-            backgroundColor={blockColor}
+            backgroundColor="light_neutral.100"
             borderRadius="6px"
             mt="32px"
           >

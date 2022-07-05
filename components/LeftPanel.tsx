@@ -1,7 +1,6 @@
 import { Box, Button, Flex, Image, Link, Text } from "@chakra-ui/react";
 import React, { useContext } from "react";
 import { useRouter } from "next/router";
-import { useColor } from "../hooks/useColor";
 import { AuthContext } from "../contexts/AuthContext";
 
 const LeftPanel = () => {
@@ -9,7 +8,6 @@ const LeftPanel = () => {
   const pathname = router.pathname;
 
   const { disconnect } = useContext(AuthContext);
-  const { logoMd } = useColor();
 
   return (
     <Box
@@ -32,10 +30,10 @@ const LeftPanel = () => {
         }}
         flexDirection="column"
       >
-        <Link onClick={() => router.push(`/`)}>
-          <Box textAlign="center" m="12px" p="8px">
+        <Link m="12px" onClick={() => router.push(`/`)}>
+          <Box textAlign="center" p="8px">
             <Image
-              src={logoMd}
+              src="/icons/logo-md-light.svg"
               alt="Wisp Logo"
               mx="auto"
             />

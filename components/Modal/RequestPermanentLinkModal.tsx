@@ -12,8 +12,7 @@ import {
   Text,
   Tooltip,
 } from "@chakra-ui/react";
-import { useColor } from "../hooks/useColor";
-import { generatePermanentLinkPath } from "../util/linkPathCodec";
+import { generatePermanentLinkPath } from "../../util/linkPathCodec";
 
 const RequestPermanentLink = (props: any) => {
   const { isOpen, onClose } = props;
@@ -23,8 +22,6 @@ const RequestPermanentLink = (props: any) => {
   );
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isCopied, setIsCopied] = useState<boolean>(false);
-
-  const { blockColor, textColor, inputColor, inputHover, chevronIcon } = useColor();
 
   const closeTooltip = () => setTimeout(() => setIsCopied(false), 3000);
 
@@ -44,14 +41,14 @@ const RequestPermanentLink = (props: any) => {
         setGeneratedLink(undefined);
       }}
     >
-      <ModalOverlay/>
-      <ModalContent backgroundColor={blockColor} pb="12px">
-        <ModalHeader textStyle="app_med_18" color={textColor}>
+      <ModalOverlay />
+      <ModalContent backgroundColor="light_neutral.100" pb="12px">
+        <ModalHeader textStyle="app_med_18" color="light_neutral.800">
           Permanent Link
         </ModalHeader>
-        <ModalCloseButton color={textColor}/>
+        <ModalCloseButton color="light_neutral.800" />
         <ModalBody>
-          <Text textStyle="app_reg_12" color={textColor}>
+          <Text textStyle="app_reg_12" color="light_neutral.800">
             Create a permanent payment link
           </Text>
 
@@ -101,7 +98,7 @@ const RequestPermanentLink = (props: any) => {
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Text
                   textStyle="app_reg_12"
-                  color={textColor}
+                  color="light_neutral.800"
                 >{`${generatedLink?.substring(0, 40)}...`}</Text>
               </Box>
               <Tooltip

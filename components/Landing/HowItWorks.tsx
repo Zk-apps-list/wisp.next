@@ -6,19 +6,8 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
-import { useColor } from '../../hooks/useColor';
 
 const HowItWorks = () => {
-  const {
-    contrastText,
-    reverseContrastText,
-    reverseContractTextBorder,
-    dimText,
-    howItWorksWallet,
-    howItWorksRequest,
-    howItWorksLink,
-  } = useColor();
-
   const contentWidths = {
     base: "343px",
     sm: "544px",
@@ -34,7 +23,7 @@ const HowItWorks = () => {
         id="how-it-works"
         mt="100px"
         textStyle={{ base: "land_reg_32", md: "land_reg_40" }}
-        color={contrastText}
+        color="light_neutral.800"
       >
         How it works
       </Text>
@@ -75,9 +64,9 @@ const HowItWorks = () => {
                   verticalAlign="center"
                   fontSize="18px"
                   transform="translateX(-50%)"
-                  color={reverseContrastText}
+                  color="light_neutral.800"
                   borderWidth="1px"
-                  borderColor={reverseContractTextBorder}
+                  borderColor="light_neutral.200"
                 >
                   1
                 </Box>
@@ -93,7 +82,7 @@ const HowItWorks = () => {
             </Text>
             <Text
               textStyle={{ base: "land_reg_24_150", sm: "land_reg_24" }}
-              color={contrastText}
+              color="light_neutral.800"
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -101,7 +90,7 @@ const HowItWorks = () => {
             </Text>
             <Text
               textStyle="land_light_14_175"
-              color={dimText}
+              color="light_neutral.600"
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -127,7 +116,7 @@ const HowItWorks = () => {
             </Link>
           </Flex>
           <Image
-            src={howItWorksWallet}
+            src="/images/how-it-works-wallet-light.svg"
             alt="how it works wallet"
             w={{ base: "350px", md: "unset" }}
           />
@@ -162,9 +151,9 @@ const HowItWorks = () => {
                   verticalAlign="center"
                   fontSize="18px"
                   transform="translateX(-50%)"
-                  color={reverseContrastText}
+                  color="light_neutral.800"
                   borderWidth="1px"
-                  borderColor={reverseContractTextBorder}
+                  borderColor="light_neutral.200"
                 >
                   2
                 </Box>
@@ -180,7 +169,7 @@ const HowItWorks = () => {
             </Text>
             <Text
               textStyle={{ base: "land_reg_24_150", sm: "land_reg_24" }}
-              color={contrastText}
+              color="light_neutral.800"
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -189,7 +178,7 @@ const HowItWorks = () => {
             </Text>
             <Text
               textStyle="land_light_14_175"
-              color={dimText}
+              color="light_neutral.600"
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -216,7 +205,7 @@ const HowItWorks = () => {
             </Link>
           </Flex>
           <Image
-            src={howItWorksRequest}
+            src="/images/how-it-works-request-light.svg"
             alt="how it works request"
             w={{ base: "350px", md: "unset" }}
           />
@@ -251,9 +240,9 @@ const HowItWorks = () => {
                   verticalAlign="center"
                   fontSize="18px"
                   transform="translateX(-50%)"
-                  color={reverseContrastText}
+                  color="light_neutral.800"
                   borderWidth="1px"
-                  borderColor={reverseContractTextBorder}
+                  borderColor="light_neutral.200"
                 >
                   3
                 </Box>
@@ -269,7 +258,7 @@ const HowItWorks = () => {
             </Text>
             <Text
               textStyle={{ base: "land_reg_24_150", sm: "land_reg_24" }}
-              color={contrastText}
+              color="light_neutral.800"
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -277,7 +266,7 @@ const HowItWorks = () => {
             </Text>
             <Text
               textStyle="land_light_14_175"
-              color={dimText}
+              color="light_neutral.600"
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -304,7 +293,7 @@ const HowItWorks = () => {
             </Link>
           </Flex>
           <Image
-            src={howItWorksLink}
+            src="/images/how-it-works-link-light.svg"
             alt="how it works link"
             w={{ base: "350px", md: "unset" }}
           />
@@ -334,9 +323,9 @@ const HowItWorks = () => {
             verticalAlign="center"
             fontSize="18px"
             transform="translateX(-50%)"
-            color={reverseContrastText}
+            color="light_neutral.800"
             borderWidth="1px"
-            borderColor={reverseContractTextBorder}
+            borderColor="light_neutral.200"
           >
             1
           </Box>
@@ -350,9 +339,9 @@ const HowItWorks = () => {
             verticalAlign="center"
             fontSize="18px"
             transform="translateX(-50%)"
-            color={reverseContrastText}
+            color="light_neutral.800"
             borderWidth="1px"
-            borderColor={reverseContractTextBorder}
+            borderColor="light_neutral.200"
           >
             2
           </Box>
@@ -366,9 +355,9 @@ const HowItWorks = () => {
             verticalAlign="center"
             fontSize="18px"
             transform="translateX(-50%)"
-            color={reverseContrastText}
+            color="light_neutral.800"
             borderWidth="1px"
-            borderColor={reverseContractTextBorder}
+            borderColor="light_neutral.200"
           >
             3
           </Box>

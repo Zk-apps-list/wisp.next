@@ -1,19 +1,20 @@
 import {
   Box,
-  Button,
   Flex,
   Image,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Header";
 import LeftPanel from "../LeftPanel";
-import { useColor } from "../../hooks/useColor";
 import Navbar from "../Navbar";
 import { MenuItem } from "../../pages";
 import Request from "../Request";
 import Token from "../Token";
 import CTAButton from "../CTAButton";
+import DepositModal from "../Modal/DepositModal";
+import WithdrawModal from "../Modal/WithdrawModal";
+import TransferModal from "../Modal/TransferModal";
 
 const ProgressBar = (props: any) => {
   const { percent } = props;
@@ -50,7 +51,7 @@ const PortfolioTable = () => {
 
           <Box borderRadius="6px" display="table-row" color="neutral.600" textStyle="app_reg_14" backgroundColor="neutral.50">
             <Box display="table-cell" width="20%" p="6px" pl="12px">
-              Your assets
+              Asset
             </Box>
             <Box display="table-cell" width="20%" p="6px">
               Amount
@@ -58,10 +59,10 @@ const PortfolioTable = () => {
             <Box display="table-cell" width="20%" p="6px">
               Value
             </Box>
-            <Box display="table-cell" width="20%" p="6px">
+            <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="20%" p="6px">
               % Change
             </Box>
-            <Box display="table-cell" width="20%" p="6px" pr="12px">
+            <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="20%" p="6px" pr="12px">
               Portfolio Amount
             </Box>
           </Box>
@@ -94,10 +95,10 @@ const PortfolioTableRow = () => {
       <Box display="table-cell" py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
         <Text textStyle="app_med_14" color="neutral.800">0.543535 BTC</Text>
       </Box>
-      <Box display="table-cell" py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
+      <Box display={{ base: "none", md: "none", lg: "table-cell" }} py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
         <Text textStyle="app_med_14" color="neutral.800">+2% ($ 435)</Text>
       </Box>
-      <Box display="table-cell" py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
+      <Box display={{ base: "none", md: "none", lg: "table-cell" }} py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
         <ProgressBar percent="45" />
       </Box>
     </Box>
@@ -105,21 +106,23 @@ const PortfolioTableRow = () => {
 };
 
 
-const OverviewPage = () => {
-  const { homeIcon, settingsIcon } = useColor();
+const PortfolioPage = () => {
+  const [isDepositModalOpen, setDepositModalOpen] = useState(false);
+  const [isWithdrawModalOpen, setWithdrawModalOpen] = useState(false);
+  const [isTransferModalOpen, setTransferModalOpen] = useState(false);
 
   const MenuItems: MenuItem[] = [
     {
-      name: 'Overview',
-      href: '/overview',
-      icon: homeIcon
+      name: 'Portfolio',
+      href: '/',
+      icon: "/icons/home-icon-light.svg"
     },
     {
       name: 'Transactions',
       href: '/transactions',
-      icon: settingsIcon
+      icon: "/icons/settings-icon-light.svg"
     }
-  ]
+  ];
 
   return (
     <Flex
@@ -132,21 +135,40 @@ const OverviewPage = () => {
         title="Portfolio"
         menuItems={MenuItems}
       />
+      <DepositModal
+        isOpen={isDepositModalOpen}
+        onClose={() => setDepositModalOpen(false)}
+      />
+      <WithdrawModal
+        isOpen={isWithdrawModalOpen}
+        onClose={() => setWithdrawModalOpen(false)}
+      />
+      <TransferModal
+        isOpen={isTransferModalOpen}
+        onClose={() => setTransferModalOpen(false)}
+      />
       <Box backgroundColor="primary.0" width="100%" display="flex">
         <Box>
           <LeftPanel />
         </Box>
         <Box width="100%">
-          <Box>
+          <Box display={{ base: "none", md: "inline" }}>
             <Header />
           </Box>
-
-          <Flex p="16px" mx="32px" justifyContent="space-between" backgroundColor="neutral.0" borderRadius="12px" box-shadow= "0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)">
-            <Flex direction="column">
-              <Text color="neutral.600" textStyle="app_reg_12">Total Value</Text>
-              <Flex mt="3px"> 
-                <Text textStyle="app_semibold_24" lineHeight="30px">$ 12,453.00</Text>
-                <Flex ml="12px">
+          <Box
+            mt={{ base: "104px", md: "0px" }}
+            p="16px"
+            mx="32px"
+            backgroundColor="neutral.0"
+            borderRadius="12px"
+            box-shadow= "0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)"
+            display={{ base: "block", lg: "flex"}}
+          >
+            <Flex direction="column" flexGrow={7} flexBasis="280px">
+              <Text color="neutral.600" textStyle="app_reg_12" textAlign={{ base: "center", lg: "left" }}>Total Value</Text>
+              <Box mt="3px" columnGap="8px" display={{ base: "block", lg: "flex"}}> 
+                <Text textStyle="app_semibold_24" lineHeight="30px" textAlign="center">$9,000,112,453.00</Text>
+                <Flex justifyContent="center">
                   <Flex justifyContent="center" alignItems="center">
                     <Image
                       src="icons/increase.svg"
@@ -157,35 +179,40 @@ const OverviewPage = () => {
                   </Flex>
                   <Text textStyle="app_med_14" color="green" lineHeight="30px" ml="6px">7D +5% ($400)</Text>
                 </Flex>
-              </Flex>
+              </Box>
             </Flex>
-            <Flex justifyContent="center" alignItems="center">
+            <Flex justifyContent="center" alignItems="center" flex={1} mt={{ base: "8px", lg: "0px"}}>
               <Box>
                 <CTAButton
                   name="Deposit"
                   icon="/icons/arrow_down.svg"
-                  onClick={() => console.log('Deposit')}
+                  onClick={() => setDepositModalOpen(true)}
                 />
               </Box>
               <Box ml="12px">
                 <CTAButton
                   name="Withdraw"
                   icon="/icons/arrow_down.svg"
-                  onClick={() => console.log('Withdraw')}
+                  onClick={() => setWithdrawModalOpen(true)}
+                />
+              </Box>
+              <Box ml="12px">
+                <CTAButton
+                  name="Transfer"
+                  icon="/icons/arrow_down.svg"
+                  onClick={() => setTransferModalOpen(true)}
                 />
               </Box>
               <Box ml="12px">
                 <Request />
               </Box>
             </Flex>
-          </Flex>
-
+          </Box>
           <PortfolioTable />
-
         </Box>
       </Box>
     </Flex>
   );
 };
 
-export default OverviewPage;
+export default PortfolioPage;

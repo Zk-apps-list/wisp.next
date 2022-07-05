@@ -5,20 +5,8 @@ import {
   Image,
   Text,
 } from "@chakra-ui/react";
-import { useColor } from '../../hooks/useColor';
 
 const WhyWisp = () => {
-  const {
-    contrastText,
-    dimText,
-    blocks,
-    blockColor,
-    walletIcon,
-    liquidityIcon,
-    docsIcon,
-    whyWispText,
-  } = useColor();
-
   const contentWidths = {
     base: "343px",
     sm: "544px",
@@ -32,21 +20,21 @@ const WhyWisp = () => {
     <>
       <Box
         id="why-wisp"
-        backgroundColor={blockColor}
+        backgroundColor="light_neutral.100"
         padding="4px 12px"
         borderRadius="6px"
         mt="160px"
       >
         <Text
           textStyle="land_light_14_175"
-          color={whyWispText}
+          color="light_neutral.500"
         >
           Why Wisp Finance
         </Text>
       </Box>
       <Text
         textStyle={{ base: "land_reg_32", md: "land_reg_40" }}
-        color={contrastText}
+        color="light_neutral.800"
         mt="8px"
         textAlign="center"
       >
@@ -54,7 +42,7 @@ const WhyWisp = () => {
       </Text>
       <Text
         textStyle="land_light_14_175"
-        color={dimText}
+        color="light_neutral.600"
         mt="8px"
         textAlign="center"
       >
@@ -71,7 +59,7 @@ const WhyWisp = () => {
         gap={{ base: "24px", lg: "0px" }}
       >
         <Flex
-          backgroundColor={blocks}
+          backgroundColor="neutral.0"
           padding="28px"
           direction="column"
           alignItems="center"
@@ -80,17 +68,17 @@ const WhyWisp = () => {
           minWidth="330px"
         >
           <Image
-            src={walletIcon}
+            src="/images/why-wisp-wallet-light.svg"
             alt="Wisp wallet"
             width="120px"
           />
-          <Text textStyle="land_reg_20" mt="28px" color={contrastText}>
+          <Text textStyle="land_reg_20" mt="28px" color="light_neutral.800">
             Payment & Transactions
           </Text>
           <Text
             textStyle="land_light_14_175"
             mt="16px"
-            color={dimText}
+            color="light_neutral.600"
             textAlign="center"
           >
             Paying & requesting payments have 
@@ -99,7 +87,7 @@ const WhyWisp = () => {
           </Text>
         </Flex>
         <Flex
-          backgroundColor={blocks}
+          backgroundColor="neutral.0"
           padding="28px"
           direction="column"
           alignItems="center"
@@ -108,24 +96,24 @@ const WhyWisp = () => {
           minWidth="330px"
         >
           <Image
-            src={liquidityIcon}
+            src="/images/why-wisp-liquidity-light.svg"
             alt="Wisp liquidity"
             width="120px"
           />
-          <Text textStyle="land_reg_20" mt="28px" color={contrastText}>
+          <Text textStyle="land_reg_20" mt="28px" color="light_neutral.800">
             Liquidity Pool
           </Text>
           <Text
             textStyle="land_light_14_175"
             mt="16px"
-            color={dimText}
+            color="light_neutral.600"
             textAlign="center"
           >
             Wisp Finance passively reinvests <br /> your money for APY gains.
           </Text>
         </Flex>
         <Flex
-          backgroundColor={blocks}
+          backgroundColor="neutral.0"
           padding="28px"
           direction="column"
           alignItems="center"
@@ -134,17 +122,17 @@ const WhyWisp = () => {
           minWidth="330px"
         >
           <Image
-            src={docsIcon}
+            src="/images/why-wisp-docs-light.svg"
             width="120px"
             alt="Wisp docs"
           />
-          <Text textStyle="land_reg_20" mt="28px" color={contrastText}>
+          <Text textStyle="land_reg_20" mt="28px" color="light_neutral.800">
             Compliance
           </Text>
           <Text
             textStyle="land_light_14_175"
             mt="16px"
-            color={dimText}
+            color="light_neutral.600"
             textAlign="center"
           >
             Wisp Finance helps you stay compliant <br />

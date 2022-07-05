@@ -5,8 +5,8 @@ import {
   Image,
   Text
 } from "@chakra-ui/react";
-import RequestOneTimeModal from "./RequestOneTimeModal";
-import RequestPermanentLink from './RequestPermanentLink';
+import RequestOneTimeModal from "./Modal/RequestOneTimeModal";
+import RequestPermanentLink from "./Modal/RequestPermanentLinkModal";
 
 const Request = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,9 +19,10 @@ const Request = () => {
       <RequestPermanentLink isOpen={isPermanentLinkModalOpen} onClose={() => setIsPermanentLinkModalOpen(false)} />
       <Box
         as={Button}
-        backgroundColor="primary.800"
+        backgroundColor="primary.500"
         borderRadius="6px"
         py="12px"
+        px="20px"
         textAlign="center"
         position="relative"
         leftIcon={
