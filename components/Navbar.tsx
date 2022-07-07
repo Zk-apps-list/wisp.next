@@ -84,14 +84,14 @@ const Navbar = (props: any) => {
               )
             })}
           </Flex>
-          {/* <Box>
+          <Box>
             <Wallet
               account={account}
               connectWallet={connectWallet}
               disconnect={disconnect}
               isLoading={isWalletLoading}
             />
-          </Box> */}
+          </Box>
         </Flex>
 
 
@@ -271,7 +271,7 @@ const Navbar = (props: any) => {
               </Flex>
 
             </Box>
-            {/* {isLandingPage && (
+            {isLandingPage && (
               <Box ml="auto" mr="auto" mt="24px">
                 <Wallet
                   account={account}
@@ -280,7 +280,7 @@ const Navbar = (props: any) => {
                   isLoading={isWalletLoading}
                 />
               </Box>
-            )} */}
+            )}
           </Flex>
         </Flex>
       )}
