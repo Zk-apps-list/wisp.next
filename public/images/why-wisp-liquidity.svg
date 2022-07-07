@@ -1,12 +1,4 @@
-<svg width="159" height="135" viewBox="0 0 159 135" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect y="21" width="158.5" height="92.8005" rx="11.908" fill="#898989"/>
-<rect x="3" y="24" width="152" height="86" rx="9" fill="#313131"/>
-<circle cx="29.9759" cy="50.1537" r="11.4974" fill="#595959"/>
-<circle cx="62.8255" cy="50.1537" r="11.4974" fill="white"/>
-<circle cx="95.6751" cy="50.1537" r="11.4974" fill="white"/>
-<circle cx="128.525" cy="50.1537" r="11.4974" fill="#147BDA"/>
-<circle cx="29.9759" cy="85.057" r="11.4974" fill="white"/>
-<circle cx="62.8255" cy="85.057" r="11.4974" fill="#898989"/>
-<circle cx="95.6751" cy="85.057" r="11.4974" fill="white"/>
-<circle cx="128.525" cy="85.057" r="11.4974" fill="white"/>
+<svg width="57" height="56" viewBox="0 0 57 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M40.2428 17.5983L29.215 6.30146C28.8227 5.89959 28.1764 5.8995 27.784 6.30126L16.7098 17.6392C12.9057 20.9396 10.5 25.8092 10.5 31.2407C10.5 41.1819 18.5589 49.2407 28.5 49.2407C38.4411 49.2407 46.5 41.1819 46.5 31.2407C46.5 25.7867 44.0743 20.8992 40.2428 17.5983Z" fill="#385BD9" fill-opacity="0.95"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M31.1667 28.6405V21L22.5 32.1754H26.8333V39.8159L35.5 28.6405H31.1667Z" fill="white"/>
 </svg>

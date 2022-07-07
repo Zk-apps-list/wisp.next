@@ -7,7 +7,7 @@ const CTAButton = (props: any) => {
   return (
     <Box
       as={Button}
-      backgroundColor={"primary.500"}
+      backgroundColor="primary.500"
       borderRadius="6px"
       py="12px"
       px="20px"

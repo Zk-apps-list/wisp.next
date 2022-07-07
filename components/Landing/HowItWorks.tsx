@@ -6,8 +6,12 @@ import {
   Link,
   Text,
 } from "@chakra-ui/react";
+import { gradient } from './Jumbotron';
+import { Color1, Color2, Color3, Color4 } from '../../pages';
 
 const HowItWorks = () => {
+  const gradientAnimation = `${gradient} 15s ease infinite`;
+
   const contentWidths = {
     base: "343px",
     sm: "544px",
@@ -22,8 +26,9 @@ const HowItWorks = () => {
       <Text
         id="how-it-works"
         mt="100px"
-        textStyle={{ base: "land_reg_32", md: "land_reg_40" }}
-        color="light_neutral.800"
+        mb={{ base: "0px", lg: "24px" }}
+        textStyle={{ base: "land_semibold_32", md: "land_semibold_36" }}
+        color="neutral.900"
       >
         How it works
       </Text>
@@ -48,9 +53,9 @@ const HowItWorks = () => {
               <Flex
                 w="1"
                 height="100%"
-                borderLeftWidth="1px"
+                borderLeftWidth="2px"
                 borderStyle="dashed"
-                borderColor="neutral.700"
+                borderColor="neutral.300"
                 direction="column"
                 justify="center"
               >
@@ -64,16 +69,16 @@ const HowItWorks = () => {
                   verticalAlign="center"
                   fontSize="18px"
                   transform="translateX(-50%)"
-                  color="light_neutral.800"
+                  color="neutral.900"
                   borderWidth="1px"
-                  borderColor="light_neutral.200"
+                  borderColor="neutral.200"
                 >
                   1
                 </Box>
               </Flex>
             </Box>
             <Text
-              textStyle="land_reg_14"
+              textStyle={{ base: "land_med_14", lg: "land_semibold_16"}}
               color="primary.700"
               mb="4px"
               textAlign={{ base: "center", md: "unset" }}
@@ -81,16 +86,16 @@ const HowItWorks = () => {
               CONNECT WALLET
             </Text>
             <Text
-              textStyle={{ base: "land_reg_24_150", sm: "land_reg_24" }}
-              color="light_neutral.800"
+              textStyle={{ base: "land_semibold_24", lg: "land_semibold_32" }}
+              color="neutral.900"
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
               Start by connecting <br />your wallet of choice
             </Text>
             <Text
-              textStyle="land_light_14_175"
-              color="light_neutral.600"
+              textStyle={{ base: "land_reg_14", lg: "land_med_16" }}
+              color="neutral.600"
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -98,7 +103,7 @@ const HowItWorks = () => {
             </Text>
             <Link
               href="#"
-              textStyle="land_reg_14"
+              textStyle="land_med_16"
               color="primary.700"
               verticalAlign="center"
               display="flex"
@@ -108,19 +113,31 @@ const HowItWorks = () => {
             >
               Get started
               <Image
-                src="icons/blue-arrow-right-thin.svg"
+                src="/icons/blue-arrow.svg"
                 alt="blue arrow right"
                 display="inline-block"
-                ml="16px"
               />
             </Link>
           </Flex>
-          <Image
-            src="/images/how-it-works-wallet-light.svg"
-            alt="how it works wallet"
-            w={{ base: "350px", md: "unset" }}
-          />
+          <Flex
+            position="relative"
+            justifyContent="center"
+            alignItems="flex-end"
+            width="320px"
+            height="256px"
+            borderRadius="12px"
+            background={`linear-gradient(-45deg, ${Color1}, ${Color2}, ${Color3}, ${Color4})`}
+            backgroundSize= "400% 400%"
+            animation={gradientAnimation}
+          >
+            <Image
+              src="/images/connect-wallet.svg"
+              alt="how it works wallet"
+              w={{ base: "280px", md: "unset" }}
+            />
+          </Flex>
         </Flex>
+
         <Flex
           justify="space-between"
           direction={{ base: "column", md: "row-reverse" }}
@@ -135,9 +152,9 @@ const HowItWorks = () => {
               <Flex
                 w="1"
                 height="100%"
-                borderLeftWidth="1px"
+                borderLeftWidth="2px"
                 borderStyle="dashed"
-                borderColor="neutral.700"
+                borderColor="neutral.300"
                 direction="column"
                 justify="center"
               >
@@ -151,16 +168,16 @@ const HowItWorks = () => {
                   verticalAlign="center"
                   fontSize="18px"
                   transform="translateX(-50%)"
-                  color="light_neutral.800"
+                  color="neutral.900"
                   borderWidth="1px"
-                  borderColor="light_neutral.200"
+                  borderColor="neutral.200"
                 >
                   2
                 </Box>
               </Flex>
             </Box>
             <Text
-              textStyle="land_reg_14"
+              textStyle={{ base: "land_med_14", lg: "land_semibold_16"}}
               color="primary.700"
               mb="4px"
               textAlign={{ base: "center", md: "unset" }}
@@ -168,8 +185,8 @@ const HowItWorks = () => {
               CREATE LINK
             </Text>
             <Text
-              textStyle={{ base: "land_reg_24_150", sm: "land_reg_24" }}
-              color="light_neutral.800"
+              textStyle={{ base: "land_semibold_24", lg: "land_semibold_32" }}
+              color="neutral.900"
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -177,8 +194,8 @@ const HowItWorks = () => {
               request with one click
             </Text>
             <Text
-              textStyle="land_light_14_175"
-              color="light_neutral.600"
+              textStyle={{ base: "land_reg_14", lg: "land_med_16" }}
+              color="neutral.600"
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -187,7 +204,7 @@ const HowItWorks = () => {
             </Text>
             <Link
               href="#"
-              textStyle="land_reg_14"
+              textStyle="land_med_16"
               color="primary.700"
               verticalAlign="center"
               display="flex"
@@ -197,18 +214,30 @@ const HowItWorks = () => {
             >
               Get started
               <Image
-                src="icons/blue-arrow-right-thin.svg"
+                src="/icons/blue-arrow.svg"
                 alt="blue arrow right"
                 display="inline-block"
                 ml="16px"
               />
             </Link>
           </Flex>
-          <Image
-            src="/images/how-it-works-request-light.svg"
-            alt="how it works request"
-            w={{ base: "350px", md: "unset" }}
-          />
+          <Flex
+            position="relative"
+            justifyContent="center"
+            alignItems="center"
+            width="320px"
+            height="256px"
+            borderRadius="12px"
+            background={`linear-gradient(-45deg, ${Color1}, ${Color2}, ${Color3}, ${Color4})`}
+            backgroundSize= "400% 400%"
+            animation={gradientAnimation}
+          >
+            <Image
+              src="/images/request-one-time.svg"
+              alt="how it works request"
+              w={{ base: "243px", md: "unset" }}
+            />
+          </Flex>
         </Flex>
         <Flex
           justify="space-between"
@@ -224,9 +253,9 @@ const HowItWorks = () => {
               <Flex
                 w="1"
                 height="100%"
-                borderLeftWidth="1px"
+                borderLeftWidth="2px"
                 borderStyle="dashed"
-                borderColor="neutral.700"
+                borderColor="neutral.300"
                 direction="column"
                 justify="center"
               >
@@ -240,16 +269,16 @@ const HowItWorks = () => {
                   verticalAlign="center"
                   fontSize="18px"
                   transform="translateX(-50%)"
-                  color="light_neutral.800"
+                  color="neutral.900"
                   borderWidth="1px"
-                  borderColor="light_neutral.200"
+                  borderColor="neutral.200"
                 >
                   3
                 </Box>
               </Flex>
             </Box>
             <Text
-              textStyle="land_reg_14"
+              textStyle={{ base: "land_med_14", lg: "land_semibold_16"}}
               color="primary.700"
               mb="4px"
               textAlign={{ base: "center", md: "unset" }}
@@ -257,16 +286,16 @@ const HowItWorks = () => {
               SHARE
             </Text>
             <Text
-              textStyle={{ base: "land_reg_24_150", sm: "land_reg_24" }}
-              color="light_neutral.800"
+              textStyle={{ base: "land_semibold_24", lg: "land_semibold_32" }}
+              color="neutral.900"
               mb={{ base: "16px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
               Send link
             </Text>
             <Text
-              textStyle="land_light_14_175"
-              color="light_neutral.600"
+              textStyle={{ base: "land_reg_14", lg: "land_med_16" }}
+              color="neutral.600"
               mb={{ base: "24px", md: "12px" }}
               textAlign={{ base: "center", md: "unset" }}
             >
@@ -275,7 +304,7 @@ const HowItWorks = () => {
             </Text>
             <Link
               href="#"
-              textStyle="land_reg_14"
+              textStyle="land_med_16"
               color="primary.700"
               verticalAlign="center"
               display="flex"
@@ -285,27 +314,39 @@ const HowItWorks = () => {
             >
               Get started
               <Image
-                src="icons/blue-arrow-right-thin.svg"
+                src="/icons/blue-arrow.svg"
                 alt="blue arrow right"
                 display="inline-block"
                 ml="16px"
               />
             </Link>
           </Flex>
-          <Image
-            src="/images/how-it-works-link-light.svg"
-            alt="how it works link"
-            w={{ base: "350px", md: "unset" }}
-          />
+          <Flex
+            position="relative"
+            justifyContent="center"
+            alignItems="center"
+            width="320px"
+            height="256px"
+            borderRadius="12px"
+            background={`linear-gradient(-45deg, ${Color1}, ${Color2}, ${Color3}, ${Color4})`}
+            backgroundSize= "400% 400%"
+            animation={gradientAnimation}
+          >
+            <Image
+              src="/images/send-link.svg"
+              alt="how it works request"
+              w={{ base: "248px", md: "unset" }}
+            />
+          </Flex>
         </Flex>
 
         {/*Steps*/}
         <Flex
           w="1"
           height="80%"
-          borderLeftWidth="1px"
+          borderLeftWidth="2px"
           borderStyle="dashed"
-          borderColor="neutral.700"
+          borderColor="neutral.300"
           direction="column"
           justify="space-between"
           position="absolute"
@@ -323,9 +364,9 @@ const HowItWorks = () => {
             verticalAlign="center"
             fontSize="18px"
             transform="translateX(-50%)"
-            color="light_neutral.800"
+            color="neutral.900"
             borderWidth="1px"
-            borderColor="light_neutral.200"
+            borderColor="neutral.200"
           >
             1
           </Box>
@@ -339,9 +380,9 @@ const HowItWorks = () => {
             verticalAlign="center"
             fontSize="18px"
             transform="translateX(-50%)"
-            color="light_neutral.800"
+            color="neutral.900"
             borderWidth="1px"
-            borderColor="light_neutral.200"
+            borderColor="neutral.200"
           >
             2
           </Box>
@@ -355,9 +396,9 @@ const HowItWorks = () => {
             verticalAlign="center"
             fontSize="18px"
             transform="translateX(-50%)"
-            color="light_neutral.800"
+            color="neutral.900"
             borderWidth="1px"
-            borderColor="light_neutral.200"
+            borderColor="neutral.200"
           >
             3
           </Box>

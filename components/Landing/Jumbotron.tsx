@@ -3,56 +3,215 @@ import {
   Box,
   Flex,
   Image,
-  Link,
   Text,
+  keyframes
 } from "@chakra-ui/react";
+import { Color1, Color2, Color3, Color4 } from '../../pages';
+import Floater from '../Floater';
+
+export const gradient = keyframes`
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+`
 
 const Jumbotron = () => {
+  const gradientAnimation = `${gradient} 15s ease infinite`;
   return (
     <>
-      <Flex mt="138px">
+      <Flex mt={{ base: "120px", md: "140px", lg: "160px", xl: "210px" }}>
+        <Box position="relative">
+          <Box
+            zIndex={1}
+            position="absolute"
+            left={{ base: "-70px", lg: "-90px", xl: "-100px" }}
+            top={{ base: "-30px", lg: "-60px", xl: "-70px" }}
+            display={{base: "none", md: "block"}}
+          >
+            <Floater
+              width="40px"
+              icon="/icons/tokens/tesos.svg"
+              iconWidth="28px"
+            />
+          </Box>
+          <Box
+            zIndex={1}
+            position="absolute"
+            left={{ base: "-110px", lg: "-140px", xl: "-250px" }}
+            top={{ base: "50px", lg: "60px", xl: "70px" }}
+            display={{base: "none", md: "block"}}
+          >
+            <Floater
+              width="52px"
+              icon="/icons/tokens/ethereum.svg"
+              iconWidth="40px"
+            />
+          </Box>
+          <Box
+            zIndex={1}
+            position="absolute"
+            left={{ base: "-50px", lg: "-90px", xl: "-180px" }}
+            top={{ base: "130px", lg: "160px", xl: "180px" }}
+            display={{base: "none", md: "block"}}
+          >
+            <Floater
+              width="62px"
+              icon="/icons/tokens/bitcoin.svg"
+              iconWidth="46px"
+            />
+          </Box>
+          <Box
+            zIndex={1}
+            position="absolute"
+            right={{ base: "-600px", lg: "-760px", xl: "-830px" }}
+            top={{ base: "-25px", lg: "-40px", xl: "-50px" }}
+            display={{base: "none", md: "block"}}
+          >
+            <Floater
+              width="62px"
+              icon="/icons/tokens/compound.svg"
+              iconWidth="46px"
+            />
+          </Box>
+          <Box
+            zIndex={1}
+            position="absolute"
+            right={{ base: "-650px", lg: "-800px", xl: "-900px" }}
+            top={{ base: "60px", lg: "70px", xl: "80px" }}
+            display={{base: "none", md: "block"}}
+          >
+            <Floater
+              width="52px"
+              icon="/icons/tokens/avalanche.svg"
+              iconWidth="40px"
+            />
+          </Box>
+          <Box
+            zIndex={1}
+            position="absolute"
+            right={{ base: "-600px", lg: "-730px", xl: "-780px" }}
+            top={{ base: "160px", lg: "180px", xl: "190px" }}
+            display={{base: "none", md: "block"}}
+          >
+            <Floater
+              width="40px"
+              icon="/icons/tokens/usdc.svg"
+              iconWidth="28px"
+            />
+          </Box>
+        </Box>
         <Text
           maxWidth="800px"
           mx="24px"
-          textStyle={{ base: "land_reg_35", md: "land_reg_56" }}
+          textStyle={{ base: "land_semibold_32", md: "land_semibold_48", lg: "land_semibold_62" }}
           textAlign="center"
-          color="light_neutral.800"
+          color="neutral.900"
         >
-            Turn your <Box as="span" fontWeight="medium">public wallet</Box><br />into {" "}
-          <Box as="span" fontWeight="medium">
-            a private bank.
-          </Box>
+          {`Turn your `}
+          <Text
+            as="span"
+            textStyle={{ base: "land_bold_32", md: "land_bold_48", lg: "land_bold_62" }}
+            background={`-webkit-linear-gradient(-45deg, ${Color1}, ${Color2}, ${Color3}, ${Color4})`}
+            backgroundClip="text"
+          >
+            {`public wallet`}
+          </Text>
+          <br />into {" "}
+          <Text
+            as="span"
+            textStyle={{ base: "land_bold_32", md: "land_bold_48", lg: "land_bold_62" }}
+            background={`-webkit-linear-gradient(-45deg, ${Color1}, ${Color2}, ${Color3}, ${Color4})`}
+            backgroundClip="text"
+          >
+            {`a private bank.`}
+          </Text>
         </Text>
       </Flex>
       <Flex mt="32px">
         <Text
-          maxWidth="600px"
-          textStyle="land_light_14_200"
+          maxWidth={{ base: "350px", md: "500px" }}
+          textStyle={{ base: "app_reg_14", md: "app_reg_18"}}
           textAlign="center"
-          color="light_neutral.600"
+          color="neutral.500"
           mx="30px"
         >
-          Wisp Finance is the easiest, safest, and fastest way to request secure and private payment using cryptocurrency without revealing your wallet address.
+          Wisp is the easiest, safest, and fastest way to request secure and private payments using cryptocurrency without revealing your wallet address.
         </Text>
       </Flex>
-      <Box overflow="hidden" mt="56px" width="100%">
-        <Image
-          src="/images/landing-phones-light.png"
-          alt="jumbotron image"
-          width={{
-            base: "875px",
-            sm: "875px",
-            md: "1400px",
-            lg: "1400px",
-            xl: "1400px",
-            xxl: "1582px",
-          }}
-          maxW="none"
-          transform={{ base: "translateX(-35%)", sm: "translateX(-50%)" }}
-          left="50%"
-          objectFit="contain"
-          position="relative"
-        />
+      <Box
+        position="relative"
+        mt="56px"
+        width={{ base: "90%", xl: "1090px" }}
+        height="380px"
+        background={`linear-gradient(-45deg, ${Color1}, ${Color2}, ${Color3}, ${Color4})`}
+        backgroundSize= "400% 400%"
+        animation={gradientAnimation}
+        borderTopLeftRadius={{ base: "72px", lg: "200px" }}
+        borderTopRightRadius="18px"
+        borderBottomLeftRadius="18px"
+        borderBottomRightRadius={{ base: "72px", lg: "200px" }}
+      >
+        <Box
+          position="absolute"
+          width="407px"
+          left={{ base: "30%"}}
+          top={{ base: "20%" }}
+          opacity={0.9}
+          zIndex={1}
+        >
+          <Image
+            src="/images/total-value.svg"
+            alt=""
+            width="407px"
+          />
+        </Box>
+        <Box
+          position="absolute"
+          width="196px"
+          top={{ base: "24px"}}
+          right={{ base: "10%"}}
+          opacity={1}
+          zIndex={2}
+        >
+          <Image
+            src="/images/design-work.svg"
+            alt=""
+            width="196px"
+          />
+        </Box>
+        <Box
+          position="absolute"
+          right={{ base: "20%"}}
+          bottom={{ base: "12%"}}
+          opacity={1}
+          zIndex={4}
+        >
+          <Image
+            src="/images/payment-request.svg"
+            alt=""
+            width="225px"
+          />
+        </Box>
+        <Box
+          position="absolute"
+          left={{ base: "15%"}}
+          bottom={{ base: "10%"}}
+          opacity={0.95}
+          zIndex={3}
+        >
+          <Image
+            src="/images/go-payment.svg"
+            alt=""
+            width="216px"
+          />
+        </Box>
       </Box>
     </>
   )

@@ -105,24 +105,25 @@ const PortfolioTableRow = () => {
   )
 };
 
+export const PortfolioMenuItems: MenuItem[] = [
+  {
+    name: "Portfolio",
+    path: "/",
+    icon: "/icons/wallet.svg",
+    iconLight: "/icons/wallet-light.svg"
+  },
+  {
+    name: "Transactions",
+    path: "/transactions",
+    icon: "/icons/transactions.svg",
+    iconLight: "/icons/transactions-light.svg"
+  }
+];
 
 const PortfolioPage = () => {
   const [isDepositModalOpen, setDepositModalOpen] = useState(false);
   const [isWithdrawModalOpen, setWithdrawModalOpen] = useState(false);
   const [isTransferModalOpen, setTransferModalOpen] = useState(false);
-
-  const MenuItems: MenuItem[] = [
-    {
-      name: 'Portfolio',
-      href: '/',
-      icon: "/icons/home-icon-light.svg"
-    },
-    {
-      name: 'Transactions',
-      href: '/transactions',
-      icon: "/icons/settings-icon-light.svg"
-    }
-  ];
 
   return (
     <Flex
@@ -133,7 +134,7 @@ const PortfolioPage = () => {
       <Navbar
         isMobileOnly
         title="Portfolio"
-        menuItems={MenuItems}
+        menuItems={PortfolioMenuItems}
       />
       <DepositModal
         isOpen={isDepositModalOpen}

@@ -114,6 +114,12 @@ const appTheme = extendTheme({
       fontWeight: 400,
       lineHeight: "150%",
     },
+    app_reg_18: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "18px",
+      fontWeight: 400,
+      lineHeight: "150%",
+    },
     app_reg_14: {
       fontFamily: `Urbanist, sans-serif`,
       fontSize: "14px",
@@ -162,13 +168,79 @@ const appTheme = extendTheme({
       fontWeight: 600,
       lineHeight: "125%",
     },
+    land_med_14: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "14px",
+      fontWeight: 500,
+      lineHeight: "200%",
+    },
+    land_semibold_14: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "14px",
+      fontWeight: 600,
+      lineHeight: "150%",
+    },
+    land_semibold_20: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "20px",
+      fontWeight: 600,
+      lineHeight: "150%",
+    },
+    land_semibold_24: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "24px",
+      fontWeight: 600,
+      lineHeight: "145%",
+    },
+    land_semibold_32: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "32px",
+      fontWeight: 600,
+      lineHeight: "150%",
+    },
+    land_semibold_36: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "36px",
+      fontWeight: 600,
+      lineHeight: "150%",
+    },
+    land_semibold_48: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "48px",
+      fontWeight: 600,
+      lineHeight: "135%",
+    },
+    land_semibold_62: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "62px",
+      fontWeight: 600,
+      lineHeight: "135%",
+    },
+    land_bold_32: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "32px",
+      fontWeight: 700,
+      lineHeight: "110%",
+    },
+    land_bold_48: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "48px",
+      fontWeight: 700,
+      lineHeight: "135%",
+    },
+    land_bold_62: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "62px",
+      fontWeight: 700,
+      lineHeight: "135%",
+    },
     land_reg_56: {
       fontFamily: `Urbanist, sans-serif`,
       fontSize: "56px",
       fontWeight: 400,
       lineHeight: "110%",
     },
-    land_md_56: {
+    land_med_56: {
       fontFamily: `Urbanist, sans-serif`,
       fontSize: "56px",
       fontWeight: 500,
@@ -185,6 +257,18 @@ const appTheme = extendTheme({
       fontSize: "35px",
       fontWeight: 400,
       lineHeight: "110%",
+    },
+    land_med_16: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "16px",
+      fontWeight: 500,
+      lineHeight: "150%",
+    },
+    land_semibold_16: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "16px",
+      fontWeight: 600,
+      lineHeight: "150%",
     },
     land_med_35: {
       fontFamily: `Urbanist, sans-serif`,
@@ -222,18 +306,12 @@ const appTheme = extendTheme({
       fontWeight: 400,
       lineHeight: "200%",
     },
-    land_light_14_200: {
+    land_reg_16: {
       fontFamily: `Urbanist, sans-serif`,
-      fontSize: "14px",
-      fontWeight: 300,
+      fontSize: "16px",
+      fontWeight: 400,
       lineHeight: "200%",
-    },
-    land_light_14_175: {
-      fontFamily: `Urbanist, sans-serif`,
-      fontSize: "14px",
-      fontWeight: 300,
-      lineHeight: "175%",
-    },
+    }
   },
   lineHeights: {
     normal: "150%",

@@ -1,9 +1,7 @@
 import type { NextPage } from "next";
-import {
-  Flex,
-} from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import Footer from "../components/Footer";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 
 import { providerOptions } from "../services/WalletConnect";
 import Web3Modal from "web3modal";
@@ -32,30 +30,44 @@ if (typeof window !== "undefined") {
 
 export type MenuItem = {
   name: string,
-  href: string,
-  icon: string
+  path: string,
+  icon: string,
+  iconLight: string
 }
+
+const LandingPageMenuItems: MenuItem[] = [
+  {
+    name: "Home",
+    path: "/#",
+    icon: "/icons/home-icon.svg",
+    iconLight: "/icons/home-icon-light.svg"
+  },
+  {
+    name: "How it works",
+    path: "/#how-it-works",
+    icon: "/icons/rocket-icon.svg",
+    iconLight: "/icons/rocket-icon-light.svg"
+  },
+  {
+    name: "Why Wisp",
+    path: "/#why-wisp",
+    icon: "/icons/settings-icon.svg",
+    iconLight: "/icons/settings-icon-light.svg"
+  }
+];
+
+// export const Color1 = "#ee7752";
+// export const Color2 = "#e73c7e ";
+// export const Color3 = "#23a6d5";
+// export const Color4 = "#23d5ab";
+
+export const Color1 = "#385CD9";
+export const Color2 = "#147BDA ";
+export const Color3 = "#0B2DA2";
+export const Color4 = "#3C96EA";
 
 const Home: NextPage = () => {
   const { account, isLoading } = useContext(AuthContext);
-
-  const MenuItems: MenuItem[] = [
-    {
-      name: 'Home',
-      href: '#',
-      icon: "/icons/home-icon-light.svg"
-    },
-    {
-      name: 'How it works',
-      href: '#how-it-works',
-      icon: "/icons/settings-icon-light.svg"
-    },
-    {
-      name: 'Why Wisp',
-      href: '#why-wisp',
-      icon: "/icons/settings-icon-light.svg"
-    }
-  ];
 
   return (
     <>
@@ -67,9 +79,14 @@ const Home: NextPage = () => {
           <Flex
             align="center"
             direction="column"
-            backgroundColor="light_neutral.50"
+            backgroundColor="neutral.0"
           >
-            <Navbar title="Home" menuItems={MenuItems} />
+            <Navbar
+              title="Home"
+              menuItems={LandingPageMenuItems}
+              isMobileOnly={false}
+              isLandingPage
+            />
             <Jumbotron />
             <HowItWorks />
             <WhyWisp />

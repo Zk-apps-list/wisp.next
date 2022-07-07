@@ -4,23 +4,10 @@ import Header from "../components/Header";
 import LeftPanel from "../components/LeftPanel";
 import TransactionTable from '../components/Transactions/Transactions';
 import Navbar from "../components/Navbar";
-import { MenuItem } from './index';
 import CTAButton from "../components/CTAButton";
+import { PortfolioMenuItems } from "../components/Portfolio/Portfolio";
 
 const TransactionsPage = () => {
-  const MenuItems: MenuItem[] = [
-    {
-      name: 'Portfolio',
-      href: '/',
-      icon: "/icons/home-icon-light.svg"
-    },
-    {
-      name: 'Transactions',
-      href: '/transactions',
-      icon: "/icons/settings-icon-light.svg"
-    }
-  ]
-
   return (
     <Flex
       align="center"
@@ -30,7 +17,7 @@ const TransactionsPage = () => {
       <Navbar
         isMobileOnly
         title="Transactions"
-        menuItems={MenuItems}
+        menuItems={PortfolioMenuItems}
       />
       <Box backgroundColor="light_neutral.50" width="100%" display="flex">
         <Box>
