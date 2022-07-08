@@ -101,7 +101,7 @@ const HowItWorks = () => {
             >
               Connect your wallet
             </Text>
-            <Link
+            {/* <Link
               href="#"
               textStyle="land_med_16"
               color="primary.700"
@@ -117,7 +117,7 @@ const HowItWorks = () => {
                 alt="blue arrow right"
                 display="inline-block"
               />
-            </Link>
+            </Link> */}
           </Flex>
           <Flex
             position="relative"
@@ -202,7 +202,7 @@ const HowItWorks = () => {
               Choose cryptocurency, and enter amount <br />
               you want to get the link to request payment
             </Text>
-            <Link
+            {/* <Link
               href="#"
               textStyle="land_med_16"
               color="primary.700"
@@ -219,7 +219,7 @@ const HowItWorks = () => {
                 display="inline-block"
                 ml="16px"
               />
-            </Link>
+            </Link> */}
           </Flex>
           <Flex
             position="relative"
@@ -302,7 +302,7 @@ const HowItWorks = () => {
               Copy and send link to the <br />
               recipient to request payment
             </Text>
-            <Link
+            {/* <Link
               href="#"
               textStyle="land_med_16"
               color="primary.700"
@@ -319,7 +319,7 @@ const HowItWorks = () => {
                 display="inline-block"
                 ml="16px"
               />
-            </Link>
+            </Link> */}
           </Flex>
           <Flex
             position="relative"

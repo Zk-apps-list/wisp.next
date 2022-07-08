@@ -157,6 +157,7 @@ const Jumbotron = () => {
         borderTopRightRadius="18px"
         borderBottomLeftRadius="18px"
         borderBottomRightRadius={{ base: "72px", lg: "200px" }}
+        overflow="hidden"
       >
         <Box
           position="absolute"

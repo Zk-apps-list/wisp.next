@@ -182,30 +182,33 @@ const PortfolioPage = () => {
                 </Flex>
               </Box>
             </Flex>
-            <Flex justifyContent="center" alignItems="center" flex={1} mt={{ base: "8px", lg: "0px"}}>
+            <Flex justifyContent="center" alignItems="center" flex={1} mt={{ base: "8px", lg: "0px"}} columnGap={{ base: "24px", md: "12px"}}>
               <Box>
                 <CTAButton
                   name="Deposit"
-                  icon="/icons/arrow_down.svg"
+                  icon="/icons/plus.svg"
+                  responsive
                   onClick={() => setDepositModalOpen(true)}
                 />
               </Box>
-              <Box ml="12px">
+              <Box>
                 <CTAButton
                   name="Withdraw"
                   icon="/icons/arrow_down.svg"
+                  responsive
                   onClick={() => setWithdrawModalOpen(true)}
                 />
               </Box>
-              <Box ml="12px">
+              <Box>
+                <Request />
+              </Box>
+              <Box>
                 <CTAButton
                   name="Transfer"
-                  icon="/icons/arrow_down.svg"
+                  icon="/icons/arrow_right.svg"
+                  responsive
                   onClick={() => setTransferModalOpen(true)}
                 />
-              </Box>
-              <Box ml="12px">
-                <Request />
               </Box>
             </Flex>
           </Box>

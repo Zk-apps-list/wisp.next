@@ -44,18 +44,20 @@ const Navbar = (props: any) => {
         borderBottomColor="neutral.300"
       >
         {/* Logo */}
-        <Image
-          src="/icons/logo-md.svg"
-          alt="Wisp Logo"
-          display={{ base: "none", md: "block" }}
-          width={{ base: "48px", lg: "72px" }}
-          mr="30px"
-        />
-        <Image
-          src={isLandingPage ? "/icons/logo-md.svg" : "/icons/logo-sm-light.svg"}
-          alt="Wisp Logo"
-          display={{ base: "block", md: "none" }}
-        />
+        <Link onClick={() => router.push(`/`)}>
+          <Image
+            src="/icons/logo-md.svg"
+            alt="Wisp Logo"
+            display={{ base: "none", md: "block" }}
+            width={{ base: "48px", lg: "72px" }}
+            mr="30px"
+          />
+          <Image
+            src={isLandingPage ? "/icons/logo-md.svg" : "/icons/logo-sm-light.svg"}
+            alt="Wisp Logo"
+            display={{ base: "block", md: "none" }}
+          />
+        </Link>
 
         {/* Title */}
         <Text

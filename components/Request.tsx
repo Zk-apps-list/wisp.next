@@ -7,6 +7,7 @@ import {
 } from "@chakra-ui/react";
 import RequestOneTimeModal from "./Modal/RequestOneTimeModal";
 import RequestPermanentLink from "./Modal/RequestPermanentLinkModal";
+import CTAButton from './CTAButton';
 
 const Request = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,33 +18,16 @@ const Request = () => {
     <>
       <RequestOneTimeModal isOpen={isOneTimeModalOpen} onClose={() => setIsOneTimeModalOpen(false)} />
       <RequestPermanentLink isOpen={isPermanentLinkModalOpen} onClose={() => setIsPermanentLinkModalOpen(false)} />
-      <Box
-        as={Button}
-        backgroundColor="primary.500"
-        borderRadius="6px"
-        py="12px"
-        px="20px"
-        textAlign="center"
-        position="relative"
-        leftIcon={
-          <Image
-            src="icons/chain.svg"
-            alt="Ethereum Logo"
-            width="16px"
-            height="16px"
-          />
-        }
-        _hover={{ bg: "primary.700" }}
+      <CTAButton
+        name="Request"
+        icon="/icons/arrow_left.svg"
+        responsive
         onClick={() => setIsOpen(!isOpen)}
-      >
-        <Text ml="auto" mr="auto" color="white" textStyle="app_reg_14">
-          Request
-        </Text>
-      </Box>
+      />
       {isOpen && (
         <Box
           position="absolute"
-          mt="16px"
+          mt="8px"
           borderWidth="1px"
           borderColor="neutral.100"
           borderRadius="6px"
