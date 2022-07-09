@@ -48,7 +48,7 @@ const PaymentOneTime = ({ id }: Props) => {
 
     const tokenContract = ERC20__factory.connect(requestedToken.address, web3Provider.getSigner(0));
     setTokenContract(tokenContract);
-    if(account) {
+    if (account) {
       tokenContract.balanceOf(account)
         .then(balance => setBalance(ethers.utils.formatEther(balance)))
         .catch(console.log);
@@ -60,7 +60,7 @@ const PaymentOneTime = ({ id }: Props) => {
       return;
     }
 
-    if(account) {
+    if (account) {
       tokenContract.allowance(account, WISP_CONTRACT)
         .then(allowance => setNeedsApproval(ethers.utils.parseEther(requestedAmount).gt(allowance)))
         .catch(console.log);
@@ -93,14 +93,11 @@ const PaymentOneTime = ({ id }: Props) => {
     }
 
     const wisp = Wisp__factory.connect(WISP_CONTRACT, web3Provider.getSigner(0));
-    const [proof] = ethers.utils.defaultAbiCoder.decode(["uint256[8]"], decodedPath.proof);
 
     try {
       setIsLoading(true);
       const transaction = await wisp.deposit(
-        [proof[0], proof[1]],
-        [[proof[2], proof[3]], [proof[4], proof[5]]],
-        [proof[6], proof[7]],
+        decodedPath.proof,
         decodedPath.commitment,
         decodedPath.publicKey,
         decodedPath.amount,
@@ -154,16 +151,16 @@ const PaymentOneTime = ({ id }: Props) => {
 
       {!account
         ? <Box
-            mt="32px"
-            textAlign="center"
-          >
-            <Wallet
-              account={account}
-              connectWallet={connectWallet}
-              disconnect={disconnect}
-              isLoading={isWalletLoading}
-            />
-          </Box>
+          mt="32px"
+          textAlign="center"
+        >
+          <Wallet
+            account={account}
+            connectWallet={connectWallet}
+            disconnect={disconnect}
+            isLoading={isWalletLoading}
+          />
+        </Box>
         : (
           <Box
             as={Button}
@@ -301,12 +298,9 @@ const PaymentPermanent = ({ id }: Props) => {
 
     const valueAsBigNumber = ethers.utils.parseEther(value);
     const depositData = await getDepositData(sharedKeypair, valueAsBigNumber, selectedToken.address);
-    const [proof] = ethers.utils.defaultAbiCoder.decode(["uint256[8]"], depositData.proof);
     const wisp = Wisp__factory.connect(WISP_CONTRACT, web3Provider.getSigner(0));
     const transaction = await wisp.deposit(
-      [proof[0], proof[1]],
-      [[proof[2], proof[3]], [proof[4], proof[5]]],
-      [proof[6], proof[7]],
+      depositData.proof,
       depositData.commitment,
       "0x" + Buffer.from(depositData.publicKey).toString("hex"),
       "0x" + Buffer.from(depositData.amount).toString("hex"),
@@ -413,7 +407,7 @@ const Request = () => {
       >
         <Box>
           <Box display="flex" justifyContent="center">
-            <Image src="/icons/logo-md.svg" alt="logo" width="72px" height="45px" />
+            <Image src="/icons/logo-md.svg" alt="logo" width="72px" height="45px"/>
           </Box>
           <Box
             width="400px"

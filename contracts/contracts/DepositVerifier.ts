@@ -23,7 +23,7 @@ import type {
 
 export interface DepositVerifierInterface extends utils.Interface {
   functions: {
-    "verifyProof(uint256[2],uint256[2][2],uint256[2],uint256[5])": FunctionFragment;
+    "verifyProof(bytes,uint256[5])": FunctionFragment;
   };
 
   getFunction(nameOrSignatureOrTopic: "verifyProof"): FunctionFragment;
@@ -31,12 +31,7 @@ export interface DepositVerifierInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "verifyProof",
     values: [
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      PromiseOrValue<BytesLike>,
       [
         PromiseOrValue<BigNumberish>,
         PromiseOrValue<BigNumberish>,
@@ -83,12 +78,7 @@ export interface DepositVerifier extends BaseContract {
 
   functions: {
     verifyProof(
-      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      b: [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      proof: PromiseOrValue<BytesLike>,
       input: [
         PromiseOrValue<BigNumberish>,
         PromiseOrValue<BigNumberish>,
@@ -97,16 +87,11 @@ export interface DepositVerifier extends BaseContract {
         PromiseOrValue<BigNumberish>
       ],
       overrides?: CallOverrides
-    ): Promise<[boolean] & { r: boolean }>;
+    ): Promise<[boolean]>;
   };
 
   verifyProof(
-    a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-    b: [
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-    ],
-    c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    proof: PromiseOrValue<BytesLike>,
     input: [
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -119,12 +104,7 @@ export interface DepositVerifier extends BaseContract {
 
   callStatic: {
     verifyProof(
-      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      b: [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      proof: PromiseOrValue<BytesLike>,
       input: [
         PromiseOrValue<BigNumberish>,
         PromiseOrValue<BigNumberish>,
@@ -140,12 +120,7 @@ export interface DepositVerifier extends BaseContract {
 
   estimateGas: {
     verifyProof(
-      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      b: [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      proof: PromiseOrValue<BytesLike>,
       input: [
         PromiseOrValue<BigNumberish>,
         PromiseOrValue<BigNumberish>,
@@ -159,12 +134,7 @@ export interface DepositVerifier extends BaseContract {
 
   populateTransaction: {
     verifyProof(
-      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      b: [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      proof: PromiseOrValue<BytesLike>,
       input: [
         PromiseOrValue<BigNumberish>,
         PromiseOrValue<BigNumberish>,

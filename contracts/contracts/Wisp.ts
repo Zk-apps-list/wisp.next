@@ -31,7 +31,7 @@ export interface WispInterface extends utils.Interface {
   functions: {
     "FIELD_SIZE()": FunctionFragment;
     "ROOT_HISTORY_SIZE()": FunctionFragment;
-    "deposit(uint256[2],uint256[2][2],uint256[2],uint256,uint256,uint256,address,bytes)": FunctionFragment;
+    "deposit(bytes,uint256,uint256,uint256,address,bytes)": FunctionFragment;
     "depositVerifier()": FunctionFragment;
     "hasher()": FunctionFragment;
     "index()": FunctionFragment;
@@ -72,12 +72,7 @@ export interface WispInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "deposit",
     values: [
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      PromiseOrValue<BytesLike>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
       PromiseOrValue<BigNumberish>,
@@ -192,12 +187,7 @@ export interface Wisp extends BaseContract {
     ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<[number]>;
 
     deposit(
-      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      b: [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      proof: PromiseOrValue<BytesLike>,
       commitment: PromiseOrValue<BigNumberish>,
       publicKey: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
@@ -247,12 +237,7 @@ export interface Wisp extends BaseContract {
   ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<number>;
 
   deposit(
-    a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-    b: [
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-    ],
-    c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    proof: PromiseOrValue<BytesLike>,
     commitment: PromiseOrValue<BigNumberish>,
     publicKey: PromiseOrValue<BigNumberish>,
     amount: PromiseOrValue<BigNumberish>,
@@ -302,12 +287,7 @@ export interface Wisp extends BaseContract {
     ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<number>;
 
     deposit(
-      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      b: [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      proof: PromiseOrValue<BytesLike>,
       commitment: PromiseOrValue<BigNumberish>,
       publicKey: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
@@ -373,12 +353,7 @@ export interface Wisp extends BaseContract {
     ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      b: [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      proof: PromiseOrValue<BytesLike>,
       commitment: PromiseOrValue<BigNumberish>,
       publicKey: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
@@ -429,12 +404,7 @@ export interface Wisp extends BaseContract {
     ROOT_HISTORY_SIZE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      a: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-      b: [
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-        [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>]
-      ],
-      c: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      proof: PromiseOrValue<BytesLike>,
       commitment: PromiseOrValue<BigNumberish>,
       publicKey: PromiseOrValue<BigNumberish>,
       amount: PromiseOrValue<BigNumberish>,
