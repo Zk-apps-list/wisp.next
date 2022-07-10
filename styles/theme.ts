@@ -108,6 +108,12 @@ const appTheme = extendTheme({
       fontWeight: 600,
       lineHeight: "150%",
     },
+    app_semibold_18: {
+      fontFamily: `Urbanist, sans-serif`,
+      fontSize: "18px",
+      fontWeight: 600,
+      lineHeight: "150%",
+    },
     app_reg_16: {
       fontFamily: `Urbanist, sans-serif`,
       fontSize: "16px",

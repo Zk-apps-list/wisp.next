@@ -11,6 +11,7 @@ type AuthContextType = {
   disconnect: () => {},
   isWalletLoading: boolean,
   web3Provider: ethers.providers.Web3Provider | undefined,
+  getWeb3Provider: () => {},
   personalKeypair: Keypair | undefined,
   sharedKeypair: Keypair | undefined,
   isLoading: boolean
@@ -22,6 +23,7 @@ export const AuthContext = createContext<AuthContextType>({
   disconnect: async () => {},
   isWalletLoading: false,
   web3Provider: undefined,
+  getWeb3Provider: async () => {},
   personalKeypair: undefined,
   sharedKeypair: undefined,
   isLoading: true,
@@ -39,16 +41,20 @@ export const AuthContextProvider = (props: any) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [isWalletLoading, setIsWalletLoading] = useState<boolean>(false);
 
+  const getWeb3Provider = async () => {
+    const provider = await web3Modal.connect();
+    const web3Provider = new ethers.providers.Web3Provider(provider) as Web3Provider;
+    setProvider(provider);
+    setWeb3Provider(web3Provider);
+  }
+
   const connectWallet = async () => {
     try {
       setIsWalletLoading(true);
-      const provider = await web3Modal.connect();
-      const web3Provider = new ethers.providers.Web3Provider(provider) as Web3Provider;
-      setProvider(provider);
-      setWeb3Provider(web3Provider);
+      getWeb3Provider();
 
       // Retrieve signature on first sign in
-      if(!account) {
+      if(!account && web3Provider) {
         const accounts = await web3Provider.listAccounts();
         const signature = await web3Provider.getSigner().signMessage("some message");
 
@@ -135,6 +141,7 @@ export const AuthContextProvider = (props: any) => {
         disconnect,
         isWalletLoading,
         web3Provider,
+        getWeb3Provider,
         personalKeypair,
         sharedKeypair,
         isLoading
