@@ -100,14 +100,11 @@ const PaymentOneTime = ({ id }: Props) => {
     }
 
     const wisp = Wisp__factory.connect(WISP_CONTRACT, web3Provider.getSigner(0));
-    const [proof] = ethers.utils.defaultAbiCoder.decode(["uint256[8]"], decodedPath.proof);
 
     try {
       setIsLoading(true);
       const transaction = await wisp.deposit(
-        [proof[0], proof[1]],
-        [[proof[2], proof[3]], [proof[4], proof[5]]],
-        [proof[6], proof[7]],
+        decodedPath.proof,
         decodedPath.commitment,
         decodedPath.publicKey,
         decodedPath.amount,

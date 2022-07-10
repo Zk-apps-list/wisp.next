@@ -117,12 +117,9 @@ const PaymentPermanent = ({ id }: Props) => {
 
     const valueAsBigNumber = ethers.utils.parseEther(value);
     const depositData = await getDepositData(sharedKeypair, valueAsBigNumber, selectedToken.address);
-    const [proof] = ethers.utils.defaultAbiCoder.decode(["uint256[8]"], depositData.proof);
     const wisp = Wisp__factory.connect(WISP_CONTRACT, web3Provider.getSigner(0));
     const transaction = await wisp.deposit(
-      [proof[0], proof[1]],
-      [[proof[2], proof[3]], [proof[4], proof[5]]],
-      [proof[6], proof[7]],
+      depositData.proof,
       depositData.commitment,
       "0x" + Buffer.from(depositData.publicKey).toString("hex"),
       "0x" + Buffer.from(depositData.amount).toString("hex"),
