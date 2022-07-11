@@ -11,6 +11,7 @@ import { useRouter } from "next/router";
 import { AuthContext } from "../contexts/AuthContext";
 import { truncateWallet } from "../util/truncateWallet";
 import ClaimIDModal, { Mode } from "./Modal/ClaimIDModal/ClaimIDModal";
+import Network from "./Network";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,7 +47,8 @@ const Header = () => {
           {title()}
         </Text>
         {account &&  (
-          <Box>
+          <Flex>
+            <Network />
             <Flex
               as={Button}
               backgroundColor="transparent"
@@ -121,7 +123,7 @@ const Header = () => {
               </Box>
             )}
 
-          </Box>
+          </Flex>
         )}
       </Box>
     </>

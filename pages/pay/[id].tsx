@@ -3,6 +3,7 @@ import React from "react";
 import { useRouter } from 'next/router'
 import PaymentPermanent from "../../components/Payment/PaymentPermanent";
 import PaymentOneTime from "../../components/Payment/PaymentOneTime";
+import Network from "../../components/Network";
 
 const Request = () => {
   const router = useRouter();
@@ -10,6 +11,9 @@ const Request = () => {
 
   return (
     <Box backgroundColor="light_neutral.100" height="100vh">
+      <Box width= "200px" ml="auto">
+        <Network />
+      </Box>
       <Box
         height="100%"
         display="flex"

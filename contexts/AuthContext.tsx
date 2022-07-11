@@ -4,6 +4,9 @@ import { web3Modal } from '../pages';
 import { Web3Provider } from "@ethersproject/providers";
 import { Keypair } from '../util/keypair';
 import { getPersonalKeypair, getSharedKeypair } from '../util/signature';
+import { toHex } from '../util/toHex';
+import { networks } from '../util/networks';
+import { chains } from '../util/chains';
 
 type AuthContextType = {
   account: string | undefined,
@@ -14,7 +17,9 @@ type AuthContextType = {
   getWeb3Provider: () => {},
   personalKeypair: Keypair | undefined,
   sharedKeypair: Keypair | undefined,
-  isLoading: boolean
+  isLoading: boolean,
+  chainId: string | undefined,
+  switchNetwork: (network: number | undefined) => Promise<void>,
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -27,6 +32,8 @@ export const AuthContext = createContext<AuthContextType>({
   personalKeypair: undefined,
   sharedKeypair: undefined,
   isLoading: true,
+  chainId: undefined,
+  switchNetwork: async () => {}
 });
 
 export const AuthContextProvider = (props: any) => {
@@ -34,6 +41,7 @@ export const AuthContextProvider = (props: any) => {
 
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [account, setAccount] = useState<string | undefined>(undefined);
+  const [chainId, setChainId] = useState<string | undefined>(undefined);
   const [personalKeypair, setPersonalKeypair] = useState<Keypair>();
   const [sharedKeypair, setSharedKeypair] = useState<Keypair>();
   const [web3Provider, setWeb3Provider] = useState<Web3Provider | undefined>(undefined);
@@ -44,8 +52,10 @@ export const AuthContextProvider = (props: any) => {
   const getWeb3Provider = async () => {
     const provider = await web3Modal.connect();
     const web3Provider = new ethers.providers.Web3Provider(provider) as Web3Provider;
+    const network = await web3Provider.getNetwork();
     setProvider(provider);
     setWeb3Provider(web3Provider);
+    setChainId(network.chainId.toString());
   }
 
   const connectWallet = async () => {
@@ -83,6 +93,27 @@ export const AuthContextProvider = (props: any) => {
     setSharedKeypair(undefined);
   };
 
+  const switchNetwork = async (network: number) => {
+    const networkHexId = toHex(network);
+    try {
+      await provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: networkHexId }]
+      });
+    } catch (switchError: any) {
+      if (switchError.code === 4902) {
+        try {
+          await provider.request({
+            method: "wallet_addEthereumChain",
+            params: [networks[networkHexId]]
+          });
+        } catch (error: any) {
+          setError(error);
+        }
+      }
+    }
+  };
+
   useEffect(() => {
     if (provider?.on) {
       const handleAccountsChanged = (accounts: string[]) => {
@@ -93,9 +124,13 @@ export const AuthContextProvider = (props: any) => {
         };
       };
 
-      // const handleChainChanged = (_hexChainId) => {
-      //   setChainId(_hexChainId);
-      // };
+      const handleChainChanged = (_hexChainId: number) => {
+        chains.forEach(chain => {
+          if (chain.hexId === _hexChainId.toString()) {
+            setChainId(chain.id);
+          }
+        })
+      };
 
       const handleDisconnect = () => {
         console.log("disconnect", error);
@@ -103,13 +138,13 @@ export const AuthContextProvider = (props: any) => {
       };
 
       provider.on("accountsChanged", handleAccountsChanged);
-      // provider.on("chainChanged", handleChainChanged);
+      provider.on("chainChanged", handleChainChanged);
       provider.on("disconnect", handleDisconnect);
 
       return () => {
         if (provider.removeListener) {
           provider.removeListener("accountsChanged", handleAccountsChanged);
-          // provider.removeListener("chainChanged", handleChainChanged);
+          provider.removeListener("chainChanged", handleChainChanged);
           provider.removeListener("disconnect", handleDisconnect);
         }
       };
@@ -122,6 +157,9 @@ export const AuthContextProvider = (props: any) => {
       const account = localStorage.getItem("account");
       const personalKeypair = JSON.parse(localStorage.getItem("personalKeypair") as string);
       const sharedKeypair = JSON.parse(localStorage.getItem("sharedKeypair") as string);
+      // const chainId = localStorage.getItem("chainId");
+      
+      getWeb3Provider();
 
       if (account && personalKeypair && sharedKeypair) {
         setAccount(account);
@@ -144,7 +182,9 @@ export const AuthContextProvider = (props: any) => {
         getWeb3Provider,
         personalKeypair,
         sharedKeypair,
-        isLoading
+        isLoading,
+        chainId,
+        switchNetwork
       }}>
       {children}
     </AuthContext.Provider>
