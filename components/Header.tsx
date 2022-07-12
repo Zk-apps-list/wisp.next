@@ -12,6 +12,7 @@ import { AuthContext } from "../contexts/AuthContext";
 import { truncateWallet } from "../util/truncateWallet";
 import ClaimIDModal, { Mode } from "./Modal/ClaimIDModal/ClaimIDModal";
 import Network from "./Network";
+import Pending from "./Pending";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);

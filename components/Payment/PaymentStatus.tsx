@@ -45,7 +45,7 @@ const PaymentStatus = (props: Props) => {
           color="neutral.500"
           textAlign="center"
         >
-          Check this <Link href={`https://polygonscan.com/token/${hash}`}>link</Link> for the transaction status.
+          Check this <Link href={`https://mumbai.polygonscan.com/tx/${hash}`} textDecoration="underline" isExternal>link</Link> for the transaction status.
         </Box>
       ) : (
         <Box

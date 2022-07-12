@@ -8,59 +8,47 @@ import {
 import RequestOneTimeModal from "./Modal/RequestOneTimeModal";
 import RequestPermanentLink from "./Modal/RequestPermanentLinkModal";
 import CTAButton from './CTAButton';
+import Dropdown, { DropdownObject } from './Dropdown';
 
 const Request = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isOneTimeModalOpen, setIsOneTimeModalOpen] = useState(false);
   const [isPermanentLinkModalOpen, setIsPermanentLinkModalOpen] = useState(false);
 
-  return (
-    <>
-      <RequestOneTimeModal isOpen={isOneTimeModalOpen} onClose={() => setIsOneTimeModalOpen(false)} />
-      <RequestPermanentLink isOpen={isPermanentLinkModalOpen} onClose={() => setIsPermanentLinkModalOpen(false)} />
+  const items: DropdownObject[] = [
+    {
+      id: "1'",
+      title: "One Time Request",
+      onClick: () => setIsOneTimeModalOpen(true)
+    },
+    {
+      id: "2",
+      title: "Permanent Link",
+      onClick: () => setIsPermanentLinkModalOpen(true)
+    }
+  ];
+
+  const RequestButton = () => {
+    return (
       <CTAButton
         name="Request"
         icon="/icons/arrow_left.svg"
         responsive
         onClick={() => setIsOpen(!isOpen)}
       />
-      {isOpen && (
-        <Box
-          position="absolute"
-          mt="8px"
-          borderWidth="1px"
-          borderColor="neutral.100"
-          borderRadius="6px"
-          backgroundColor="neutral.0"
-        >
-          <Box
-            py="10px"
-            px="12px"
-            textStyle="app_reg_12"
-            color="neutral.800"
-            borderBottomWidth="1px"
-            borderColor="neutral.100"
-            overflow="hidden"
-            _hover={{ bg: "neutral.100", cursor: "pointer" }}
-            onClick={() => {
-              setIsOneTimeModalOpen(true);
-              setIsOpen(false);
-            }}
-          >One time request</Box>
-          <Box
-            py="10px"
-            px="12px"
-            textStyle="app_reg_12"
-            color="neutral.800"
-            overflow="hidden"
-            _hover={{ bg: "neutral.100", cursor: "pointer" }}
-            onClick={() => {
-              setIsPermanentLinkModalOpen(true);
-              setIsOpen(false);
-            }}
-          >Permanent link</Box>
-        </Box>
-      )}
+    )
+  };
+
+  return (
+    <>
+      <RequestOneTimeModal isOpen={isOneTimeModalOpen} onClose={() => setIsOneTimeModalOpen(false)} />
+      <RequestPermanentLink isOpen={isPermanentLinkModalOpen} onClose={() => setIsPermanentLinkModalOpen(false)} />
+      <Dropdown
+        button={<RequestButton />}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        items={items}
+      />
     </>
   )
 }

@@ -8,11 +8,13 @@ import { ethers } from "ethers";
 import { ERC20, ERC20__factory, Wisp__factory } from "../../contracts";
 import { WISP_CONTRACT } from "../../util/contracts";
 import PaymentStatus, { Payment } from "./PaymentStatus";
+import { TransactionContext } from "../../contexts/TransactionContext";
 
 type Props = { id: string }
 
 const PaymentOneTime = ({ id }: Props) => {
-  const { account, connectWallet, disconnect, isWalletLoading, web3Provider, getWeb3Provider } = useContext(AuthContext);
+  const { account, connectWallet, disconnect, isWalletLoading, web3Provider } = useContext(AuthContext);
+  const { setIsPendingModalOpen, setTransactionHash, setIsPending, isPending, transactionHash } = useContext(TransactionContext);
 
   const [error, setError] = useState<string>("");
 
@@ -24,7 +26,6 @@ const PaymentOneTime = ({ id }: Props) => {
   const [decodedPath, setDecodedPath] = useState<DecodedPath | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-  const [hash, setHash] = useState<string | undefined>();
 
   useEffect(() => {
     if (!id) {
@@ -38,10 +39,6 @@ const PaymentOneTime = ({ id }: Props) => {
   }, [id]);
 
   useEffect(() => {
-    if (!web3Provider) {
-      getWeb3Provider();
-    }
-
     if (!requestedToken || !web3Provider || !account) {
       return;
     }
@@ -68,10 +65,6 @@ const PaymentOneTime = ({ id }: Props) => {
   }, [tokenContract, account, requestedAmount]);
 
   const approvePayment = async () => {
-    if (!web3Provider) {
-      getWeb3Provider();
-    }
-
     if (!tokenContract || !requestedAmount || !web3Provider) {
       return;
     }
@@ -79,8 +72,16 @@ const PaymentOneTime = ({ id }: Props) => {
     try {
       setIsLoading(true);
       const transaction = await tokenContract.approve(WISP_CONTRACT, ethers.utils.parseEther(requestedAmount));
+
+      setIsPending(true);
+      setIsPendingModalOpen(true);
+      setTransactionHash(transaction.hash);
+
       const result = await web3Provider.waitForTransaction(transaction.hash);
       if(result.status) {
+        setIsPending(false);
+        setIsPendingModalOpen(false);
+        setTransactionHash(undefined);
         setNeedsApproval(false);
       }
     } catch (error: any) {
@@ -91,10 +92,6 @@ const PaymentOneTime = ({ id }: Props) => {
   }
 
   const executePayment = async () => {
-    if (!web3Provider) {
-      getWeb3Provider();
-    }
-
     if (!web3Provider || !decodedPath) {
       return;
     }
@@ -113,8 +110,8 @@ const PaymentOneTime = ({ id }: Props) => {
       );
 
       if (transaction?.hash) {
+        setTransactionHash(transaction?.hash);
         setIsSubmitted(true);
-        setHash(transaction?.hash);
       }
       // await transaction.wait(1);
     } catch (error: any) {
@@ -205,8 +202,8 @@ const PaymentOneTime = ({ id }: Props) => {
             )}
           </>
         )}
-        {isSubmitted && hash && (
-          <PaymentStatus status={Payment.SUBMITTED} hash={hash} />
+        {isSubmitted && transactionHash && (
+          <PaymentStatus status={Payment.SUBMITTED} hash={transactionHash} />
         )}
     </Box>
   )

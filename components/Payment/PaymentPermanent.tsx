@@ -7,11 +7,18 @@ import { ERC20__factory, Wisp__factory } from "../../contracts";
 import { WISP_CONTRACT } from "../../util/contracts";
 import { getDepositData } from "../../util/deposit";
 import { Keypair } from "../../util/keypair";
+import PaymentStatus, { Payment } from "./PaymentStatus";
+import { TransactionContext } from "../../contexts/TransactionContext";
+import Wallet from "../Wallet";
 
 type Props = { id: string }
 
 const PaymentPermanent = ({ id }: Props) => {
-  const { account, web3Provider } = useContext(AuthContext);
+  const { account, connectWallet, disconnect, isWalletLoading, web3Provider } = useContext(AuthContext);
+  const { setIsPendingModalOpen, setTransactionHash, setIsPending, transactionHash } = useContext(TransactionContext);
+
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const [value, setValue] = useState<string | undefined>(undefined);
   const [error, setError] = useState<string>("");
@@ -56,7 +63,7 @@ const PaymentPermanent = ({ id }: Props) => {
             height="24px"
           />
         </Box>
-        <Text color="light_neutral.800" textStyle="app_reg_14" ml="8px" mt="2px">
+        <Text color="neutral.800" textStyle="app_reg_14" ml="8px" mt="2px">
           {token.name + ` (${token.symbol})`}
         </Text>
       </Box>
@@ -64,38 +71,11 @@ const PaymentPermanent = ({ id }: Props) => {
   }
 
   const approvalNeeded = (value: string | undefined): boolean => {
-    if (!value || !allowance) {
+    if (isNaN(Number(value)) || !value || !allowance || Number(value) <= 0) {
       return true;
     }
 
     return ethers.utils.parseEther(value).gt(allowance);
-  }
-
-  const actionButton = (text: string, action: () => void) => {
-    return (<Box
-      as={Button}
-      backgroundColor="primary.800"
-      borderRadius="6px"
-      mt="12px"
-      py="12px"
-      width="100%"
-      textAlign="center"
-      leftIcon={
-        <Image
-          src="/icons/chain.svg"
-          alt="Chevron Down"
-          width="16px"
-          height="16px"
-        />
-      }
-      _hover={{ bg: "primary.700" }}
-      color="neutral.0"
-      textStyle="app_reg_14"
-      isDisabled={!selectedToken || !value}
-      onClick={action}
-    >
-      {text}
-    </Box>);
   }
 
   const approvePayment = async () => {
@@ -103,111 +83,177 @@ const PaymentPermanent = ({ id }: Props) => {
       return
     }
 
-    const valueAsBigNumber = ethers.utils.parseEther(value);
-    const tokenContract = ERC20__factory.connect(selectedToken.address, web3Provider.getSigner(0));
-    const transaction = await tokenContract.approve(WISP_CONTRACT, valueAsBigNumber);
-    await transaction.wait(1);
-    setAllowance(valueAsBigNumber);
+    try {
+      setIsLoading(true);
+      const valueAsBigNumber = ethers.utils.parseEther(value);
+      const tokenContract = ERC20__factory.connect(selectedToken.address, web3Provider.getSigner(0));
+      const transaction = await tokenContract.approve(WISP_CONTRACT, valueAsBigNumber);
+      setAllowance(valueAsBigNumber);
+
+      setIsPending(true);
+      setIsPendingModalOpen(true);
+      setTransactionHash(transaction.hash);
+
+      const result = await web3Provider.waitForTransaction(transaction.hash);
+      if(result.status) {
+        setIsPending(false);
+        setIsPendingModalOpen(false);
+        setTransactionHash(undefined);
+      }
+
+    } catch (error: any) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   const executePayment = async () => {
     if (!selectedToken || !web3Provider || !value || !sharedKeypair) {
-      return
+      return;
     }
-
     const valueAsBigNumber = ethers.utils.parseEther(value);
     const depositData = await getDepositData(sharedKeypair, valueAsBigNumber, selectedToken.address);
     const wisp = Wisp__factory.connect(WISP_CONTRACT, web3Provider.getSigner(0));
-    const transaction = await wisp.deposit(
-      depositData.proof,
-      depositData.commitment,
-      "0x" + Buffer.from(depositData.publicKey).toString("hex"),
-      "0x" + Buffer.from(depositData.amount).toString("hex"),
-      "0x" + Buffer.from(depositData.token).toString("hex"),
-      "0x" + depositData.encryptedData.toString("hex")
-    );
-    await transaction.wait(1);
-    console.log(transaction);
+
+    try {
+      setIsLoading(true);
+      const transaction = await wisp.deposit(
+        depositData.proof,
+        depositData.commitment,
+        "0x" + Buffer.from(depositData.publicKey).toString("hex"),
+        "0x" + Buffer.from(depositData.amount).toString("hex"),
+        "0x" + Buffer.from(depositData.token).toString("hex"),
+        "0x" + depositData.encryptedData.toString("hex")
+      );
+
+      if (transaction?.hash) {
+        setTransactionHash(transaction?.hash);
+        setIsSubmitted(true);
+      }
+    } catch (error: any) {
+      setError(error.reason);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
-    <Box>
-      <Box>
-        <Text color="light_neutral.800" textStyle="app_med_18" textAlign="center">
-          Payment
-        </Text>
-      </Box>
-      <Box>
-        <Text color="light_neutral.800" textStyle="app_reg_14" textAlign="center">
-          You can make any contribution you want
-        </Text>
-      </Box>
-      <Box>
-        <Menu>
-          <MenuButton
-            as={Button}
-            mt="32px"
-            width="100%"
-            textAlign={"left"}
-            color="light_neutral.800"
-            backgroundColor="light_neutral.0"
-            _hover={{ bg: "light_neutral.50" }}
-            _active={{ bg: "neutral_800" }}
-            rightIcon={
-              <Image
-                src="/icons/chevron_down.svg"
-                alt="Chevron Down"
-                width="16px"
-                height="16px"
-              />
-            }
-          >
-            {!!selectedToken ? token(selectedToken) : "Select Token"}
-          </MenuButton>
-          <MenuList backgroundColor="light_neutral.0" borderWidth="0px">
-            {
-              tokens.map(it => {
-                return (
-                  <MenuItem
-                    key={it.address}
-                    _hover={{ bg: "light_neutral.50" }}
-                    _focus={{ bg: "neutral_800" }}
-                    onClick={() => setSelectedToken(it)}
-                  >
-                    {token(it)}
-                  </MenuItem>
-                );
-              })
-            }
-          </MenuList>
-        </Menu>
+    <Box backgroundColor="neutral.0" p="24px" borderRadius="12px" borderWidth="1px" borderColor="neutral.100">
+      {!isSubmitted && (
+        <>
+          <Box>
+            <Text color="neutral.800" textStyle="app_med_18" textAlign="center">
+              Payment Link
+            </Text>
+          </Box>
+          <Box mt="8px">
+            <Text color="neutral.800" textStyle="app_reg_14" textAlign="center">
+              Please select token and amount to send
+            </Text>
+          </Box>
+          <Box>
+            <Menu>
+              <MenuButton
+                as={Button}
+                mt="32px"
+                width="100%"
+                textAlign={"left"}
+                color="neutral.800"
+                backgroundColor="neutral.100"
+                _hover={{ bg: "neutral.50" }}
+                _active={{ bg: "neutral_800" }}
+                rightIcon={
+                  <Image
+                    src="/icons/chevron_down.svg"
+                    alt="Chevron Down"
+                    width="16px"
+                    height="16px"
+                  />
+                }
+              >
+                {!!selectedToken ? token(selectedToken) : "Select Token"}
+              </MenuButton>
+              <MenuList backgroundColor="neutral.0" borderWidth="0px">
+                {
+                  tokens.map(it => {
+                    return (
+                      <MenuItem
+                        key={it.address}
+                        _hover={{ bg: "neutral.50" }}
+                        _focus={{ bg: "neutral_800" }}
+                        onClick={() => setSelectedToken(it)}
+                      >
+                        {token(it)}
+                      </MenuItem>
+                    );
+                  })
+                }
+              </MenuList>
+            </Menu>
 
-        <Input
-          mt="16px"
-          value={value}
-          placeholder="0"
-          color="light_neutral.800"
-          borderWidth="0px"
-          backgroundColor="light_neutral.0"
-          isDisabled={!selectedToken}
-          onChange={handleValueChange}
-        />
+            <Input
+              mt="16px"
+              value={value}
+              placeholder="0"
+              color="neutral.800"
+              borderWidth="0px"
+              backgroundColor="neutral.100"
+              isDisabled={!selectedToken}
+              onChange={handleValueChange}
+            />
 
-        {/* TODO: Add conversion to USD */}
-        {/* <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
-          ~ 0 USD
-        </Text> */}
-      </Box>
+          </Box>
 
-      {error && <Text mt="12px" color="light_neutral.800" textStyle="app_reg_14" textAlign="center">
-        {`You don't have enough token on your account`}
-      </Text>}
+          {error && <Text mt="12px" color="neutral.800" textStyle="app_reg_14" textAlign="center">
+            {`You don't have enough token on your account`}
+          </Text>}
 
-      {
-        approvalNeeded(value) ?
-          actionButton("Approve Payment", approvePayment) :
-          actionButton("Pay", executePayment)
-      }
+          {!account
+            ? <Box
+                mt="32px"
+                textAlign="center"
+              >
+                <Wallet
+                  account={account}
+                  connectWallet={connectWallet}
+                  disconnect={disconnect}
+                  isLoading={isWalletLoading}
+                />
+              </Box>
+            : (
+              <Box
+                as={Button}
+                backgroundColor="primary.800"
+                borderRadius="6px"
+                mt="32px"
+                py="12px"
+                width="100%"
+                textAlign="center"
+                leftIcon={
+                  <Image
+                    src="/icons/chain.svg"
+                    alt="Chevron Down"
+                    width="16px"
+                    height="16px"
+                  />
+                }
+                _hover={{ bg: "primary.700" }}
+                color="neutral.0"
+                textStyle="app_reg_14"
+                isLoading={isLoading}
+                disabled={!value || !selectedToken}
+                onClick={approvalNeeded(value) ? approvePayment : executePayment}
+              >
+                {approvalNeeded(value) ? "Approve Payment" : "Pay"}
+              </Box>
+            )}
+          </>
+      )}
+
+      {isSubmitted && transactionHash && (
+          <PaymentStatus status={Payment.SUBMITTED} hash={transactionHash} />
+        )}
     </Box>
   )
 };
