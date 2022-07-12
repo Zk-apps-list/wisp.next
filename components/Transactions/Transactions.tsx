@@ -1,4 +1,4 @@
-import { Box, Text, } from "@chakra-ui/react";
+import { Box, Link, Text, } from "@chakra-ui/react";
 import React from "react";
 import Token from "../Token";
 import { decryptData } from "../../util/encryption";
@@ -7,6 +7,8 @@ import { parseNoteFromBuff } from "../../util/note";
 import { tokens } from "../../util/tokens";
 import { ethers } from "ethers";
 import { GetPaymentsResult, Payment } from "../../util/thegraph";
+import { truncateTx } from "../../util/truncateTx";
+import moment from "moment";
 
 enum BadgeType {
   RECEIVED = "RECEIVED",
@@ -108,13 +110,13 @@ const TransactionTable = (props: TransactionTableProps) => {
           <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px">
             Transaction ID
           </Box>
-          <Box display="table-cell" width="16.7%" p="6px">
+          <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px">
             Status
           </Box>
-          <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px">
+          <Box display="table-cell" width="16.7%" p="6px">
             Amount
           </Box>
-          <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px" pr="12px">
+          <Box display="table-cell" width="16.7%" p="6px" pr="12px">
             Date
           </Box>
         </Box>
@@ -155,18 +157,21 @@ const TransactionRow = (props: TransactionRowProps) => {
       </Box>
       <Box display={{ base: "none", md: "none", lg: "table-cell" }} py="8px" borderBottomWidth="1px"
            borderBottomColor="neutral.100">
-        <Text textStyle="app_med_14" color="neutral.800">{props.txHash}</Text>
-      </Box>
-      <Box display="table-cell" py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
-        <Badge type={BadgeType.RECEIVED}/>
+        <Link href={`https://mumbai.polygonscan.com/tx/${props.txHash}`} textDecoration="underline" isExternal>
+          <Text textStyle="app_med_14" color="neutral.800">{truncateTx(props.txHash, 4)}</Text>
+        </Link>
       </Box>
       <Box display={{ base: "none", md: "none", lg: "table-cell" }} py="8px" borderBottomWidth="1px"
+           borderBottomColor="neutral.100">
+        <Badge type={BadgeType.RECEIVED}/>
+      </Box>
+      <Box display="table-cell" py="8px" borderBottomWidth="1px"
            borderBottomColor="neutral.100">
         <Text textStyle="app_med_14" color="neutral.800">{props.amount}</Text>
       </Box>
-      <Box display={{ base: "none", md: "none", lg: "table-cell" }} py="8px" borderBottomWidth="1px"
+      <Box display="table-cell" py="8px" borderBottomWidth="1px"
            borderBottomColor="neutral.100">
-        <Text textStyle="app_med_14" color="neutral.800">{props.date.toISOString()}</Text>
+        <Text textStyle="app_med_14" color="neutral.800">{moment(props.date).format("L LTS")}</Text>
       </Box>
     </Box>
   )
