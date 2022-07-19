@@ -8,6 +8,8 @@ import {
 } from "@chakra-ui/react";
 import { Color1, Color2, Color3, Color4 } from '../../pages';
 import Floater from '../Floater';
+import CTAButton from '../CTAButton';
+import { useRouter } from 'next/router';
 
 export const gradient = keyframes`
   0% {
@@ -23,7 +25,9 @@ export const gradient = keyframes`
 `
 
 const Jumbotron = () => {
+  const router = useRouter();
   const gradientAnimation = `${gradient} 15s ease infinite`;
+
   return (
     <>
       <Flex mt={{ base: "120px", md: "140px", lg: "160px", xl: "210px" }}>
@@ -145,9 +149,17 @@ const Jumbotron = () => {
           Wisp is the easiest, safest, and fastest way to request secure and private payments using cryptocurrency without revealing your wallet address.
         </Text>
       </Flex>
+      <Flex mt="24px" width="100%" justifyContent="center">
+        <CTAButton
+          name="Join Wisp"
+          icon="/icons/discord.svg"
+          responsive
+          onClick={() => window.open("https://discord.gg/wgJugWkJPP", "_ blank")}
+        />
+      </Flex>
       <Box
         position="relative"
-        mt="56px"
+        mt="40px"
         width={{ base: "90%", xl: "1090px" }}
         height="380px"
         background={`linear-gradient(-45deg, ${Color1}, ${Color2}, ${Color3}, ${Color4})`}

@@ -4,6 +4,7 @@ import React, { useContext, useState } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
 import { MenuItem } from '../pages';
 import { truncateWallet } from '../util/truncateWallet';
+import { defaultGradient, ethereumGradient, polygonGradient } from './LeftPanel';
 import ClaimIDModal from './Modal/ClaimIDModal/ClaimIDModal';
 import Wallet from './Wallet';
 
@@ -11,12 +12,20 @@ const Navbar = (props: any) => {
   const router = useRouter();
   const pathname = router.asPath;
 
-  const { account, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
+  const { account, chainId, connectWallet, disconnect, isWalletLoading } = useContext(AuthContext);
   const { menuItems, isMobileOnly, title, isLandingPage} = props;
   const [menuOpen, setMenuOpen] = useState(false);
   const [menu, setMenu] = useState(menuItems[0]);
 
   const [isClaimIDModalOpen, setClaimIDModalOpen] = useState(false);
+
+  const gradient = 
+    chainId === "1"
+      ? ethereumGradient
+      : chainId === "137"
+        ? polygonGradient
+        : defaultGradient;
+
 
   const contentWidths = {
     base: "calc(100% - 64px)",
@@ -63,7 +72,7 @@ const Navbar = (props: any) => {
         <Text
           textStyle="app_med_18"
           display={{ base: "block", md: "none" }}
-          color={isLandingPage ? "red" : "neutral.0"}
+          color={isLandingPage ? "red.light" : "neutral.0"}
         >
           {!isLandingPage && title}
         </Text>
@@ -123,7 +132,7 @@ const Navbar = (props: any) => {
           position="fixed"
           top="0"
           left="0"
-          background="linear-gradient(152.47deg, #385CD9 42.36%, #147BDA 73.79%);"
+          background={gradient}
           direction="column"
           align="center"
           zIndex={10}
@@ -180,18 +189,7 @@ const Navbar = (props: any) => {
                       borderRadius="6px"
                       py="24px"
                       textAlign="center"
-                      leftIcon={
-                        <Image
-                        src={
-                          pathname === el.path
-                            ? el.icon
-                            : el.iconLight
-                        }
-                          alt="Portfolio Icon"
-                          width="28px"
-                          height="28px"
-                        />
-                      }
+                      leftIcon={el.icon(pathname === el.path ? "primary.500" : "neutral.0")}
                       backgroundColor={pathname === el.path ? "neutral.0" : "transparent"}
                       _hover={{ bg: pathname === el.path ? "neutral.0" : "primary.900" }}
                       onClick={() => router.push(el.path)}

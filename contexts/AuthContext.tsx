@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useRef, useState } from 'react';
 import { ethers } from "ethers";
 import { web3Modal } from '../pages';
 import { Web3Provider } from "@ethersproject/providers";
@@ -49,6 +49,8 @@ export const AuthContextProvider = (props: any) => {
   const [error, setError] = useState<string | undefined>(undefined);
   const [isWalletLoading, setIsWalletLoading] = useState<boolean>(false);
 
+  const runningOnce = useRef(false);
+
   const getWeb3Provider = async () => {
     const provider = await web3Modal.connect();
     const web3Provider = new ethers.providers.Web3Provider(provider) as Web3Provider;
@@ -56,12 +58,14 @@ export const AuthContextProvider = (props: any) => {
     setProvider(provider);
     setWeb3Provider(web3Provider);
     setChainId(network.chainId.toString());
+    return web3Provider;
   }
 
   const connectWallet = async () => {
     try {
       setIsWalletLoading(true);
-      getWeb3Provider();
+      // Get fresh instance of web3Provider instead of from state, because of race condition
+      const web3Provider = await getWeb3Provider();
 
       // Retrieve signature on first sign in
       if(!account && web3Provider) {
@@ -91,6 +95,10 @@ export const AuthContextProvider = (props: any) => {
     setAccount(undefined);
     setPersonalKeypair(undefined);
     setSharedKeypair(undefined);
+
+    setProvider(undefined);
+    setWeb3Provider(undefined);
+    setChainId(undefined);    
   };
 
   const switchNetwork = async (network: number) => {
@@ -152,22 +160,29 @@ export const AuthContextProvider = (props: any) => {
   }, [provider]);
 
   useEffect(() => {
-    try {
+    if(!runningOnce.current) {
+      runningOnce.current = true;
       setIsLoading(true);
       const account = localStorage.getItem("account");
       const personalKeypair = JSON.parse(localStorage.getItem("personalKeypair") as string);
       const sharedKeypair = JSON.parse(localStorage.getItem("sharedKeypair") as string);
       // const chainId = localStorage.getItem("chainId");
-      
-      getWeb3Provider();
 
       if (account && personalKeypair && sharedKeypair) {
         setAccount(account);
         setPersonalKeypair(personalKeypair);
         setSharedKeypair(sharedKeypair);
+
+        // Only retrieve web3Provider if already connected because
+        // otherwise, it will show unnecessary modal prompting to connect
+        getWeb3Provider().then().finally(() => {
+          setIsLoading(false);
+          runningOnce.current = false;
+        });
+      } else {
+        setIsLoading(false);
+        runningOnce.current = false;
       }
-    } finally {
-      setIsLoading(false);
     }
   }, []);
 

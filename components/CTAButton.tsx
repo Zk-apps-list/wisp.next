@@ -1,4 +1,4 @@
-import { Box, Image, Button, Text, Flex } from '@chakra-ui/react';
+import { Box, Image, Button, Text } from '@chakra-ui/react';
 import React from 'react';
 
 const CTAButton = (props: any) => {
@@ -15,14 +15,14 @@ const CTAButton = (props: any) => {
         px="20px"
         textAlign="center"
         _hover={{ bg: "primary.700" }}
-        leftIcon={
+        leftIcon={icon && (
           <Image
             src={icon}
             alt="logo"
             width="16px"
             height="16px"
           />
-        }
+        )}
         onClick={onClick}
       >
         <Text ml="auto" mr="auto" color="white" textStyle="app_reg_14">

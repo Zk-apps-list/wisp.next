@@ -11,6 +11,9 @@ import HowItWorks from "../components/Landing/HowItWorks";
 import WhyWisp from "../components/Landing/WhyWisp";
 import { AuthContext } from "../contexts/AuthContext";
 import PortfolioPage from "../components/Portfolio/Portfolio";
+import HomeIcon from "../components/Icons/HomeIcon";
+import RocketIcon from "../components/Icons/RocketIcon";
+import SettingsIcon from "../components/Icons/SettingsIcon";
 
 export let web3Modal: any;
 if (typeof window !== "undefined") {
@@ -31,35 +34,26 @@ if (typeof window !== "undefined") {
 export type MenuItem = {
   name: string,
   path: string,
-  icon: string,
-  iconLight: string
+  icon: (color: string) => JSX.Element
 }
 
 const LandingPageMenuItems: MenuItem[] = [
   {
     name: "Home",
     path: "/#",
-    icon: "/icons/home-icon.svg",
-    iconLight: "/icons/home-icon-light.svg"
+    icon: (color) => <HomeIcon color={color} boxSize="28px" />
   },
   {
     name: "How it works",
     path: "/#how-it-works",
-    icon: "/icons/rocket-icon.svg",
-    iconLight: "/icons/rocket-icon-light.svg"
+    icon: (color) => <RocketIcon color={color} boxSize="28px" />
   },
   {
     name: "Why Wisp",
     path: "/#why-wisp",
-    icon: "/icons/settings-icon.svg",
-    iconLight: "/icons/settings-icon-light.svg"
+    icon: (color) => <SettingsIcon color={color} boxSize="28px" />
   }
 ];
-
-// export const Color1 = "#ee7752";
-// export const Color2 = "#e73c7e ";
-// export const Color3 = "#23a6d5";
-// export const Color4 = "#23d5ab";
 
 export const Color1 = "#385CD9";
 export const Color2 = "#147BDA ";

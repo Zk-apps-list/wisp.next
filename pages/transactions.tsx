@@ -36,14 +36,14 @@ const TransactionsPage = () => {
     <Flex
       align="center"
       direction="column"
-      backgroundColor="light_neutral.50"
+      backgroundColor="neutral.50"
     >
       <Navbar
         isMobileOnly
         title="Transactions"
         menuItems={PortfolioMenuItems}
       />
-      <Box backgroundColor="light_neutral.50" width="100%" display="flex">
+      <Box backgroundColor="neutral.50" width="100%" display="flex">
         <Box>
           <LeftPanel/>
         </Box>

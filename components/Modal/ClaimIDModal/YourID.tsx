@@ -35,11 +35,11 @@ const YourID = (props: any) => {
       <Input
         value={value}
         placeholder="Enter your ID"
-        color="light_neutral.800"
+        color="neutral.800"
         borderWidth="0px"
         backgroundColor="neutral.50"
         onChange={handleValueChange}
-        errorBorderColor="red"
+        errorBorderColor="red.light"
         _disabled={{ opacity: 1 }}
         isDisabled
       />
@@ -84,7 +84,7 @@ const YourID = (props: any) => {
         <Flex justifyContent="center" alignItems="center">
           <Text
             textStyle="app_reg_12"
-            color="light_neutral.800"
+            color="neutral.800"
             textAlign="left"
           >{`https://wisp.finance/${value ? value : ""}`}</Text>
         </Flex>

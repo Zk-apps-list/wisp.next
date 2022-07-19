@@ -5,6 +5,7 @@ export interface DropdownObject {
   id: string;
   title: string;
   onClick: () => void;
+  icon?: string;
 }
 
 type DropdownProps = {
@@ -32,21 +33,37 @@ const Dropdown = (props: DropdownProps) => {
         >
           {items.map(el => {
             return (
-              <Box
+              <Flex
                 key={el.id}
                 py="10px"
                 px="12px"
-                textStyle="app_reg_12"
-                color="neutral.800"
-                borderBottomWidth="1px"
-                borderColor="neutral.100"
                 overflow="hidden"
+                columnGap="8px"
                 _hover={{ bg: "neutral.100", cursor: "pointer" }}
                 onClick={() => {
                   el.onClick();
                   setIsOpen(false);
                 }}
-              >{el.title}</Box>
+              >
+                {el.icon && (
+                  <Flex justifyContent="center" alignItems="center">
+                    <Image
+                      src={el.icon}
+                      alt="icon"
+                      width="24px"
+                      height="24px"
+                    />
+                  </Flex>
+                )}
+                <Box
+                  textStyle="app_med_14"
+                  color="neutral.900"
+                  borderBottomWidth="1px"
+                  borderColor="neutral.100"
+                >
+                  {el.title}
+                </Box>
+              </Flex>
             )
           })}
         </Box>

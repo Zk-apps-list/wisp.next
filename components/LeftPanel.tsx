@@ -1,13 +1,26 @@
 import { Box, Button, Flex, Image, Link, Text } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import { AuthContext } from "../contexts/AuthContext";
+import WalletIcon from "./Icons/WalletIcon";
+import TransactionIcon from "./Icons/TransactionIcon";
+
+export const defaultGradient = `linear-gradient(152.47deg, #385CD9 42.36%, #147BDA 73.79%)`;
+export const polygonGradient = `linear-gradient(152.47deg, #661DDF 42.36%, #8147E5 73.79%)`;
+export const ethereumGradient = `linear-gradient(152.47deg, #141414 42.36%, #343434 73.79%)`;
 
 const LeftPanel = () => {
   const router = useRouter();
   const pathname = router.pathname;
 
-  const { disconnect } = useContext(AuthContext);
+  const { disconnect, chainId } = useContext(AuthContext);
+
+  const gradient = 
+    chainId === "1"
+      ? ethereumGradient
+      : chainId === "137"
+        ? polygonGradient
+        : defaultGradient;
 
   return (
     <Box
@@ -15,7 +28,7 @@ const LeftPanel = () => {
       py="24px"
       px="16px"
       height="100vh"
-      background="linear-gradient(145.39deg, #385CD9 36.67%, #147BDA 75.02%)"
+      background={gradient}
       display={{
         base: "none",
         md: "flex"
@@ -46,19 +59,13 @@ const LeftPanel = () => {
             py="12px"
             textAlign="center"
             leftIcon={
-              <Image
-              src={
-                pathname === "/"
-                  ? "icons/wallet.svg"
-                  : "icons/wallet-light.svg"
-              }
-                alt="Portfolio Icon"
-                width="28px"
-                height="28px"
+              <WalletIcon
+                color={pathname === "/" ? "primary.500" : "neutral.0"}
+                boxSize="28px"
               />
             }
             backgroundColor={pathname === "/" ? "neutral.0" : "transparent"}
-            _hover={{ bg: pathname === "/" ? "neutral.0" : "primary.900" }}
+            _hover={{ bg: pathname === "/" ? "neutral.0" : "primary.400" }}
             onClick={() => router.push(`/`)}
           >
             <Text mr="auto" ml="16px" color={pathname === "/" ? "primary.700" : "neutral.0"} textStyle="app_reg_14">
@@ -73,19 +80,13 @@ const LeftPanel = () => {
             py="12px"
             textAlign="center"
             leftIcon={
-              <Image
-                src={
-                  pathname === "/transactions"
-                    ? "icons/transactions.svg"
-                    : "icons/transactions-light.svg"
-                }
-                alt="Transactions Icon"
-                width="28px"
-                height="28px"
+              <TransactionIcon
+                color={pathname === "/transactions" ? "primary.500" : "neutral.0"}
+                boxSize="28px"
               />
             }
             backgroundColor={pathname === "/transactions" ? "neutral.0" : "transparent"}
-            _hover={{ bg: pathname === "/transactions" ? "neutral.0" : "primary.900" }}
+            _hover={{ bg: pathname === "/transactions" ? "neutral.0" : "primary.400" }}
             onClick={() => router.push(`/transactions`)}
           >
             <Text mr="auto" ml="16px" color={pathname === "/transactions" ? "primary.700" : "neutral.0"} textStyle="app_reg_14">
@@ -102,14 +103,14 @@ const LeftPanel = () => {
           textAlign="center"
           leftIcon={
             <Image
-              src="icons/leave.svg"
+              src="/icons/leave.svg"
               alt="Transactions Icon"
               width="24px"
               height="24px"
             />
           }
           backgroundColor="transparent"
-          _hover={{ bg: "primary.900" }}
+          _hover={{ bg: "primary.400" }}
           onClick={() => disconnect()}
         >
           <Text mr="auto" color="neutral.0" textStyle="app_reg_14">

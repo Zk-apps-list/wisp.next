@@ -13,11 +13,12 @@ const Network = () => {
     return {
       id: el.id,
       title: el.label,
-      onClick: () => switchNetwork(Number(el.id))
+      onClick: () => switchNetwork(Number(el.id)),
+      icon: el.icon
     }
   });
 
-  const selectedChain = () => chains.find(el => el.id === chainId)?.label;
+  const selectedChain = chains.find(el => el.id === chainId);
 
   const NetworkButton = () => {
     return (
@@ -26,16 +27,24 @@ const Network = () => {
         backgroundColor="transparent"
         columnGap="8px"
         py="8px"
-        px="16px"
+        px="12px"
         onClick={() => setIsOpen(!isOpen)}
       >
+        {selectedChain && <Flex justifyContent="center" alignItems="center">
+          <Image
+            src={selectedChain.icon}
+            alt="network"
+            width="24px"
+            height="24px"
+          />
+        </Flex>}
         <Flex justifyContent="center" alignItems="center">
-          <Text color="neutral.800" textStyle="app_med_14">{selectedChain()}</Text>
+          <Text color="neutral.800" textStyle="app_med_14">{selectedChain?.label}</Text>
         </Flex>
         <Flex justifyContent="center" alignItems="center">
           <Image
             src={isOpen ? "/icons/chevron_up.svg" : "/icons/chevron_down.svg"}
-            alt="Chevron Down"
+            alt="chevron icon"
             width="16px"
             height="16px"
           />

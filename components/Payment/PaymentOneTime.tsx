@@ -131,7 +131,7 @@ const PaymentOneTime = ({ id }: Props) => {
           {!account && <Text color="neutral.400" textStyle="app_reg_14" textAlign="center">
             Please connect your wallet to make payment
           </Text>}
-          <Box borderRadius="12px" backgroundColor="light_neutral.50" p="16px" mt="16px">
+          <Box borderRadius="12px" backgroundColor="neutral.50" p="16px" mt="16px">
             {account && <Text color="neutral.500" textStyle="app_reg_14" textAlign="center">
               Your balance: {balance} {requestedToken?.symbol}
             </Text>}
@@ -158,7 +158,7 @@ const PaymentOneTime = ({ id }: Props) => {
 
           </Box>
 
-          {error && <Text mt="12px" color={"red"} textStyle="app_reg_14" textAlign="center">
+          {error && <Text mt="12px" color={"red.light"} textStyle="app_reg_14" textAlign="center">
             {`Error: ${error}`}
           </Text>}
 

@@ -40,11 +40,11 @@ const EditID = (props: any) => {
         <Input
           value={value}
           placeholder="Enter your ID"
-          color="light_neutral.800"
+          color="neutral.800"
           borderWidth="0px"
           backgroundColor="neutral.50"
           onChange={handleValueChange}
-          errorBorderColor="red"
+          errorBorderColor="red.light"
           isInvalid={!!error}
           _disabled={{ opacity: 1 }}
           // isDisabled={!isEditing}
@@ -73,7 +73,7 @@ const EditID = (props: any) => {
         )}
       </InputGroup>
 
-      {error && <Text mt="12px" color={"red"} textStyle="app_reg_14">
+      {error && <Text mt="12px" color={"red.light"} textStyle="app_reg_14">
         {error}
       </Text>}
 
@@ -85,7 +85,7 @@ const EditID = (props: any) => {
         <Box
           as={Button}
           mt="16px"
-          backgroundColor="red"
+          backgroundColor="red.light"
           borderRadius="6px"
           py="12px"
           width="100%"
@@ -98,7 +98,7 @@ const EditID = (props: any) => {
               height="16px"
             />
           }
-          _hover={{ bg: "dark_red" }}
+          _hover={{ bg: "red.dark" }}
           color="neutral.0"
           textStyle="app_reg_14"
           isLoading={isLoading}

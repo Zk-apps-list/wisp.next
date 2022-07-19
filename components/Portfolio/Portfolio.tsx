@@ -10,6 +10,8 @@ import CTAButton from "../CTAButton";
 import DepositModal from "../Modal/DepositModal";
 import WithdrawModal from "../Modal/WithdrawModal";
 import TransferModal from "../Modal/TransferModal";
+import TransactionIcon from "../Icons/TransactionIcon";
+import WalletIcon from "../Icons/WalletIcon";
 import { Keypair } from "../../util/keypair";
 import { useQuery } from "@apollo/client";
 import { GET_PAYMENTS_QUERY, GetPaymentsResult, Payment } from "../../util/thegraph";
@@ -159,14 +161,12 @@ export const PortfolioMenuItems: MenuItem[] = [
   {
     name: "Portfolio",
     path: "/",
-    icon: "/icons/wallet.svg",
-    iconLight: "/icons/wallet-light.svg"
+    icon: (color) => <WalletIcon color={color} boxSize="28px" />
   },
   {
     name: "Transactions",
     path: "/transactions",
-    icon: "/icons/transactions.svg",
-    iconLight: "/icons/transactions-light.svg"
+    icon: (color) => <TransactionIcon color={color} boxSize="28px" />
   }
 ];
 
@@ -248,7 +248,7 @@ const PortfolioPage = () => {
                       height="22px"
                     />
                   </Flex>
-                  <Text textStyle="app_med_14" color="green" lineHeight="30px" ml="6px">7D +5% ($400)</Text>
+                  <Text textStyle="app_med_14" color="green.dark" lineHeight="30px" ml="6px">7D +5% ($400)</Text>
                 </Flex>
               </Box>
             </Flex>

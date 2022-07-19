@@ -46,7 +46,7 @@ const WithdrawModal = (props: any) => {
             height="24px"
           />
         </Box>
-        <Text color="light_neutral.800" textStyle="app_reg_14" ml="8px" mt="2px">
+        <Text color="neutral.800" textStyle="app_reg_14" ml="8px" mt="2px">
           {token.name + ` (${token.symbol})`}
         </Text>
       </Box>
@@ -73,13 +73,13 @@ const WithdrawModal = (props: any) => {
       }}
     >
       <ModalOverlay />
-      <ModalContent backgroundColor="light_neutral.100" pb="12px">
-        <ModalHeader textStyle="app_med_18" color="light_neutral.800">
+      <ModalContent backgroundColor="neutral.100" pb="12px">
+        <ModalHeader textStyle="app_med_18" color="neutral.800">
           Withdraw
         </ModalHeader>
-        <ModalCloseButton color="light_neutral.800" />
+        <ModalCloseButton color="neutral.800" />
         <ModalBody>
-          <Text textStyle="app_reg_12" color="light_neutral.800">
+          <Text textStyle="app_reg_12" color="neutral.800">
             Withdraw to your wallet
           </Text>
           <Menu>
@@ -88,9 +88,9 @@ const WithdrawModal = (props: any) => {
               mt="32px"
               width="100%"
               textAlign={"left"}
-              color="light_neutral.800"
-              backgroundColor="light_neutral.0"
-              _hover={{ bg: "light_neutral.50" }}
+              color="neutral.800"
+              backgroundColor="neutral.0"
+              _hover={{ bg: "neutral.50" }}
               _active={{ bg: "neutral_800" }}
               rightIcon={
                 <Image
@@ -103,13 +103,13 @@ const WithdrawModal = (props: any) => {
             >
               {!!selectedToken ? token(selectedToken) : "Select Token"}
             </MenuButton>
-            <MenuList backgroundColor="light_neutral.0" borderWidth="0px">
+            <MenuList backgroundColor="neutral.0" borderWidth="0px">
               {
                 tokens.map(it => {
                   return (
                     <MenuItem
                       key={it.address}
-                      _hover={{ bg: "light_neutral.50" }}
+                      _hover={{ bg: "neutral.50" }}
                       _focus={{ bg: "neutral_800" }}
                       onClick={() => setSelectedToken(it)}
                     >
@@ -125,9 +125,9 @@ const WithdrawModal = (props: any) => {
             mt="16px"
             value={value}
             placeholder="0"
-            color="light_neutral.800"
+            color="neutral.800"
             borderWidth="0px"
-            backgroundColor="light_neutral.0"
+            backgroundColor="neutral.0"
             isDisabled={!selectedToken}
             onChange={handleValueChange}
           />

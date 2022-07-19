@@ -1,7 +1,8 @@
-interface Chain {
+export interface Chain {
   id: string,
   hexId: string,
-  label: string
+  label: string,
+  icon: string
 }
 
 export const chains: Chain[] = [
@@ -9,30 +10,24 @@ export const chains: Chain[] = [
     id: "1",
     hexId: "0x1",
     label: "Ethereum Mainnet",
-  },
-  {
-    id: "3",
-    hexId: "0x3",
-    label: "Ropsten Testnet",
+    icon: "/icons/networks/ethereum.svg"
   },
   {
     id: "4",
     hexId: "0x4",
     label: "Rinkeby Testnet",
-  },
-  {
-    id: "42",
-    hexId: "0x42",
-    label: "Kovan Testnet",
+    icon: "/icons/networks/ethereum.svg"
   },
   {
     id: "137",
     hexId: "0x89",
     label: "Polygon Mainnet",
+    icon: "/icons/networks/polygon.svg"
   },
   {
     id: "80001",
     hexId: "0x13881",
     label: "Mumbai Testnet",
+    icon: "/icons/networks/polygon.svg"
   }
 ];

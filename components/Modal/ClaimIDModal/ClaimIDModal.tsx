@@ -30,7 +30,7 @@ const ClaimIDModal = (props: any) => {
     >
       <ModalOverlay />
       <ModalContent backgroundColor="neutral.0" pb="12px">
-        <ModalHeader textStyle="app_med_18" color="light_neutral.800">
+        <ModalHeader textStyle="app_med_18" color="neutral.800">
           {mode === Mode.CLAIM
             ? 'Claim Personal ID'
             : mode === Mode.YOUR_ID
@@ -38,9 +38,9 @@ const ClaimIDModal = (props: any) => {
               : 'Edit ID'
           }
         </ModalHeader>
-        <ModalCloseButton color="light_neutral.800" />
+        <ModalCloseButton color="neutral.800" />
         <ModalBody>
-          <Text textStyle="app_reg_12" color="light_neutral.800">
+          <Text textStyle="app_reg_12" color="neutral.800">
             This ID can be used to receive payment using crypto wallet. The ID will be used to create a permanent link to receive payment for ex. wisp.finance/name
           </Text>
 

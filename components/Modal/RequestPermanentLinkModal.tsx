@@ -42,13 +42,13 @@ const RequestPermanentLink = (props: any) => {
       }}
     >
       <ModalOverlay />
-      <ModalContent backgroundColor="light_neutral.100" pb="12px">
-        <ModalHeader textStyle="app_med_18" color="light_neutral.800">
+      <ModalContent backgroundColor="neutral.100" pb="12px">
+        <ModalHeader textStyle="app_med_18" color="neutral.800">
           Permanent Link
         </ModalHeader>
-        <ModalCloseButton color="light_neutral.800" />
+        <ModalCloseButton color="neutral.800" />
         <ModalBody>
-          <Text textStyle="app_reg_12" color="light_neutral.800">
+          <Text textStyle="app_reg_12" color="neutral.800">
             Create a permanent payment link
           </Text>
 
@@ -98,7 +98,7 @@ const RequestPermanentLink = (props: any) => {
               <Box display="flex" justifyContent="center" alignItems="center">
                 <Text
                   textStyle="app_reg_12"
-                  color="light_neutral.800"
+                  color="neutral.800"
                 >{`${generatedLink?.substring(0, 40)}...`}</Text>
               </Box>
               <Tooltip

@@ -10,12 +10,12 @@ const Wallet = (props: any) => {
         {!account ? (
           <Box
             as={Button}
-            backgroundColor={"primary.800"}
+            backgroundColor="#1c3db6"
             borderRadius="6px"
             py="12px"
             height="34px"
             textAlign="center"
-            _hover={{ bg: "primary.700" }}
+            _hover={{ bg: "#2748c1" }}
             onClick={connectWallet}
             isLoading={isLoading}
           >
@@ -26,12 +26,12 @@ const Wallet = (props: any) => {
         ) : (
           <Box
             as={Button}
-            backgroundColor={"primary.800"}
+            backgroundColor="#1c3db6"
             borderRadius="6px"
             py="12px"
             textAlign="center"
             ml="36px"
-            _hover={{ bg: "primary.700" }}
+            _hover={{ bg: "#2748c1" }}
             onClick={disconnect}
             isLoading={isLoading}
           >

@@ -44,7 +44,7 @@ const Header = () => {
         flexDirection="row"
         justifyContent="space-between"
       >
-        <Text color="light_neutral.800" textStyle="app_bold_28">
+        <Text color="neutral.800" textStyle="app_bold_28">
           {title()}
         </Text>
         {account &&  (

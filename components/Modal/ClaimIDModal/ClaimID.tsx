@@ -44,17 +44,17 @@ const ClaimID = (props: any) => {
         <Input
           value={value}
           placeholder="Enter your ID"
-          color="light_neutral.800"
+          color="neutral.800"
           borderWidth="0px"
           backgroundColor="neutral.50"
           onChange={handleValueChange}
-          errorBorderColor="red"
+          errorBorderColor="red.light"
           isInvalid={!!error}
           _disabled={{ opacity: 1 }}
         />
       </InputGroup>
 
-      {error && <Text mt="12px" color={"red"} textStyle="app_reg_14">
+      {error && <Text mt="12px" color={"red.light"} textStyle="app_reg_14">
         {error}
       </Text>}
 

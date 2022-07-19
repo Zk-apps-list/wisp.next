@@ -1,6 +1,6 @@
 import { extendTheme } from "@chakra-ui/react";
 
-const appTheme = extendTheme({
+const defaultTheme = extendTheme({
   colors: {
     primary: {
       900: "#0129a2",
@@ -15,10 +15,14 @@ const appTheme = extendTheme({
       50: "#E9ECFB",
       0: "#F4F8FB",
     },
-    red: "#DF5954",
-    dark_red: "#C53731",
-    green: "#41BC5E",
-    light_green: "#EFF8F2",
+    red: {
+      light: "#DF5954",
+      dark: "#C53731"
+    },
+    green: {
+      light: "#EFF8F2",
+      dark: "#41BC5E"
+    },
     neutral: {
       900: "#27292b",
       800: "#333638",
@@ -32,25 +36,6 @@ const appTheme = extendTheme({
       50: "#f9fcff",
       0: "#ffffff",
     },
-    light_neutral: {
-      900: "#161616",
-      800: "#363636",
-      700: "#545454",
-      600: "#676767",
-      500: "#8f8f8f",
-      400: "#b0b0b0",
-      300: "#d4d4d4",
-      200: "#e5e5e5",
-      100: "#f0f0f0",
-      50: "#f7f7f7",
-      0: "#ffffff",
-    },
-    block: "#27292b",
-    background: {
-      start: "#242628",
-      end: "#1B1B1B",
-    },
-    landingBG: "#1E1E1E",
   },
   fonts: {
     // app: "Urbanist, sans-serif",
@@ -334,4 +319,43 @@ const appTheme = extendTheme({
   initialColorMode: "dark",
   useSystemColorMode: false,
 });
-export default appTheme;
+
+
+export const ethereumTheme = extendTheme({
+  colors: {
+    primary: {
+      900: "#545454",
+      800: "#363636",
+      700: "#363636",
+      600: "#676767",
+      500: "#161616",
+      400: "#363636",
+      300: "#D4D4D4",
+      200: "#E5E5E5",
+      100: "#F0F0F0",
+      50: "#F8F8F8",
+      0: "#ffffff"
+    }
+  }
+}, defaultTheme);
+
+export const polygonTheme = extendTheme({
+  colors: {
+    primary: {
+      900: "#0000bd",
+      800: "#3402cb",
+      700: "#490cd1",
+      600: "#8147E5",
+      500: "#661ddf",
+      400: "#8147E5",
+      300: "#996aea",
+      200: "#b797ef",
+      100: "#d4c1f5",
+      50: "#efe6fb",
+      0: "#ffffff"
+    }
+  }
+}, defaultTheme);
+
+
+export default defaultTheme;

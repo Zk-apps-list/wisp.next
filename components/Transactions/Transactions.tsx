@@ -24,12 +24,12 @@ const Badge = (props: any) => {
       return (
         <Box
           display="inline"
-          color="green"
+          color="green.dark"
           textStyle="app_med_12"
           px="8px"
           py="4px"
           borderRadius="4px"
-          backgroundColor="light_green"
+          backgroundColor="green.light"
         >
           RECEIVED
         </Box>
@@ -38,7 +38,7 @@ const Badge = (props: any) => {
       return (
         <Box
           display="inline"
-          color="red"
+          color="red.light"
           textStyle="app_med_12"
           px="8px"
           py="4px"
@@ -53,7 +53,7 @@ const Badge = (props: any) => {
       return (
         <Box
           display="inline"
-          color="red"
+          color="red.light"
           textStyle="app_med_12"
           px="8px"
           py="4px"
