@@ -8,6 +8,7 @@ const Conversion = (props: any) => {
 
   const getConversionToDollar = () => {
     if(selectedToken && conversion && value) {
+      // @ts-ignore
       const oneDollarEquivalent = Number(conversion[selectedToken?.symbol]) || 0;
       const dollarValue = value / oneDollarEquivalent;
       return dollarValue.toFixed(2);
