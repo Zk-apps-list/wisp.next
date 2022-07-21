@@ -113,6 +113,7 @@ export const AuthContextProvider = (props: any) => {
         try {
           await provider.request({
             method: "wallet_addEthereumChain",
+            // @ts-ignore
             params: [networks[networkHexId]]
           });
         } catch (error: any) {
