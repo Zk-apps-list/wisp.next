@@ -101,7 +101,7 @@ export const AuthContextProvider = (props: any) => {
     setChainId(undefined);    
   };
 
-  const switchNetwork = async (network: number) => {
+  const switchNetwork = async (network: number | undefined) => {
     const networkHexId = toHex(network);
     try {
       await provider.request({
