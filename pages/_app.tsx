@@ -7,6 +7,7 @@ import Head from 'next/head'
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import { useContext, useState } from "react";
 import defaultTheme from "../styles/theme";
+import { ConversionContextProvider } from "../contexts/ConversionContext";
 
 const client = new ApolloClient({
   uri: "https://api.thegraph.com/subgraphs/name/uladandrew/wisp-subgraph",
@@ -18,7 +19,9 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ApolloProvider client={client}>
       <AuthContextProvider>
         <TransactionContextProvider>
-          <ThemeSwitch Component={Component} pageProps={pageProps} />
+          <ConversionContextProvider>
+            <ThemeSwitch Component={Component} pageProps={pageProps} />
+          </ConversionContextProvider>
         </TransactionContextProvider>
       </AuthContextProvider>
     </ApolloProvider>

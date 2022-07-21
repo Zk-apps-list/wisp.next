@@ -148,14 +148,12 @@ const PaymentOneTime = ({ id }: Props) => {
                 <Text color="neutral.800" textStyle="app_reg_24">{requestedAmount} {requestedToken?.symbol}</Text>
               </Box>
             </Box>
-
-            {/* TODO: Add conversion to USD */}
-            {/* <Box mt="4px" textAlign="center">
-              <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
-                ~ 0 USD
-              </Text>
+            {/* <Box textAlign="center">
+              <Conversion
+                selectedToken={requestedToken}
+                value={requestedAmount}
+              />
             </Box> */}
-
           </Box>
 
           {error && <Text mt="12px" color={"red.light"} textStyle="app_reg_14" textAlign="center">

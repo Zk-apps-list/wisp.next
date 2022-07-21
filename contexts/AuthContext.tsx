@@ -160,6 +160,7 @@ export const AuthContextProvider = (props: any) => {
   }, [provider]);
 
   useEffect(() => {
+    // In React 18 that mounts, unmounts, then remounts in strict mode
     if(!runningOnce.current) {
       runningOnce.current = true;
       setIsLoading(true);

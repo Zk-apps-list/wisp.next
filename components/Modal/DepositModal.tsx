@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -18,6 +18,8 @@ import {
 } from "@chakra-ui/react";
 import { ethers } from "ethers";
 import { Token, tokens } from "../../util/tokens";
+import { ConversionContext } from "../../contexts/ConversionContext";
+import Conversion from "../Conversion";
 
 const DepositModal = (props: any) => {
   const { isOpen, onClose } = props;
@@ -131,10 +133,11 @@ const DepositModal = (props: any) => {
             isDisabled={!selectedToken}
             onChange={handleValueChange}
           />
-          {/* TODO: Add conversion to USD */}
-          {/* <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
-            ~ 0 USD
-          </Text> */}
+
+          <Conversion
+            selectedToken={selectedToken}
+            value={value}
+          />
 
           <Box
             as={Button}

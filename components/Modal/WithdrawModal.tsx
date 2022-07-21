@@ -18,6 +18,7 @@ import {
 } from "@chakra-ui/react";
 import { ethers } from "ethers";
 import { Token, tokens } from "../../util/tokens";
+import Conversion from "../Conversion";
 
 const WithdrawModal = (props: any) => {
   const { isOpen, onClose } = props;
@@ -131,10 +132,11 @@ const WithdrawModal = (props: any) => {
             isDisabled={!selectedToken}
             onChange={handleValueChange}
           />
-          {/* TODO: Add conversion to USD */}
-          {/* <Text mt="8px" textStyle="app_reg_12" color="neutral.500">
-            ~ 0 USD
-          </Text> */}
+          
+          <Conversion
+            selectedToken={selectedToken}
+            value={value}
+          />
 
           <Box
             as={Button}
