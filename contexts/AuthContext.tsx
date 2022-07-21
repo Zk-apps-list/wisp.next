@@ -19,7 +19,7 @@ type AuthContextType = {
   sharedKeypair: Keypair | undefined,
   isLoading: boolean,
   chainId: string | undefined,
-  switchNetwork: (network: number | undefined) => Promise<void>,
+  switchNetwork: (network: number) => Promise<void>,
 }
 
 export const AuthContext = createContext<AuthContextType>({
@@ -101,7 +101,7 @@ export const AuthContextProvider = (props: any) => {
     setChainId(undefined);    
   };
 
-  const switchNetwork = async (network: number | undefined) => {
+  const switchNetwork = async (network: number) => {
     const networkHexId = toHex(network);
     try {
       await provider.request({
