@@ -1,22 +1,17 @@
 import { Box, Link, Text, } from "@chakra-ui/react";
 import React from "react";
 import Token from "../Token";
-import { decryptData } from "../../util/encryption";
-import { Keypair } from "../../util/keypair";
-import { parseNoteFromBuff } from "../../util/note";
-import { tokens } from "../../util/tokens";
-import { ethers } from "ethers";
-import { GetPaymentsResult, Payment } from "../../util/thegraph";
 import { truncateTx } from "../../util/truncateTx";
 import moment from "moment";
+import { TableData } from "../../pages/transactions";
 
-enum BadgeType {
+export enum BadgeType {
   RECEIVED = "RECEIVED",
   PENDING = "PENDING",
   FAILED = "FAILED"
 }
 
-const Badge = (props: any) => {
+export const Badge = (props: any) => {
   const type: BadgeType = props.type;
 
   switch (type) {
@@ -67,35 +62,11 @@ const Badge = (props: any) => {
 };
 
 type TransactionTableProps = {
-  personalKeypair: Keypair,
-  sharedKeypair: Keypair,
-  data: GetPaymentsResult,
+  tableData: TableData,
 }
 
 const TransactionTable = (props: TransactionTableProps) => {
-
-  const tableData = props.data.payments.map((p: Payment) => {
-    let privateKey: string;
-    if (p.publicKey === props.personalKeypair.publicKey) {
-      privateKey = props.personalKeypair.privateKey || "";
-    } else if (p.publicKey === props.sharedKeypair.publicKey) {
-      privateKey = props.sharedKeypair.privateKey || "";
-    } else {
-      return null;
-    }
-
-    const decryptedNote = parseNoteFromBuff(decryptData(privateKey.slice(2), p.encryptedData))
-    const token = tokens.find(it => it.address === decryptedNote.token);
-
-    return {
-      id: p.id,
-      logo: token?.icon,
-      name: `${token?.name} (${token?.symbol})`,
-      txHash: p.txHash,
-      amount: ethers.utils.formatEther(decryptedNote.amount),
-      date: new Date(parseInt(p.blockTimestamp) * 1000)
-    }
-  })
+  const { tableData } = props;
 
   return (
     <Box p="16px" mx="32px" backgroundColor="neutral.0" borderRadius="12px"

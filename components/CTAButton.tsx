@@ -1,8 +1,8 @@
-import { Box, Image, Button, Text } from '@chakra-ui/react';
+import { Box, Image, Button, Text, Spinner } from '@chakra-ui/react';
 import React from 'react';
 
 const CTAButton = (props: any) => {
-  const { name, icon, onClick, responsive } = props;
+  const { name, icon, onClick, responsive, isLoading } = props;
 
   return (
     <>
@@ -23,6 +23,13 @@ const CTAButton = (props: any) => {
             height="16px"
           />
         )}
+        isLoading={isLoading}
+        spinner={<Spinner
+          size="xs"
+          color="neutral.0"
+          thickness='2px'
+          speed='0.75s'
+        />}
         onClick={onClick}
       >
         <Text ml="auto" mr="auto" color="white" textStyle="app_reg_14">
@@ -40,6 +47,13 @@ const CTAButton = (props: any) => {
           borderRadius="100%"
           textAlign="center"
           _hover={{ bg: "primary.700" }}
+          isLoading={isLoading}
+          spinner={<Spinner
+            size="xs"
+            color="neutral.0"
+            thickness='2px'
+            speed='0.75s'
+          />}
           onClick={onClick}
         >
           <Image
