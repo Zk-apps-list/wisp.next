@@ -19,9 +19,9 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../common";
+} from "../../common";
 
-export interface TransactionVerifierInterface extends utils.Interface {
+export interface ITransactionVerifierInterface extends utils.Interface {
   functions: {
     "verifyProof(bytes,uint256[10])": FunctionFragment;
   };
@@ -41,12 +41,12 @@ export interface TransactionVerifierInterface extends utils.Interface {
   events: {};
 }
 
-export interface TransactionVerifier extends BaseContract {
+export interface ITransactionVerifier extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: TransactionVerifierInterface;
+  interface: ITransactionVerifierInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

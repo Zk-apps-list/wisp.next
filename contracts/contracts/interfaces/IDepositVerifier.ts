@@ -19,18 +19,27 @@ import type {
   TypedListener,
   OnEvent,
   PromiseOrValue,
-} from "../common";
+} from "../../common";
 
-export interface TransactionVerifierInterface extends utils.Interface {
+export interface IDepositVerifierInterface extends utils.Interface {
   functions: {
-    "verifyProof(bytes,uint256[10])": FunctionFragment;
+    "verifyProof(bytes,uint256[5])": FunctionFragment;
   };
 
   getFunction(nameOrSignatureOrTopic: "verifyProof"): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "verifyProof",
-    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>[]]
+    values: [
+      PromiseOrValue<BytesLike>,
+      [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>
+      ]
+    ]
   ): string;
 
   decodeFunctionResult(
@@ -41,12 +50,12 @@ export interface TransactionVerifierInterface extends utils.Interface {
   events: {};
 }
 
-export interface TransactionVerifier extends BaseContract {
+export interface IDepositVerifier extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: TransactionVerifierInterface;
+  interface: IDepositVerifierInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -70,21 +79,39 @@ export interface TransactionVerifier extends BaseContract {
   functions: {
     verifyProof(
       proof: PromiseOrValue<BytesLike>,
-      input: PromiseOrValue<BigNumberish>[],
+      input: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>
+      ],
       overrides?: CallOverrides
     ): Promise<[boolean]>;
   };
 
   verifyProof(
     proof: PromiseOrValue<BytesLike>,
-    input: PromiseOrValue<BigNumberish>[],
+    input: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ],
     overrides?: CallOverrides
   ): Promise<boolean>;
 
   callStatic: {
     verifyProof(
       proof: PromiseOrValue<BytesLike>,
-      input: PromiseOrValue<BigNumberish>[],
+      input: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>
+      ],
       overrides?: CallOverrides
     ): Promise<boolean>;
   };
@@ -94,7 +121,13 @@ export interface TransactionVerifier extends BaseContract {
   estimateGas: {
     verifyProof(
       proof: PromiseOrValue<BytesLike>,
-      input: PromiseOrValue<BigNumberish>[],
+      input: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>
+      ],
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -102,7 +135,13 @@ export interface TransactionVerifier extends BaseContract {
   populateTransaction: {
     verifyProof(
       proof: PromiseOrValue<BytesLike>,
-      input: PromiseOrValue<BigNumberish>[],
+      input: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>
+      ],
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

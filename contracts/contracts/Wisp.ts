@@ -40,7 +40,10 @@ export interface WispInterface extends utils.Interface {
     "levels()": FunctionFragment;
     "maxSize()": FunctionFragment;
     "roots(uint256)": FunctionFragment;
+    "spentNullifiers(uint256)": FunctionFragment;
     "tokens(address)": FunctionFragment;
+    "transaction(bytes,uint256[2],uint256,address,address,uint256,uint256[2],uint256[2],bytes[2])": FunctionFragment;
+    "transactionVerifier()": FunctionFragment;
     "zeros(uint256)": FunctionFragment;
   };
 
@@ -57,7 +60,10 @@ export interface WispInterface extends utils.Interface {
       | "levels"
       | "maxSize"
       | "roots"
+      | "spentNullifiers"
       | "tokens"
+      | "transaction"
+      | "transactionVerifier"
       | "zeros"
   ): FunctionFragment;
 
@@ -101,8 +107,30 @@ export interface WispInterface extends utils.Interface {
     values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
+    functionFragment: "spentNullifiers",
+    values: [PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "tokens",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transaction",
+    values: [
+      PromiseOrValue<BytesLike>,
+      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]
+    ]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "transactionVerifier",
+    values?: undefined
   ): string;
   encodeFunctionData(
     functionFragment: "zeros",
@@ -132,7 +160,19 @@ export interface WispInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: "levels", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "maxSize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "roots", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "spentNullifiers",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "tokens", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transaction",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "transactionVerifier",
+    data: BytesLike
+  ): Result;
   decodeFunctionResult(functionFragment: "zeros", data: BytesLike): Result;
 
   events: {
@@ -221,10 +261,30 @@ export interface Wisp extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    spentNullifiers(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
+
     tokens(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<[boolean]>;
+
+    transaction(
+      proof: PromiseOrValue<BytesLike>,
+      nullifiers: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      root: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      withdrawnAmount: PromiseOrValue<BigNumberish>,
+      publicKeys: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      commitments: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      encryptedData: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    transactionVerifier(overrides?: CallOverrides): Promise<[string]>;
 
     zeros(
       i: PromiseOrValue<BigNumberish>,
@@ -271,10 +331,30 @@ export interface Wisp extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  spentNullifiers(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   tokens(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
   ): Promise<boolean>;
+
+  transaction(
+    proof: PromiseOrValue<BytesLike>,
+    nullifiers: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    root: PromiseOrValue<BigNumberish>,
+    recipient: PromiseOrValue<string>,
+    token: PromiseOrValue<string>,
+    withdrawnAmount: PromiseOrValue<BigNumberish>,
+    publicKeys: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    commitments: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+    encryptedData: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  transactionVerifier(overrides?: CallOverrides): Promise<string>;
 
   zeros(
     i: PromiseOrValue<BigNumberish>,
@@ -321,10 +401,30 @@ export interface Wisp extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    spentNullifiers(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
+
     tokens(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<boolean>;
+
+    transaction(
+      proof: PromiseOrValue<BytesLike>,
+      nullifiers: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      root: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      withdrawnAmount: PromiseOrValue<BigNumberish>,
+      publicKeys: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      commitments: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      encryptedData: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    transactionVerifier(overrides?: CallOverrides): Promise<string>;
 
     zeros(
       i: PromiseOrValue<BigNumberish>,
@@ -387,10 +487,30 @@ export interface Wisp extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    spentNullifiers(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     tokens(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
+
+    transaction(
+      proof: PromiseOrValue<BytesLike>,
+      nullifiers: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      root: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      withdrawnAmount: PromiseOrValue<BigNumberish>,
+      publicKeys: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      commitments: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      encryptedData: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    transactionVerifier(overrides?: CallOverrides): Promise<BigNumber>;
 
     zeros(
       i: PromiseOrValue<BigNumberish>,
@@ -438,8 +558,30 @@ export interface Wisp extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    spentNullifiers(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
     tokens(
       arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<PopulatedTransaction>;
+
+    transaction(
+      proof: PromiseOrValue<BytesLike>,
+      nullifiers: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      root: PromiseOrValue<BigNumberish>,
+      recipient: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      withdrawnAmount: PromiseOrValue<BigNumberish>,
+      publicKeys: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      commitments: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+      encryptedData: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    transactionVerifier(
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 

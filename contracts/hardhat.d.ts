@@ -33,6 +33,14 @@ declare module "hardhat/types/runtime" {
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.DepositVerifier__factory>;
     getContractFactory(
+      name: "IDepositVerifier",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.IDepositVerifier__factory>;
+    getContractFactory(
+      name: "ITransactionVerifier",
+      signerOrOptions?: ethers.Signer | FactoryOptions
+    ): Promise<Contracts.ITransactionVerifier__factory>;
+    getContractFactory(
       name: "IPoseidonHasher",
       signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.IPoseidonHasher__factory>;
@@ -82,6 +90,16 @@ declare module "hardhat/types/runtime" {
       address: string,
       signer?: ethers.Signer
     ): Promise<Contracts.DepositVerifier>;
+    getContractAt(
+      name: "IDepositVerifier",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.IDepositVerifier>;
+    getContractAt(
+      name: "ITransactionVerifier",
+      address: string,
+      signer?: ethers.Signer
+    ): Promise<Contracts.ITransactionVerifier>;
     getContractAt(
       name: "IPoseidonHasher",
       address: string,

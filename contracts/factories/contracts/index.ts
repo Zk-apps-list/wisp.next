@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export * as merkleTreeSol from "./MerkleTree.sol";
+export * as interfaces from "./interfaces";
 export { DepositVerifier__factory } from "./DepositVerifier__factory";
 export { PoseidonHasher__factory } from "./PoseidonHasher__factory";
 export { TransactionVerifier__factory } from "./TransactionVerifier__factory";
