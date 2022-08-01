@@ -25,6 +25,7 @@ const ClaimIDModal = (props: any) => {
 
   return (
     <Modal
+      isCentered
       isOpen={isOpen}
       onClose={() => onClose()}
     >

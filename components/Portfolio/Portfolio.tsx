@@ -10,6 +10,7 @@ import CTAButton from "../CTAButton";
 import DepositModal from "../Modal/DepositModal";
 import WithdrawModal from "../Modal/WithdrawModal";
 import TransferModal from "../Modal/TransferModal";
+import TransactionPendingModal from "../Modal/TransactionPendingModal";
 import TransactionIcon from "../Icons/TransactionIcon";
 import WalletIcon from "../Icons/WalletIcon";
 import { Keypair } from "../../util/keypair";
@@ -205,6 +206,7 @@ const PortfolioPage = () => {
         title="Portfolio"
         menuItems={PortfolioMenuItems}
       />
+      <TransactionPendingModal />
       <DepositModal
         isOpen={isDepositModalOpen}
         onClose={() => setDepositModalOpen(false)}

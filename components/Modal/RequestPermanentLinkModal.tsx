@@ -35,6 +35,7 @@ const RequestPermanentLink = (props: any) => {
 
   return (
     <Modal
+      isCentered
       isOpen={isOpen}
       onClose={() => {
         onClose();

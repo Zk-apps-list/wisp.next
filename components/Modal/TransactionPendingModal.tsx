@@ -15,7 +15,7 @@ import Lottie from "lottie-react";
 import loadingAnimation from "../../public/animations/loading.json";
 import { TransactionContext } from "../../contexts/TransactionContext";
 
-const LoadingModal = () => {
+const TransactionPendingModal = () => {
   const { isPendingModalOpen, setIsPendingModalOpen, transactionHash } = useContext(TransactionContext);
 
   return (
@@ -27,7 +27,7 @@ const LoadingModal = () => {
       <ModalOverlay />
       <ModalContent backgroundColor="neutral.100" pb="12px">
         <ModalHeader textStyle="app_med_18" color="neutral.800">
-          Loading
+          Pending Approval
         </ModalHeader>
         <ModalCloseButton color="neutral.800" />
         <ModalBody>
@@ -51,4 +51,4 @@ const LoadingModal = () => {
   );
 }
 
-export default LoadingModal;
+export default TransactionPendingModal;

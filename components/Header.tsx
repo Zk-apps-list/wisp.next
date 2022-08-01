@@ -13,6 +13,7 @@ import { truncateWallet } from "../util/truncateWallet";
 import ClaimIDModal, { Mode } from "./Modal/ClaimIDModal/ClaimIDModal";
 import Network from "./Network";
 import Pending from "./Pending";
+import PendingMultiple from "./PendingMultiple";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +50,14 @@ const Header = () => {
         </Text>
         {account &&  (
           <Flex>
-            <Network />
+            <Flex columnGap="8px">
+              <Flex alignItems="center">
+                <PendingMultiple />
+              </Flex>
+              <Flex alignItems="center">
+                <Network />
+              </Flex>
+            </Flex>
             <Flex
               as={Button}
               backgroundColor="transparent"

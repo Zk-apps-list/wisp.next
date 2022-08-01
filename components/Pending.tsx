@@ -17,7 +17,6 @@ const Pending = () => {
       _hover={{ backgroundColor: 'primary.900', cursor: 'pointer' }}
       onClick={() => setIsPendingModalOpen(true)}
     >
-      <Box textStyle="app_med_14" color="neutral.0">Pending</Box>
       <Flex alignItems="center">
         <Spinner
           size="xs"
@@ -26,6 +25,7 @@ const Pending = () => {
           speed='1.2s'
         />
       </Flex>
+      <Box textStyle="app_med_14" color="neutral.0">Pending</Box>
     </Flex>
   )
 }
