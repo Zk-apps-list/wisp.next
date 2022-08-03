@@ -12,12 +12,12 @@ export const chains: Chain[] = [
     label: "Ethereum Mainnet",
     icon: "/icons/networks/ethereum.svg"
   },
-  {
-    id: "4",
-    hexId: "0x4",
-    label: "Rinkeby Testnet",
-    icon: "/icons/networks/ethereum.svg"
-  },
+  // {
+  //   id: "4",
+  //   hexId: "0x4",
+  //   label: "Rinkeby Testnet",
+  //   icon: "/icons/networks/ethereum.svg"
+  // },
   {
     id: "137",
     hexId: "0x89",
