@@ -5,9 +5,11 @@ import { AuthContext, AuthContextProvider } from "../contexts/AuthContext";
 import { TransactionContextProvider } from "../contexts/TransactionContext";
 import Head from 'next/head'
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import defaultTheme from "../styles/theme";
 import { ConversionContextProvider } from "../contexts/ConversionContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const client = new ApolloClient({
   uri: "https://api.thegraph.com/subgraphs/name/uladandrew/wisp-subgraph",
@@ -17,6 +19,7 @@ const client = new ApolloClient({
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
+      <ToastContainer />
       <AuthContextProvider>
         <TransactionContextProvider>
           <ConversionContextProvider>
