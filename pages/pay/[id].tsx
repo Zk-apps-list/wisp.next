@@ -37,7 +37,9 @@ const Request = () => {
         >
           <Box>
             <Box display="flex" justifyContent="center">
-              <Image src="/icons/logo-md.svg" alt="logo" width="72px" height="45px"/>
+              <Box as="button" onClick={() => router.push("/")}>
+                <Image src="/icons/logo-md.svg" alt="logo" width="72px" height="45px"/>
+              </Box>
             </Box>
             <Box
               width="400px"
