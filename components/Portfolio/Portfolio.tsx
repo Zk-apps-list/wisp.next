@@ -20,6 +20,106 @@ import { parseNoteFromBuff } from "../../util/note";
 import { decryptData } from "../../util/encryption";
 import { tokens } from "../../util/tokens";
 import { BigNumber, ethers } from "ethers";
+import Shimmer from "../Shimmer";
+
+const LoadingPortfolioPage = () => {
+  return (
+    <Box>
+      <Box
+        mt={{ base: "104px", md: "0px" }}
+        p="16px"
+        mx="32px"
+        backgroundColor="neutral.0"
+        borderRadius="12px"
+        box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)"
+        display={{ base: "block", lg: "flex" }}
+      >
+        <Flex direction="column" flexGrow={7} flexBasis="280px">
+          <Text color="neutral.600" textStyle="app_reg_12" textAlign={{ base: "center", lg: "left" }}>Total Value</Text>
+          <Box mt="3px" columnGap="8px" display={{ base: "block", lg: "flex" }}>
+            <Box>
+              <Shimmer width="220px" height="24px" />
+            </Box>
+            <Box>
+              <Shimmer width="120px" height="24px" />
+            </Box>
+          </Box>
+        </Flex>
+        <Flex justifyContent="center" alignItems="center" flex={1} mt={{ base: "8px", lg: "0px" }}
+              columnGap={{ base: "24px", md: "12px" }}>
+          <Box>
+            <Box>
+              <Shimmer width="100px" height="42px" borderRadius="6px" />
+            </Box>
+          </Box>
+          <Box>
+            <Box>
+              <Shimmer width="100px" height="42px" borderRadius="6px" />
+            </Box>
+          </Box>
+          <Box>
+            <Box>
+              <Shimmer width="100px" height="42px" borderRadius="6px" />
+            </Box>
+          </Box>
+          <Box>
+            <Box>
+              <Shimmer width="100px" height="42px" borderRadius="6px" />
+            </Box>
+          </Box>
+        </Flex>
+      </Box>
+        
+      <Box mt="24px" p="16px" mx="32px" backgroundColor="neutral.0" borderRadius="12px"
+          box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)">
+        <Box>
+          <Text color="neutral.900" textStyle="app_semibold_16">Your Holdings</Text>
+        </Box>
+
+        <Box mt="16px">
+          <Box display="table" width="100%">
+            <Box borderRadius="6px" display="table-row" color="neutral.600" textStyle="app_reg_14"
+                backgroundColor="neutral.50">
+              <Box display="table-cell" width="20%" p="6px" pl="12px">
+                Asset
+              </Box>
+              <Box display="table-cell" width="20%" p="6px">
+                Amount
+              </Box>
+              <Box display="table-cell" width="20%" p="6px">
+                Value
+              </Box>
+              <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="20%" p="6px">
+                % Change
+              </Box>
+              <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="20%" p="6px" pr="12px">
+                Portfolio Amount
+              </Box>
+            </Box>
+            <Box mt="10px"/>
+          </Box>
+          <Box px="16px">
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  )
+}
 
 const ProgressBar = (props: any) => {
   const { percent } = props;
@@ -227,67 +327,74 @@ const PortfolioPage = () => {
           <Box display={{ base: "none", md: "inline" }}>
             <Header/>
           </Box>
-          <Box
-            mt={{ base: "104px", md: "0px" }}
-            p="16px"
-            mx="32px"
-            backgroundColor="neutral.0"
-            borderRadius="12px"
-            box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)"
-            display={{ base: "block", lg: "flex" }}
-          >
-            <Flex direction="column" flexGrow={7} flexBasis="280px">
-              <Text color="neutral.600" textStyle="app_reg_12" textAlign={{ base: "center", lg: "left" }}>Total
-                Value</Text>
-              <Box mt="3px" columnGap="8px" display={{ base: "block", lg: "flex" }}>
-                <Text textStyle="app_semibold_24" lineHeight="30px" textAlign="center">$9,000,112,453.00</Text>
-                <Flex justifyContent="center">
-                  <Flex justifyContent="center" alignItems="center">
-                    <Image
-                      src="icons/increase.svg"
-                      alt="Increase Icon"
-                      width="22px"
-                      height="22px"
-                    />
+          {loading
+            ? <LoadingPortfolioPage />
+            : (
+              <>
+                <Box
+                  mt={{ base: "104px", md: "0px" }}
+                  p="16px"
+                  mx="32px"
+                  backgroundColor="neutral.0"
+                  borderRadius="12px"
+                  box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)"
+                  display={{ base: "block", lg: "flex" }}
+                >
+                  <Flex direction="column" flexGrow={7} flexBasis="280px">
+                    <Text color="neutral.600" textStyle="app_reg_12" textAlign={{ base: "center", lg: "left" }}>Total
+                      Value</Text>
+                    <Box mt="3px" columnGap="8px" display={{ base: "block", lg: "flex" }}>
+                      <Text textStyle="app_semibold_24" lineHeight="30px" textAlign="center">$9,000,112,453.00</Text>
+                      <Flex justifyContent="center">
+                        <Flex justifyContent="center" alignItems="center">
+                          <Image
+                            src="icons/increase.svg"
+                            alt="Increase Icon"
+                            width="22px"
+                            height="22px"
+                          />
+                        </Flex>
+                        <Text textStyle="app_med_14" color="green.dark" lineHeight="30px" ml="6px">7D +5% ($400)</Text>
+                      </Flex>
+                    </Box>
                   </Flex>
-                  <Text textStyle="app_med_14" color="green.dark" lineHeight="30px" ml="6px">7D +5% ($400)</Text>
-                </Flex>
-              </Box>
-            </Flex>
-            <Flex justifyContent="center" alignItems="center" flex={1} mt={{ base: "8px", lg: "0px" }}
-                  columnGap={{ base: "24px", md: "12px" }}>
-              <Box>
-                <CTAButton
-                  name="Deposit"
-                  icon="/icons/plus.svg"
-                  responsive
-                  onClick={() => setDepositModalOpen(true)}
-                />
-              </Box>
-              <Box>
-                <CTAButton
-                  name="Withdraw"
-                  icon="/icons/arrow_down.svg"
-                  responsive
-                  onClick={() => setWithdrawModalOpen(true)}
-                />
-              </Box>
-              <Box>
-                <Request/>
-              </Box>
-              <Box>
-                <CTAButton
-                  name="Transfer"
-                  icon="/icons/arrow_right.svg"
-                  responsive
-                  onClick={() => setTransferModalOpen(true)}
-                />
-              </Box>
-            </Flex>
-          </Box>
-          {
-            data && personalKeypair && sharedKeypair &&
-            <PortfolioTable personalKeypair={personalKeypair} sharedKeypair={sharedKeypair} data={data}/>
+                  <Flex justifyContent="center" alignItems="center" flex={1} mt={{ base: "8px", lg: "0px" }}
+                        columnGap={{ base: "24px", md: "12px" }}>
+                    <Box>
+                      <CTAButton
+                        name="Deposit"
+                        icon="/icons/plus.svg"
+                        responsive
+                        onClick={() => setDepositModalOpen(true)}
+                      />
+                    </Box>
+                    <Box>
+                      <CTAButton
+                        name="Withdraw"
+                        icon="/icons/arrow_down.svg"
+                        responsive
+                        onClick={() => setWithdrawModalOpen(true)}
+                      />
+                    </Box>
+                    <Box>
+                      <Request/>
+                    </Box>
+                    <Box>
+                      <CTAButton
+                        name="Transfer"
+                        icon="/icons/arrow_right.svg"
+                        responsive
+                        onClick={() => setTransferModalOpen(true)}
+                      />
+                    </Box>
+                  </Flex>
+                </Box>
+                {
+                  data && personalKeypair && sharedKeypair &&
+                  <PortfolioTable personalKeypair={personalKeypair} sharedKeypair={sharedKeypair} data={data}/>
+                }
+              </>
+            )
           }
         </Box>
       </Box>

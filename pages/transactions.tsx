@@ -14,6 +14,56 @@ import { parseNoteFromBuff } from "../util/note";
 import { tokens } from "../util/tokens";
 import { decryptData } from "../util/encryption";
 import { ethers } from "ethers";
+import Shimmer from "../components/Shimmer";
+
+const LoadingTransactionsPage = () => {
+  return (
+    <Box width="100%" mt="16px">
+      <Box width={{ base: "100%" }}>
+        <Box p="16px" mx="32px" backgroundColor="neutral.0" borderRadius="12px"
+          box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)">
+        <Box display="table" width="100%">
+          <Box borderRadius="6px" display="table-row" color="neutral.600" textStyle="app_reg_14" backgroundColor="neutral.50">
+            <Box display="table-cell" width="16.7%" p="6px" pl="12px">
+              Token
+            </Box>
+            <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px">
+              Transaction ID
+            </Box>
+            <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px">
+              Status
+            </Box>
+            <Box display="table-cell" width="16.7%" p="6px">
+              Amount
+            </Box>
+            <Box display="table-cell" width="16.7%" p="6px" pr="12px">
+              Date
+            </Box>
+          </Box>
+          <Box mt="10px"/>
+        </Box>
+          <Box px="16px">
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+            <Box mt="16px">
+              <Shimmer width="100%" height="24px" />
+            </Box>
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  )
+}
 
 export type TableData = RowData[];
 interface RowData {
@@ -112,16 +162,17 @@ const TransactionsPage = () => {
           <Box display={{ base: "none", md: "inline" }} width="100%">
             <Header/>
           </Box>
-          {!loading && (
-            <>
-              <Box mt={{ base: "104px", md: "0px" }} mx="32px" textAlign="right">
-                <CTAButton
-                  name="Export"
-                  icon="/icons/arrow_down.svg"
-                  isLoading={isExporting}
-                  onClick={exportPdf}
-                />
-              </Box>
+          <Box mt={{ base: "104px", md: "0px" }} mx="32px" textAlign="right">
+            <CTAButton
+              name="Export"
+              icon="/icons/arrow_down.svg"
+              isLoading={isExporting}
+              onClick={exportPdf}
+            />
+          </Box>
+          {loading
+            ? <LoadingTransactionsPage />
+            : (
               <Box width="100%" mt="16px">
                 <Box width={{ base: "100%" }}>
                   {
@@ -130,10 +181,10 @@ const TransactionsPage = () => {
                   }
                 </Box>
               </Box>
-            </>
           )}
         </Box>
       </Box>
+      
     </Flex>
   );
 };
