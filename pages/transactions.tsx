@@ -8,7 +8,7 @@ import CTAButton from "../components/CTAButton";
 import { PortfolioMenuItems } from "../components/Portfolio/Portfolio";
 import { Keypair } from "../util/keypair";
 import { useQuery } from "@apollo/client";
-import { GET_PAYMENTS_QUERY, Payment } from "../util/thegraph";
+import { GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, Payment } from "../util/thegraph";
 import axios from "axios";
 import { parseNoteFromBuff } from "../util/note";
 import { tokens } from "../util/tokens";
@@ -81,7 +81,7 @@ const TransactionsPage = () => {
   const [sharedKeypair, setSharedKeypair] = useState<Keypair | undefined>();
   const [isExporting, setIsExporting] = useState<boolean>(false);
 
-  const { loading, error, data } = useQuery(GET_PAYMENTS_QUERY, {
+  const { loading, data } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
     variables: {
       publicKeys: [personalKeypair?.publicKey, sharedKeypair?.publicKey]
     },

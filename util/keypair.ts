@@ -13,8 +13,8 @@ export class Keypair {
     this.encryptionKey = encryptionKey;
   }
 
-  static fromPrivateKey(privateKey: string) {
-    const publicKey = poseidonHash([privateKey]).toHexString();
+  static fromPrivateKey(privateKey: string, shared: boolean) {
+    const publicKey = poseidonHash([privateKey, shared ? 123 : 321]).toHexString();
     const encryptionKey = getEncryptionPublicKey(privateKey.slice(2));
     return new Keypair(privateKey, publicKey, encryptionKey);
   }

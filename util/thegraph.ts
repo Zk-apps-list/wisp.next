@@ -14,13 +14,27 @@ export type Payment = {
   blockTimestamp: string,
 }
 
-export const GET_PAYMENTS_QUERY = gql`
-    query GetPayments ($publicKeys: [String!]) {
+export const GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY = gql`
+    query GetPaymentsByPublicKeys ($publicKeys: [String!]) {
         payments(
             where: {publicKey_in: $publicKeys}
-            orderBy: blockTimestamp
+            orderBy: index
             orderDirection: desc
         ) {
+            id
+            publicKey
+            commitment
+            encryptedData
+            sender
+            txHash
+            blockTimestamp
+        }
+    }
+`;
+
+export const GET_PAYMENTS_QUERY = gql`
+    query GetPayments {
+        payments(orderBy: index) {
             id
             publicKey
             commitment

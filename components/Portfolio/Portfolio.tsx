@@ -15,7 +15,7 @@ import TransactionIcon from "../Icons/TransactionIcon";
 import WalletIcon from "../Icons/WalletIcon";
 import { Keypair } from "../../util/keypair";
 import { useQuery } from "@apollo/client";
-import { GET_PAYMENTS_QUERY, GetPaymentsResult, Payment } from "../../util/thegraph";
+import { GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, GetPaymentsResult, Payment } from "../../util/thegraph";
 import { parseNoteFromBuff } from "../../util/note";
 import { decryptData } from "../../util/encryption";
 import { tokens } from "../../util/tokens";
@@ -279,7 +279,7 @@ const PortfolioPage = () => {
   const [personalKeypair, setPersonalKeypair] = useState<Keypair | undefined>();
   const [sharedKeypair, setSharedKeypair] = useState<Keypair | undefined>();
 
-  const { loading, error, data } = useQuery(GET_PAYMENTS_QUERY, {
+  const { data } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
     variables: {
       publicKeys: [personalKeypair?.publicKey, sharedKeypair?.publicKey]
     },
