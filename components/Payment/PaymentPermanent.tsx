@@ -1,4 +1,4 @@
-import { Box, Button, Image, Input, Menu, MenuButton, MenuItem, MenuList, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Input, Menu, MenuButton, MenuItem, MenuList, Text, Tooltip } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import { Token, tokens } from "../../util/tokens";
@@ -221,6 +221,56 @@ const PaymentPermanent = ({ id }: Props) => {
                   isLoading={isWalletLoading}
                 />
               </Box>
+            : approvalNeeded(value)
+            ? (
+              <Box
+                as={Button}
+                mt={"16px"}
+                backgroundColor="primary.800"
+                borderRadius="6px"
+                py="12px"
+                width="100%"
+                textAlign="center"
+                _hover={{ bg: "primary.700" }}
+                color="neutral.0"
+                textStyle="app_reg_14"
+                isLoading={isLoading}
+                onClick={approvePayment}
+              >
+                <Flex justifyContent="space-between" width="100%">
+                  <Flex alignItems="center">
+                    <Image
+                      src="/icons/lock.svg"
+                      alt="Chevron Down"
+                      width="16px"
+                      height="16px"
+                    />
+                  </Flex>
+                  <Box>
+                    Allow Wisp to use your {selectedToken?.symbol}
+                  </Box>
+                  <Flex alignItems="center">
+                    <Tooltip
+                      label={`You must give the Wisp smart contract permission to use your ${selectedToken?.symbol}. You only have to do this once per token.`}
+                      placement="top"
+                      width="250px"
+                      p="12px"
+                      borderRadius="12px"
+                      textStyle="app_med_10"
+                      backgroundColor="neutral.900"
+                      color="neutral.0"
+                    >
+                      <Image
+                        src="/icons/question.svg"
+                        alt="Question icon"
+                        width="16px"
+                        height="16px"
+                      />
+                    </Tooltip>
+                  </Flex>
+                </Flex>
+              </Box>
+            )
             : (
               <Box
                 as={Button}
@@ -242,10 +292,9 @@ const PaymentPermanent = ({ id }: Props) => {
                 color="neutral.0"
                 textStyle="app_reg_14"
                 isLoading={isLoading}
-                disabled={!value || !selectedToken}
-                onClick={approvalNeeded(value) ? approvePayment : executePayment}
+                onClick={executePayment}
               >
-                {approvalNeeded(value) ? "Approve Payment" : "Pay"}
+                Pay
               </Box>
             )}
           </>

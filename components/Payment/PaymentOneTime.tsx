@@ -1,4 +1,4 @@
-import { Box, Button, Image, Text, } from "@chakra-ui/react";
+import { Box, Button, Flex, Image, Text, Tooltip, } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import Wallet from "../../components/Wallet";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -172,32 +172,83 @@ const PaymentOneTime = ({ id }: Props) => {
                   isLoading={isWalletLoading}
                 />
               </Box>
-            : (
-              <Box
-                as={Button}
-                backgroundColor="primary.800"
-                borderRadius="6px"
-                mt="32px"
-                py="12px"
-                width="100%"
-                textAlign="center"
-                leftIcon={
-                  <Image
-                    src="/icons/chain.svg"
-                    alt="Chevron Down"
-                    width="16px"
-                    height="16px"
-                  />
-                }
-                _hover={{ bg: "primary.700" }}
-                color="neutral.0"
-                textStyle="app_reg_14"
-                isLoading={isLoading}
-                onClick={needsApproval ? approvePayment : executePayment}
-              >
-                {needsApproval ? "Approve Payment" : "Pay"}
-              </Box>
-            )}
+            : needsApproval
+              ? (
+                <Box
+                  as={Button}
+                  mt={"16px"}
+                  backgroundColor="primary.800"
+                  borderRadius="6px"
+                  py="12px"
+                  width="100%"
+                  textAlign="center"
+                  _hover={{ bg: "primary.700" }}
+                  color="neutral.0"
+                  textStyle="app_reg_14"
+                  isLoading={isLoading}
+                  onClick={approvePayment}
+                >
+                  <Flex justifyContent="space-between" width="100%">
+                    <Flex alignItems="center">
+                      <Image
+                        src="/icons/lock.svg"
+                        alt="Chevron Down"
+                        width="16px"
+                        height="16px"
+                      />
+                    </Flex>
+                    <Box>
+                      Allow Wisp to use your {requestedToken?.symbol}
+                    </Box>
+                    <Flex alignItems="center">
+                      <Tooltip
+                        label={`You must give the Wisp smart contract permission to use your ${requestedToken.symbol}. You only have to do this once per token.`}
+                        placement="top"
+                        width="250px"
+                        p="12px"
+                        borderRadius="12px"
+                        textStyle="app_med_10"
+                        backgroundColor="neutral.900"
+                        color="neutral.0"
+                      >
+                        <Image
+                          src="/icons/question.svg"
+                          alt="Question icon"
+                          width="16px"
+                          height="16px"
+                        />
+                      </Tooltip>
+                    </Flex>
+                  </Flex>
+                </Box>
+              )
+              : (
+                <Box
+                  as={Button}
+                  backgroundColor="primary.800"
+                  borderRadius="6px"
+                  mt="32px"
+                  py="12px"
+                  width="100%"
+                  textAlign="center"
+                  leftIcon={
+                    <Image
+                      src="/icons/chain.svg"
+                      alt="Chevron Down"
+                      width="16px"
+                      height="16px"
+                    />
+                  }
+                  _hover={{ bg: "primary.700" }}
+                  color="neutral.0"
+                  textStyle="app_reg_14"
+                  isLoading={isLoading}
+                  onClick={executePayment}
+                >
+                  Pay
+                </Box>
+              )
+            }
           </>
         )}
         {isSubmitted && transactionHash && (
