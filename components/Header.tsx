@@ -12,13 +12,13 @@ import { AuthContext } from "../contexts/AuthContext";
 import { truncateWallet } from "../util/truncateWallet";
 import ClaimIDModal, { Mode } from "./Modal/ClaimIDModal/ClaimIDModal";
 import Network from "./Network";
-import Pending from "./Pending";
 import PendingMultiple from "./PendingMultiple";
+import CTAButton from "./CTAButton";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isClaimIDModalOpen, setClaimIDModalOpen] = useState(false);
-  const { account} = useContext(AuthContext);
+  const { account, chainId } = useContext(AuthContext);
   const router = useRouter();
   const pathname = router.pathname;
 
@@ -51,6 +51,16 @@ const Header = () => {
         {account &&  (
           <Flex>
             <Flex columnGap="8px">
+              {chainId === "80001" && (
+                <Box>
+                  <CTAButton
+                    name="Request Test ETH"
+                    icon="/icons/plus.svg"
+                    responsive
+                    onClick={() => console.log("Request Test Eth ")}
+                  />
+                </Box>
+              )}
               <Flex alignItems="center">
                 <PendingMultiple />
               </Flex>
