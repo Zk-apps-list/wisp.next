@@ -279,7 +279,7 @@ const PortfolioPage = () => {
   const [personalKeypair, setPersonalKeypair] = useState<Keypair | undefined>();
   const [sharedKeypair, setSharedKeypair] = useState<Keypair | undefined>();
 
-  const { data } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
+  const { loading, data } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
     variables: {
       publicKeys: [personalKeypair?.publicKey, sharedKeypair?.publicKey]
     },

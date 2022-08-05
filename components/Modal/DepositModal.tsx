@@ -41,7 +41,6 @@ const DepositModal = (props: any) => {
     depositApproving
   } = useContext(TransactionContext);
 
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isApproving, setIsApproving] = useState<boolean>(false);
   const [isApproved, setIsApproved] = useState<boolean>(false);
   const [isConfirming, setIsConfirming] = useState<boolean>(false);
@@ -283,8 +282,8 @@ const DepositModal = (props: any) => {
                   <Flex justifyContent="space-between" width="100%">
                     <Flex alignItems="center">
                       <Image
-                        src="/icons/lock.svg"
-                        alt="Chevron Down"
+                        src="/icons/check.svg"
+                        alt="Check icon"
                         width="16px"
                         height="16px"
                       />
@@ -325,8 +324,8 @@ const DepositModal = (props: any) => {
                 textAlign="center"
                 leftIcon={
                   <Image
-                    src="icons/chain.svg"
-                    alt="Chevron Down"
+                    src="/icons/check.svg"
+                    alt="Check icon"
                     width="16px"
                     height="16px"
                   />

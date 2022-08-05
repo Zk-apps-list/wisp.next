@@ -19,7 +19,6 @@ import {
 import { BigNumber, ethers } from "ethers";
 import { Token, tokens } from "../../util/tokens";
 import Conversion from "../Conversion";
-import { Keypair } from "../../util/keypair";
 import { useQuery } from "@apollo/client";
 import { GET_PAYMENTS_QUERY, GetPaymentsResult } from "../../util/thegraph";
 import { Note, parseNoteFromBuff } from "../../util/note";
@@ -34,6 +33,8 @@ import { buildTree } from "../../util/merkleTree";
 import { MerkleTree } from "fixed-merkle-tree";
 import { Element } from "fixed-merkle-tree/src";
 import { bitArrayToNumber } from "../../util/array";
+import { TransactionContext, Transaction, TransactionType, TransactionStatus } from "../../contexts/TransactionContext";
+import PaymentStatus, { Payment } from "../Payment/PaymentStatus";
 
 type MerkleProof = {
   pathElements: Element[],
@@ -52,27 +53,28 @@ type InputNote = {
 const TransferModal = (props: any) => {
   const { isOpen, onClose } = props;
 
-  const { web3Provider } = useContext(AuthContext);
+  const { web3Provider, personalKeypair, sharedKeypair, account } = useContext(AuthContext);
 
-  const [value, setValue] = useState<number | undefined>(undefined);
+  const [value, setValue] = useState<string | undefined>(undefined);
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(undefined);
   const [wallet, setWallet] = useState<string | undefined>(undefined);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const [personalKeypair, setPersonalKeypair] = useState<Keypair | undefined>();
-  const [sharedKeypair, setSharedKeypair] = useState<Keypair | undefined>();
 
   const [merkleTree, setMerkleTree] = useState<MerkleTree | undefined>();
 
   const { data } = useQuery(GET_PAYMENTS_QUERY);
 
-  useEffect(() => {
-    const personalKeypair = JSON.parse(localStorage.getItem("personalKeypair") || "") as Keypair;
-    const sharedKeypair = JSON.parse(localStorage.getItem("sharedKeypair") || "") as Keypair;
+  const {
+    setTransactionHash,
+    transactionHash,
+    multiplePendingTransactions,
+    setMultiplePendingTransactionsStorage,
+    transferApproving
+  } = useContext(TransactionContext);
 
-    setPersonalKeypair(personalKeypair);
-    setSharedKeypair(sharedKeypair);
-  }, []);
+  const [error, setError] = useState<string>("");
+  const [isApproving, setIsApproving] = useState<boolean>(false);
+  const [isConfirming, setIsConfirming] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   useEffect(() => {
     if (!data) {
@@ -82,9 +84,16 @@ const TransferModal = (props: any) => {
   }, [data]);
 
   const resetFields = () => {
-    setValue(undefined);
-    setSelectedToken(undefined);
-    setWallet(undefined);
+    if(!isApproving && !isConfirming) {
+      setValue(undefined);
+      setWallet(undefined);
+      setError("");
+      setSelectedToken(undefined);
+      setTransactionHash(undefined);
+      setIsSubmitted(false);
+      setIsApproving(false);
+      setIsConfirming(false);
+    }
   };
 
   const handleValueChange = (event: any) => setValue(event.target.value);
@@ -113,7 +122,7 @@ const TransferModal = (props: any) => {
       return;
     }
 
-    setIsLoading(true);
+    setIsConfirming(true);
 
     const amount = ethers.utils.parseEther(value.toString());
 
@@ -208,30 +217,48 @@ const TransferModal = (props: any) => {
       outBlinding: [outBlinding1.toString(), outBlinding2.toString()],
       outAmount: [outAmount1.toString(), outAmount2.toString()]
     };
-    const proof = await generateTransactionProof(input);
+    
+    try {
+      const proof = await generateTransactionProof(input);
+      const encryptedData1 = encryptData(personalKeypair.encryptionKey, Buffer.concat([
+        ethers.utils.arrayify(personalKeypair.publicKey),
+        ethers.utils.arrayify(outBlinding1),
+        ethers.utils.arrayify(outAmount1),
+        ethers.utils.arrayify(selectedToken.address),
+      ]));
+      const encryptedData2 = encryptData(personalKeypair.encryptionKey, Buffer.concat([
+        ethers.utils.arrayify(personalKeypair.publicKey),
+        ethers.utils.arrayify(outBlinding2),
+        ethers.utils.arrayify(outAmount2),
+        ethers.utils.arrayify(selectedToken.address),
+      ]));
 
-    const encryptedData1 = encryptData(personalKeypair.encryptionKey, Buffer.concat([
-      ethers.utils.arrayify(personalKeypair.publicKey),
-      ethers.utils.arrayify(outBlinding1),
-      ethers.utils.arrayify(outAmount1),
-      ethers.utils.arrayify(selectedToken.address),
-    ]));
-    const encryptedData2 = encryptData(personalKeypair.encryptionKey, Buffer.concat([
-      ethers.utils.arrayify(personalKeypair.publicKey),
-      ethers.utils.arrayify(outBlinding2),
-      ethers.utils.arrayify(outAmount2),
-      ethers.utils.arrayify(selectedToken.address),
-    ]));
+      const transaction = await wisp.transaction(proof,
+        [inputNote1.nullifier, inputNote2.nullifier],
+        merkleTree.root.toString(), wallet, selectedToken.address, amount,
+        [outPublicKeys[0], outPublicKeys[1]],
+        [outCommitment1, outCommitment2],
+        [encryptedData1, encryptedData2]);
+      
+        setTransactionHash(transaction?.hash);
+        const transactionConfirming: Transaction = {
+          type: TransactionType.Transfer,
+          status: TransactionStatus.Confirming,
+          hash: transaction.hash,
+        };
+        setMultiplePendingTransactionsStorage([...multiplePendingTransactions, transactionConfirming]);
+        setIsSubmitted(true);
 
-    await wisp.transaction(proof,
-      [inputNote1.nullifier, inputNote2.nullifier],
-      merkleTree.root.toString(), wallet, selectedToken.address, amount,
-      [outPublicKeys[0], outPublicKeys[1]],
-      [outCommitment1, outCommitment2],
-      [encryptedData1, encryptedData2]);
-
-    resetFields();
-    setIsLoading(false);
+        const result = await web3Provider.waitForTransaction(transaction.hash);
+        if (result.status) {
+          const removePendingTransaction = multiplePendingTransactions.filter(el => el.hash !== transaction.hash);
+          setMultiplePendingTransactionsStorage(removePendingTransaction);
+        }
+    } catch (err: any) {
+      setError(err.reason);
+    } finally {
+      setIsConfirming(false);
+    }
   }
 
   return (
@@ -250,100 +277,118 @@ const TransferModal = (props: any) => {
         </ModalHeader>
         <ModalCloseButton color="neutral.800"/>
         <ModalBody>
-          <Text textStyle="app_reg_12" color="neutral.800">
-            Transfer funds to a wallet
-          </Text>
-          <Menu>
-            <MenuButton
-              as={Button}
-              mt="32px"
-              width="100%"
-              textAlign={"left"}
-              color="neutral.800"
-              backgroundColor="neutral.0"
-              _hover={{ bg: "neutral.50" }}
-              _active={{ bg: "neutral_800" }}
-              rightIcon={
-                <Image
-                  src="/icons/chevron_down.svg"
-                  alt="Chevron Down"
-                  width="16px"
-                  height="16px"
-                />
-              }
-            >
-              {!!selectedToken ? token(selectedToken) : "Select Token"}
-            </MenuButton>
-            <MenuList backgroundColor="neutral.0" borderWidth="0px">
-              {
-                tokens.map(it => {
-                  return (
-                    <MenuItem
-                      key={it.address}
-                      _hover={{ bg: "neutral.50" }}
-                      _focus={{ bg: "neutral_800" }}
-                      onClick={() => setSelectedToken(it)}
-                    >
-                      {token(it)}
-                    </MenuItem>
-                  );
-                })
-              }
-            </MenuList>
-          </Menu>
+          {!isSubmitted && (
+            <>
+              <Text textStyle="app_reg_12" color="neutral.800">
+                Transfer funds to a wallet
+              </Text>
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  mt="32px"
+                  width="100%"
+                  textAlign={"left"}
+                  color="neutral.800"
+                  backgroundColor="neutral.0"
+                  _hover={{ bg: "neutral.50" }}
+                  _active={{ bg: "neutral_800" }}
+                  rightIcon={
+                    <Image
+                      src="/icons/chevron_down.svg"
+                      alt="Chevron Down"
+                      width="16px"
+                      height="16px"
+                    />
+                  }
+                >
+                  {!!selectedToken ? token(selectedToken) : "Select Token"}
+                </MenuButton>
+                <MenuList backgroundColor="neutral.0" borderWidth="0px">
+                  {
+                    tokens.map(it => {
+                      return (
+                        <MenuItem
+                          key={it.address}
+                          _hover={{ bg: "neutral.50" }}
+                          _focus={{ bg: "neutral_800" }}
+                          onClick={() => setSelectedToken(it)}
+                        >
+                          {token(it)}
+                        </MenuItem>
+                      );
+                    })
+                  }
+                </MenuList>
+              </Menu>
 
-          <Input
-            mt="16px"
-            value={value}
-            placeholder="0"
-            color="neutral.800"
-            borderWidth="0px"
-            backgroundColor="neutral.0"
-            isDisabled={!selectedToken}
-            onChange={handleValueChange}
-          />
-
-          <Input
-            mt="16px"
-            value={wallet}
-            placeholder="Wallet Address"
-            color="neutral.800"
-            borderWidth="0px"
-            backgroundColor="neutral.0"
-            isDisabled={!selectedToken}
-            onChange={handleWalletChange}
-          />
-
-          <Conversion
-            selectedToken={selectedToken}
-            value={value}
-          />
-
-          <Box
-            as={Button}
-            mt={"16px"}
-            backgroundColor="primary.800"
-            borderRadius="6px"
-            py="12px"
-            width="100%"
-            textAlign="center"
-            leftIcon={
-              <Image
-                src="icons/chain.svg"
-                alt="Chevron Down"
-                width="16px"
-                height="16px"
+              <Input
+                mt="16px"
+                value={value}
+                placeholder="0"
+                color="neutral.800"
+                borderWidth="0px"
+                backgroundColor="neutral.0"
+                isDisabled={!selectedToken}
+                onChange={handleValueChange}
               />
-            }
-            _hover={{ bg: "primary.700" }}
-            color="neutral.0"
-            textStyle="app_reg_14"
-            isDisabled={!selectedToken || !value || !wallet}
-            isLoading={isLoading}
-            onClick={transfer}
-          >
-            Transfer
-          </Box>
+
+              <Input
+                mt="16px"
+                value={wallet}
+                placeholder="Wallet Address"
+                color="neutral.800"
+                borderWidth="0px"
+                backgroundColor="neutral.0"
+                isDisabled={!selectedToken}
+                onChange={handleWalletChange}
+              />
+
+              <Conversion
+                selectedToken={selectedToken}
+                value={value}
+              />
+
+              <Box
+                as={Button}
+                mt={"16px"}
+                backgroundColor="primary.800"
+                borderRadius="6px"
+                py="12px"
+                width="100%"
+                textAlign="center"
+                leftIcon={
+                  <Image
+                    src="/icons/check.svg"
+                    alt="Check icon"
+                    width="16px"
+                    height="16px"
+                  />
+                }
+                _hover={{ bg: "primary.700" }}
+                color="neutral.0"
+                textStyle="app_reg_14"
+                isDisabled={!selectedToken || !value || Number(value) <= 0 || transferApproving || !wallet || (wallet || "").length !== 42}
+                isLoading={isConfirming || transferApproving}
+                onClick={transfer}
+              >
+                {
+                  !selectedToken
+                    ? 'Select Token'
+                    : transferApproving
+                      ? 'Approving Transfer'
+                      : 'Complete Transfer'
+                }
+              </Box>
+
+              {error && <Text mt="12px" color="red" textStyle="app_reg_14" textAlign="center">
+                {error}
+              </Text>}
+            </>
+          )}
+
+          {isSubmitted && transactionHash && (
+            <PaymentStatus status={Payment.SUBMITTED} hash={transactionHash} />
+          )}
 
         </ModalBody>
       </ModalContent>
