@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -21,9 +21,11 @@ import { ethers } from "ethers";
 import { Token, tokens } from "../../util/tokens";
 import { generateOneTimeLinkPath } from "../../util/linkPathCodec";
 import Conversion from "../Conversion";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const RequestOneTimeModal = (props: any) => {
   const { isOpen, onClose } = props;
+  const { sharedKeypair } = useContext(AuthContext);
 
   const [value, setValue] = useState<number | undefined>(undefined);
   const [selectedToken, setSelectedToken] = useState<Token | undefined>(
@@ -66,11 +68,10 @@ const RequestOneTimeModal = (props: any) => {
     if (!selectedToken || !value) {
       return;
     }
-    const sharedKeypairObj = JSON.parse(localStorage.getItem("sharedKeypair") as string);
 
     setIsLoading(true);
     const amount = ethers.utils.parseEther(value.toString());
-    const path = await generateOneTimeLinkPath(sharedKeypairObj, amount, selectedToken.address);
+    const path = await generateOneTimeLinkPath(sharedKeypair!, amount, selectedToken.address);
     setGeneratedLink(window.location.origin + "/pay/" + path);
     resetFields();
     setIsLoading(false);
@@ -127,7 +128,7 @@ const RequestOneTimeModal = (props: any) => {
                       _focus={{ bg: "neutral_800" }}
                       onClick={() => setSelectedToken(it)}
                     >
-                      { token(it) }
+                      {token(it)}
                     </MenuItem>
                   );
                 })

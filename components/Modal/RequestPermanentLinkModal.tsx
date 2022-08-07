@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   Button,
@@ -13,9 +13,11 @@ import {
   Tooltip,
 } from "@chakra-ui/react";
 import { generatePermanentLinkPath } from "../../util/linkPathCodec";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const RequestPermanentLink = (props: any) => {
   const { isOpen, onClose } = props;
+  const { sharedKeypair } = useContext(AuthContext);
 
   const [generatedLink, setGeneratedLink] = useState<string | undefined>(
     undefined
@@ -26,10 +28,8 @@ const RequestPermanentLink = (props: any) => {
   const closeTooltip = () => setTimeout(() => setIsCopied(false), 3000);
 
   const generateLink = async () => {
-    const sharedKeypairObj = JSON.parse(localStorage.getItem("sharedKeypair") as string);
-
     setIsLoading(true);
-    setGeneratedLink(window.location.origin + "/pay/" + generatePermanentLinkPath(sharedKeypairObj));
+    setGeneratedLink(window.location.origin + "/pay/" + generatePermanentLinkPath(sharedKeypair!));
     setIsLoading(false);
   }
 
@@ -42,12 +42,12 @@ const RequestPermanentLink = (props: any) => {
         setGeneratedLink(undefined);
       }}
     >
-      <ModalOverlay />
+      <ModalOverlay/>
       <ModalContent backgroundColor="neutral.100" pb="12px">
         <ModalHeader textStyle="app_med_18" color="neutral.800">
           Permanent Link
         </ModalHeader>
-        <ModalCloseButton color="neutral.800" />
+        <ModalCloseButton color="neutral.800"/>
         <ModalBody>
           <Text textStyle="app_reg_12" color="neutral.800">
             Create a permanent payment link

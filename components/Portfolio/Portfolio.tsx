@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Text, } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../Header";
 import LeftPanel from "../LeftPanel";
 import Navbar from "../Navbar";
@@ -21,6 +21,7 @@ import { decryptData } from "../../util/encryption";
 import { tokens } from "../../util/tokens";
 import { BigNumber, ethers } from "ethers";
 import Shimmer from "../Shimmer";
+import { AuthContext } from "../../contexts/AuthContext";
 
 const LoadingPortfolioPage = () => {
   return (
@@ -69,9 +70,9 @@ const LoadingPortfolioPage = () => {
           </Box>
         </Flex>
       </Box>
-        
+
       <Box mt="24px" p="16px" mx="32px" backgroundColor="neutral.0" borderRadius="12px"
-          box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)">
+           box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)">
         <Box>
           <Text color="neutral.900" textStyle="app_semibold_16">Your Holdings</Text>
         </Box>
@@ -79,7 +80,7 @@ const LoadingPortfolioPage = () => {
         <Box mt="16px">
           <Box display="table" width="100%">
             <Box borderRadius="6px" display="table-row" color="neutral.600" textStyle="app_reg_14"
-                backgroundColor="neutral.50">
+                 backgroundColor="neutral.50">
               <Box display="table-cell" width="20%" p="6px" pl="12px">
                 Asset
               </Box>
@@ -96,7 +97,7 @@ const LoadingPortfolioPage = () => {
                 Portfolio Amount
               </Box>
             </Box>
-            <Box mt="10px"/>
+            <Box mt="10px" />
           </Box>
           <Box px="16px">
             <Box mt="16px">
@@ -208,7 +209,7 @@ const PortfolioTable = (props: PortfolioTableProps) => {
               Portfolio Amount
             </Box>
           </Box>
-          <Box mt="10px"/>
+          <Box mt="10px" />
 
           {Object.keys(tableData).map(tokenAddress => {
             return (
@@ -237,7 +238,7 @@ const PortfolioTableRow = (props: PortfolioTableRowProps) => {
     <Box display="table-row">
       <Box display="table-cell" py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
         <Box position="relative" top="10px" ml="12px">
-          <Token source={props.logo} name={props.name}/>
+          <Token source={props.logo} name={props.name} />
         </Box>
       </Box>
       <Box display="table-cell" py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
@@ -252,7 +253,7 @@ const PortfolioTableRow = (props: PortfolioTableRowProps) => {
       </Box>
       <Box display={{ base: "none", md: "none", lg: "table-cell" }} py="8px" borderBottomWidth="1px"
            borderBottomColor="neutral.100">
-        <ProgressBar percent="45"/>
+        <ProgressBar percent="45" />
       </Box>
     </Box>
   )
@@ -272,28 +273,17 @@ export const PortfolioMenuItems: MenuItem[] = [
 ];
 
 const PortfolioPage = () => {
+  const { personalKeypair, sharedKeypair } = useContext(AuthContext);
+
   const [isDepositModalOpen, setDepositModalOpen] = useState(false);
   const [isWithdrawModalOpen, setWithdrawModalOpen] = useState(false);
   const [isTransferModalOpen, setTransferModalOpen] = useState(false);
-  const [account, setAccount] = useState<string>("");
-  const [personalKeypair, setPersonalKeypair] = useState<Keypair | undefined>();
-  const [sharedKeypair, setSharedKeypair] = useState<Keypair | undefined>();
 
   const { loading, data } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
     variables: {
       publicKeys: [personalKeypair?.publicKey, sharedKeypair?.publicKey]
     },
   });
-
-  useEffect(() => {
-    const account = localStorage.getItem("account") as string;
-    const personalKeypair = JSON.parse(localStorage.getItem("personalKeypair") || "") as Keypair;
-    const sharedKeypair = JSON.parse(localStorage.getItem("sharedKeypair") || "") as Keypair;
-
-    setAccount(account);
-    setPersonalKeypair(personalKeypair);
-    setSharedKeypair(sharedKeypair);
-  }, []);
 
   return (
     <Flex
@@ -321,11 +311,11 @@ const PortfolioPage = () => {
       />
       <Box backgroundColor="primary.0" width="100%" display="flex">
         <Box>
-          <LeftPanel/>
+          <LeftPanel />
         </Box>
         <Box width="100%">
           <Box display={{ base: "none", md: "inline" }}>
-            <Header/>
+            <Header />
           </Box>
           {loading
             ? <LoadingPortfolioPage />
@@ -377,7 +367,7 @@ const PortfolioPage = () => {
                       />
                     </Box>
                     <Box>
-                      <Request/>
+                      <Request />
                     </Box>
                     <Box>
                       <CTAButton
@@ -391,7 +381,7 @@ const PortfolioPage = () => {
                 </Box>
                 {
                   data && personalKeypair && sharedKeypair &&
-                  <PortfolioTable personalKeypair={personalKeypair} sharedKeypair={sharedKeypair} data={data}/>
+                  <PortfolioTable personalKeypair={personalKeypair} sharedKeypair={sharedKeypair} data={data} />
                 }
               </>
             )

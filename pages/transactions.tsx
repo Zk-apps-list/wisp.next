@@ -1,12 +1,11 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import Header from "../components/Header";
 import LeftPanel from "../components/LeftPanel";
 import TransactionTable from '../components/Transactions/Transactions';
 import Navbar from "../components/Navbar";
 import CTAButton from "../components/CTAButton";
 import { PortfolioMenuItems } from "../components/Portfolio/Portfolio";
-import { Keypair } from "../util/keypair";
 import { useQuery } from "@apollo/client";
 import { GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, Payment } from "../util/thegraph";
 import axios from "axios";
@@ -15,33 +14,35 @@ import { tokens } from "../util/tokens";
 import { decryptData } from "../util/encryption";
 import { ethers } from "ethers";
 import Shimmer from "../components/Shimmer";
+import { AuthContext } from "../contexts/AuthContext";
 
 const LoadingTransactionsPage = () => {
   return (
     <Box width="100%" mt="16px">
       <Box width={{ base: "100%" }}>
         <Box p="16px" mx="32px" backgroundColor="neutral.0" borderRadius="12px"
-          box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)">
-        <Box display="table" width="100%">
-          <Box borderRadius="6px" display="table-row" color="neutral.600" textStyle="app_reg_14" backgroundColor="neutral.50">
-            <Box display="table-cell" width="16.7%" p="6px" pl="12px">
-              Token
+             box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)">
+          <Box display="table" width="100%">
+            <Box borderRadius="6px" display="table-row" color="neutral.600" textStyle="app_reg_14"
+                 backgroundColor="neutral.50">
+              <Box display="table-cell" width="16.7%" p="6px" pl="12px">
+                Token
+              </Box>
+              <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px">
+                Transaction ID
+              </Box>
+              <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px">
+                Status
+              </Box>
+              <Box display="table-cell" width="16.7%" p="6px">
+                Amount
+              </Box>
+              <Box display="table-cell" width="16.7%" p="6px" pr="12px">
+                Date
+              </Box>
             </Box>
-            <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px">
-              Transaction ID
-            </Box>
-            <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="16.7%" p="6px">
-              Status
-            </Box>
-            <Box display="table-cell" width="16.7%" p="6px">
-              Amount
-            </Box>
-            <Box display="table-cell" width="16.7%" p="6px" pr="12px">
-              Date
-            </Box>
+            <Box mt="10px" />
           </Box>
-          <Box mt="10px"/>
-        </Box>
           <Box px="16px">
             <Box mt="16px">
               <Shimmer width="100%" height="24px" />
@@ -66,6 +67,7 @@ const LoadingTransactionsPage = () => {
 }
 
 export type TableData = RowData[];
+
 interface RowData {
   id: string,
   logo: string,
@@ -76,9 +78,8 @@ interface RowData {
 }
 
 const TransactionsPage = () => {
-  const [account, setAccount] = useState<string>("");
-  const [personalKeypair, setPersonalKeypair] = useState<Keypair | undefined>();
-  const [sharedKeypair, setSharedKeypair] = useState<Keypair | undefined>();
+  const { personalKeypair, sharedKeypair } = useContext(AuthContext);
+
   const [isExporting, setIsExporting] = useState<boolean>(false);
 
   const { loading, data } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
@@ -86,16 +87,6 @@ const TransactionsPage = () => {
       publicKeys: [personalKeypair?.publicKey, sharedKeypair?.publicKey]
     },
   });
-
-  useEffect(() => {
-    const account = localStorage.getItem("account") as string;
-    const personalKeypair = JSON.parse(localStorage.getItem("personalKeypair") || "") as Keypair;
-    const sharedKeypair = JSON.parse(localStorage.getItem("sharedKeypair") || "") as Keypair;
-
-    setAccount(account);
-    setPersonalKeypair(personalKeypair);
-    setSharedKeypair(sharedKeypair);
-  }, []);
 
   const tableData: TableData = data?.payments.map((p: Payment) => {
     let privateKey: string;
@@ -156,11 +147,11 @@ const TransactionsPage = () => {
       />
       <Box backgroundColor="neutral.50" width="100%" display="flex">
         <Box>
-          <LeftPanel/>
+          <LeftPanel />
         </Box>
         <Box width="100%">
           <Box display={{ base: "none", md: "inline" }} width="100%">
-            <Header/>
+            <Header />
           </Box>
           <Box mt={{ base: "104px", md: "0px" }} mx="32px" textAlign="right">
             <CTAButton
@@ -177,14 +168,14 @@ const TransactionsPage = () => {
                 <Box width={{ base: "100%" }}>
                   {
                     data && personalKeypair && sharedKeypair &&
-                    <TransactionTable tableData={tableData}/>
+                    <TransactionTable tableData={tableData} />
                   }
                 </Box>
               </Box>
-          )}
+            )}
         </Box>
       </Box>
-      
+
     </Flex>
   );
 };
