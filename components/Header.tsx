@@ -14,13 +14,25 @@ import ClaimIDModal, { Mode } from "./Modal/ClaimIDModal/ClaimIDModal";
 import Network from "./Network";
 import PendingMultiple from "./PendingMultiple";
 import CTAButton from "./CTAButton";
+import { WispToken__factory } from "../contracts";
+import { ethers } from "ethers";
+import { WISP_ETH } from "../util/contracts";
 
 const Header = () => {
+  const { web3Provider } = useContext(AuthContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const [isClaimIDModalOpen, setClaimIDModalOpen] = useState(false);
   const { account, chainId } = useContext(AuthContext);
   const router = useRouter();
   const pathname = router.pathname;
+
+
+  const requestTestTokens = async () => {
+    const wispToken = WispToken__factory.connect(WISP_ETH, web3Provider!.getSigner(0));
+    const transaction = await wispToken.mint(ethers.utils.parseEther("100"));
+    await transaction.wait(1);
+  };
 
   const title = () => {
     switch (pathname) {
@@ -48,7 +60,7 @@ const Header = () => {
         <Text color="neutral.800" textStyle="app_bold_28">
           {title()}
         </Text>
-        {account &&  (
+        {account && (
           <Flex>
             <Flex columnGap="8px">
               {chainId === "80001" && (
@@ -57,15 +69,15 @@ const Header = () => {
                     name="Request Test ETH"
                     icon="/icons/plus.svg"
                     responsive
-                    onClick={() => console.log("Request Test Eth ")}
+                    onClick={requestTestTokens}
                   />
                 </Box>
               )}
               <Flex alignItems="center">
-                <PendingMultiple />
+                <PendingMultiple/>
               </Flex>
               <Flex alignItems="center">
-                <Network />
+                <Network/>
               </Flex>
             </Flex>
             <Flex
@@ -100,7 +112,7 @@ const Header = () => {
                 borderColor="neutral.100"
                 borderRadius="12px"
                 backgroundColor="neutral.0"
-                boxShadow= "59px 77px 39px rgba(0, 0, 0, 0.01), 33px 43px 33px rgba(0, 0, 0, 0.02), 15px 19px 24px rgba(0, 0, 0, 0.04), 4px 5px 13px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)"
+                boxShadow="59px 77px 39px rgba(0, 0, 0, 0.01), 33px 43px 33px rgba(0, 0, 0, 0.02), 15px 19px 24px rgba(0, 0, 0, 0.04), 4px 5px 13px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)"
                 right="32px"
               >
                 <Flex justifyContent="space-between">
