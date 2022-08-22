@@ -55,10 +55,10 @@ const PDF = (props: any) => {
         <div style={{ fontSize: "12px", marginTop: "12px", fontWeight: "bold" }}>
           <span style={{ fontWeight: "bold" }}>Period:</span><span> All Transactions</span>
         </div>
-        <div style={{ fontSize: "12px" }}>
+        {/* <div style={{ fontSize: "12px" }}>
           <span style={{ fontWeight: "bold" }}>Operating Income: </span>
           <span>{calculateIncome(data)}</span>
-        </div>
+        </div> */}
       </div>
 
       <div style={{ padding: 16 }}>

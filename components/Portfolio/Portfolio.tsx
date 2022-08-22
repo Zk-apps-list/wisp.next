@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Text, } from "@chakra-ui/react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Header from "../Header";
 import LeftPanel from "../LeftPanel";
 import Navbar from "../Navbar";
@@ -22,6 +22,7 @@ import { tokens } from "../../util/tokens";
 import { BigNumber, ethers } from "ethers";
 import Shimmer from "../Shimmer";
 import { AuthContext } from "../../contexts/AuthContext";
+import { ConversionContext } from "../../contexts/ConversionContext";
 
 const LoadingPortfolioPage = () => {
   return (
@@ -41,9 +42,9 @@ const LoadingPortfolioPage = () => {
             <Box>
               <Shimmer width="220px" height="24px" />
             </Box>
-            <Box>
+            {/* <Box>
               <Shimmer width="120px" height="24px" />
-            </Box>
+            </Box> */}
           </Box>
         </Flex>
         <Flex justifyContent="center" alignItems="center" flex={1} mt={{ base: "8px", lg: "0px" }}
@@ -81,28 +82,22 @@ const LoadingPortfolioPage = () => {
           <Box display="table" width="100%">
             <Box borderRadius="6px" display="table-row" color="neutral.600" textStyle="app_reg_14"
                  backgroundColor="neutral.50">
-              <Box display="table-cell" width="20%" p="6px" pl="12px">
+              <Box display="table-cell" width="25%" p="6px" pl="12px">
                 Asset
               </Box>
-              <Box display="table-cell" width="20%" p="6px">
+              <Box display="table-cell" width="25%" p="6px">
                 Amount
               </Box>
-              <Box display="table-cell" width="20%" p="6px">
+              <Box display="table-cell" width="25%" p="6px">
                 Value
               </Box>
-              <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="20%" p="6px">
-                % Change
-              </Box>
-              <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="20%" p="6px" pr="12px">
+              <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="25%" p="6px" pr="12px">
                 Portfolio Amount
               </Box>
             </Box>
             <Box mt="10px" />
           </Box>
           <Box px="16px">
-            <Box mt="16px">
-              <Shimmer width="100%" height="24px" />
-            </Box>
             <Box mt="16px">
               <Shimmer width="100%" height="24px" />
             </Box>
@@ -146,40 +141,14 @@ const ProgressBar = (props: any) => {
 }
 
 type PortfolioTableProps = {
-  personalKeypair: Keypair,
-  sharedKeypair: Keypair,
-  data: GetPaymentsResult,
+  portfolio: {},
+  totalValue: number
 }
 
 const PortfolioTable = (props: PortfolioTableProps) => {
+  const { portfolio, totalValue } = props;
 
-  const tableData: { [tokenAddress: string]: { logo: string, name: string, amount: BigNumber } } = {};
-  props.data.payments.forEach((p: Payment) => {
-    let privateKey: string;
-    if (p.publicKey === props.personalKeypair.publicKey) {
-      privateKey = props.personalKeypair.privateKey!;
-    } else if (p.publicKey === props.sharedKeypair.publicKey) {
-      privateKey = props.sharedKeypair.privateKey!;
-    } else {
-      return;
-    }
-
-    const decryptedNote = parseNoteFromBuff(decryptData(privateKey.slice(2), p.encryptedData))
-    const token = tokens.find(it => it.address === decryptedNote.token);
-    if (!token) {
-      return;
-    }
-
-    if (!tableData[token.address]) {
-      tableData[token.address] = {
-        logo: token.icon,
-        name: `${token.name} (${token.symbol})`,
-        amount: decryptedNote.amount
-      };
-    } else {
-      tableData[token.address].amount = tableData[token.address].amount.add(decryptedNote.amount);
-    }
-  });
+  const { chainId } = useContext(AuthContext);
 
   return (
     <Box mt="24px" p="16px" mx="32px" backgroundColor="neutral.0" borderRadius="12px"
@@ -193,31 +162,30 @@ const PortfolioTable = (props: PortfolioTableProps) => {
 
           <Box borderRadius="6px" display="table-row" color="neutral.600" textStyle="app_reg_14"
                backgroundColor="neutral.50">
-            <Box display="table-cell" width="20%" p="6px" pl="12px">
+            <Box display="table-cell" width="25%" p="6px" pl="12px">
               Asset
             </Box>
-            <Box display="table-cell" width="20%" p="6px">
+            <Box display="table-cell" width="25%" p="6px">
               Amount
             </Box>
-            <Box display="table-cell" width="20%" p="6px">
+            <Box display="table-cell" width="25%" p="6px">
               Value
             </Box>
-            <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="20%" p="6px">
-              % Change
-            </Box>
-            <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="20%" p="6px" pr="12px">
+            <Box display={{ base: "none", md: "none", lg: "table-cell" }} width="25%" p="6px" pr="12px">
               Portfolio Amount
             </Box>
           </Box>
           <Box mt="10px" />
 
-          {Object.keys(tableData).map(tokenAddress => {
+          {chainId === "80001" && Object.keys(portfolio).length && Object.keys(portfolio).map(tokenAddress => {
             return (
               <PortfolioTableRow
                 key={tokenAddress}
-                logo={tableData[tokenAddress].logo}
-                name={tableData[tokenAddress].name}
-                amount={ethers.utils.formatEther(tableData[tokenAddress].amount)}
+                logo={portfolio[tokenAddress].logo}
+                name={portfolio[tokenAddress].name}
+                amount={ethers.utils.formatEther(portfolio[tokenAddress].amount)}
+                symbol={portfolio[tokenAddress].symbol}
+                totalValue={totalValue}
               />
             );
           })}
@@ -230,30 +198,35 @@ const PortfolioTable = (props: PortfolioTableProps) => {
 type PortfolioTableRowProps = {
   logo: string,
   name: string,
-  amount: string
+  amount: string,
+  symbol: string,
+  totalValue: number
 }
 
 const PortfolioTableRow = (props: PortfolioTableRowProps) => {
+  const { name, amount, symbol, totalValue } = props;
+
+  const { conversion } = useContext(ConversionContext);
+  const oneDollarEquivalent = Number(conversion[symbol]) || 0;
+  const dollarValue = Number(amount) / oneDollarEquivalent;
+  const fixedDollarValue = dollarValue.toFixed(2);
+
   return (
     <Box display="table-row">
       <Box display="table-cell" py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
         <Box position="relative" top="10px" ml="12px">
-          <Token source={props.logo} name={props.name} />
+          <Token source={props.logo} name={name} />
         </Box>
       </Box>
       <Box display="table-cell" py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
-        <Text textStyle="app_med_14" color="neutral.800">{props.amount}</Text>
+        <Text textStyle="app_med_14" color="neutral.800">{amount}</Text>
       </Box>
       <Box display="table-cell" py="8px" borderBottomWidth="1px" borderBottomColor="neutral.100">
-        <Text textStyle="app_med_14" color="neutral.800">11,054.09 USD</Text>
+        <Text textStyle="app_med_14" color="neutral.800">{fixedDollarValue} USD</Text>
       </Box>
       <Box display={{ base: "none", md: "none", lg: "table-cell" }} py="8px" borderBottomWidth="1px"
            borderBottomColor="neutral.100">
-        <Text textStyle="app_med_14" color="neutral.800">+2% ($ 435)</Text>
-      </Box>
-      <Box display={{ base: "none", md: "none", lg: "table-cell" }} py="8px" borderBottomWidth="1px"
-           borderBottomColor="neutral.100">
-        <ProgressBar percent="45" />
+        <ProgressBar percent={((Number(fixedDollarValue) / Number(totalValue)) * 100).toFixed(2)} />
       </Box>
     </Box>
   )
@@ -273,17 +246,68 @@ export const PortfolioMenuItems: MenuItem[] = [
 ];
 
 const PortfolioPage = () => {
-  const { personalKeypair, sharedKeypair } = useContext(AuthContext);
+  const { personalKeypair, sharedKeypair, chainId } = useContext(AuthContext);
+  const { conversion } = useContext(ConversionContext);
 
   const [isDepositModalOpen, setDepositModalOpen] = useState(false);
   const [isWithdrawModalOpen, setWithdrawModalOpen] = useState(false);
   const [isTransferModalOpen, setTransferModalOpen] = useState(false);
+
+  const [totalValue, setTotalValue] = useState<number>(0);
+  const [portfolio, setPortfolio] = useState<{[tokenAddress: string]: { logo: string, name: string, amount: BigNumber, symbol: string }}>({});
 
   const { loading, data } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
     variables: {
       publicKeys: [personalKeypair?.publicKey, sharedKeypair?.publicKey]
     },
   });
+
+  useEffect(() => {
+    if(!loading && data) {
+      const tableData: {[tokenAddress: string]: { logo: string, name: string, amount: BigNumber, symbol: string }} = {};
+
+      data?.payments.map((p: Payment) => {
+        let privateKey: string;
+        if (p.publicKey === personalKeypair?.publicKey) {
+          privateKey = personalKeypair?.privateKey!;
+        } else if (p.publicKey === sharedKeypair?.publicKey) {
+          privateKey = sharedKeypair?.privateKey!;
+        } else {
+          return;
+        }
+    
+        const decryptedNote = parseNoteFromBuff(decryptData(privateKey.slice(2), p.encryptedData))
+        const token = tokens.find(it => it.address === decryptedNote.token);
+        if (!token) {
+          return;
+        }
+    
+        if (!tableData[token.address]) {
+          tableData[token.address] = {
+            logo: token.icon,
+            name: `${token.name} (${token.symbol})`,
+            amount: decryptedNote.amount,
+            symbol: token.symbol
+          };
+        } else {
+          tableData[token.address].amount = tableData[token.address].amount.add(decryptedNote.amount);
+        }
+      });
+      setPortfolio(tableData);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if(Object.keys(portfolio).length) {
+      const total = Object.keys(portfolio).map(el => {
+        const amountOfTokens = Number(ethers.utils.formatEther(portfolio[el].amount));
+        const oneDollarEquivalent = Number(conversion[portfolio[el].symbol]) || 0;
+        const dollarValue = Number(amountOfTokens) / oneDollarEquivalent;
+        return dollarValue;
+      }).reduce((a, b) => a + b, 0).toFixed(2);
+      setTotalValue(total);
+    }
+  }, [portfolio]);
 
   return (
     <Flex
@@ -334,8 +358,8 @@ const PortfolioPage = () => {
                     <Text color="neutral.600" textStyle="app_reg_12" textAlign={{ base: "center", lg: "left" }}>Total
                       Value</Text>
                     <Box mt="3px" columnGap="8px" display={{ base: "block", lg: "flex" }}>
-                      <Text textStyle="app_semibold_24" lineHeight="30px" textAlign="center">$9,000,112,453.00</Text>
-                      <Flex justifyContent="center">
+                      <Text textStyle="app_semibold_24" lineHeight="30px" textAlign="center">{chainId === "80001" ? `$${totalValue}` : `$0`}</Text>
+                      {/* <Flex justifyContent="center">
                         <Flex justifyContent="center" alignItems="center">
                           <Image
                             src="icons/increase.svg"
@@ -345,7 +369,7 @@ const PortfolioPage = () => {
                           />
                         </Flex>
                         <Text textStyle="app_med_14" color="green.dark" lineHeight="30px" ml="6px">7D +5% ($400)</Text>
-                      </Flex>
+                      </Flex> */}
                     </Box>
                   </Flex>
                   <Flex justifyContent="center" alignItems="center" flex={1} mt={{ base: "8px", lg: "0px" }}
@@ -381,7 +405,10 @@ const PortfolioPage = () => {
                 </Box>
                 {
                   data && personalKeypair && sharedKeypair &&
-                  <PortfolioTable personalKeypair={personalKeypair} sharedKeypair={sharedKeypair} data={data} />
+                  <PortfolioTable
+                    portfolio={portfolio}
+                    totalValue={totalValue}
+                  />
                 }
               </>
             )

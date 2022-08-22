@@ -95,16 +95,14 @@ const Navbar = (props: any) => {
               )
             })}
           </Flex>
-          {process.env.NODE_ENV === 'development' && (
-            <Box>
-              <Wallet
-                account={account}
-                connectWallet={connectWallet}
-                disconnect={disconnect}
-                isLoading={isWalletLoading}
-              />
-            </Box>
-          )}
+          <Box>
+            <Wallet
+              account={account}
+              connectWallet={connectWallet}
+              disconnect={disconnect}
+              isLoading={isWalletLoading}
+            />
+          </Box>
         </Flex>
 
 
@@ -273,7 +271,7 @@ const Navbar = (props: any) => {
               </Flex>
 
             </Box>
-            {isLandingPage && process.env.NODE_ENV === 'development' && (
+            {isLandingPage && (
               <Box ml="auto" mr="auto" mt="24px">
                 <Wallet
                   account={account}

@@ -1,9 +1,10 @@
 import { Box, Link, Text, } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import Token from "../Token";
 import { truncateTx } from "../../util/truncateTx";
 import moment from "moment";
 import { TableData } from "../../pages/transactions";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export enum BadgeType {
   RECEIVED = "RECEIVED",
@@ -68,6 +69,8 @@ type TransactionTableProps = {
 const TransactionTable = (props: TransactionTableProps) => {
   const { tableData } = props;
 
+  const { chainId } = useContext(AuthContext);
+
   return (
     <Box p="16px" mx="32px" backgroundColor="neutral.0" borderRadius="12px"
          box-shadow="0px 10px 6px rgba(0, 0, 0, 0.02), 0px 1px 2px rgba(0, 0, 0, 0.04), 0px 0px 0px rgba(0, 0, 0, 0.04)">
@@ -92,7 +95,7 @@ const TransactionTable = (props: TransactionTableProps) => {
           </Box>
         </Box>
         <Box mt="10px"/>
-        {
+        {chainId === "80001" &&
           tableData.map((it: any) => {
             return (
               <TransactionRow

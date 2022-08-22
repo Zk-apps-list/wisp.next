@@ -2,7 +2,7 @@ import { Box, Image, Button, Text, Spinner } from '@chakra-ui/react';
 import React from 'react';
 
 const CTAButton = (props: any) => {
-  const { name, icon, onClick, responsive, isLoading } = props;
+  const { name, disabled, icon, onClick, responsive, isLoading } = props;
 
   return (
     <>
@@ -15,6 +15,7 @@ const CTAButton = (props: any) => {
         px="20px"
         textAlign="center"
         _hover={{ bg: "primary.700" }}
+        disabled={disabled}
         leftIcon={icon && (
           <Image
             src={icon}

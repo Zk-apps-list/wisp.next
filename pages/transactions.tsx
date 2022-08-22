@@ -78,7 +78,7 @@ interface RowData {
 }
 
 const TransactionsPage = () => {
-  const { personalKeypair, sharedKeypair } = useContext(AuthContext);
+  const { personalKeypair, sharedKeypair, chainId } = useContext(AuthContext);
 
   const [isExporting, setIsExporting] = useState<boolean>(false);
 
@@ -158,6 +158,7 @@ const TransactionsPage = () => {
               name="Export"
               icon="/icons/arrow_down.svg"
               isLoading={isExporting}
+              disabled={chainId !== "80001"}
               onClick={exportPdf}
             />
           </Box>
