@@ -14,7 +14,7 @@ export class Keypair {
   }
 
   static fromPrivateKey(privateKey: string, shared: boolean) {
-    const publicKey = poseidonHash([privateKey, shared ? 123 : 321]).toHexString();
+    const publicKey = "0x" + poseidonHash([privateKey, shared ? 123 : 321]).toHexString().slice(2).padStart(64, "0");
     const encryptionKey = getEncryptionPublicKey(privateKey.slice(2));
     return new Keypair(privateKey, publicKey, encryptionKey);
   }

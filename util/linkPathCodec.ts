@@ -11,7 +11,7 @@ export const generateOneTimeLinkPath = async (keypair: Keypair, amount: BigNumbe
   return Buffer.concat([
     ethers.utils.arrayify(depositData.proof), // 256 bytes
     ethers.utils.arrayify(depositData.commitment), // 32 bytes
-    depositData.publicKey, // 32 bytes
+    Buffer.alloc(32 - depositData.publicKey.length), depositData.publicKey, // 32 bytes
     depositData.token, // 20 bytes
     Buffer.alloc(32 - depositData.amount.length), depositData.amount,  // 32 bytes
     depositData.encryptedData // arbitrary length
