@@ -1,4 +1,4 @@
-import { Box, Flex, Image, Text, } from "@chakra-ui/react";
+import { Box, Flex, Image, Text, useInterval, } from "@chakra-ui/react";
 import React, { useContext, useEffect, useState } from "react";
 import Header from "../Header";
 import LeftPanel from "../LeftPanel";
@@ -256,7 +256,7 @@ const PortfolioPage = () => {
   const [totalValue, setTotalValue] = useState<number>(0);
   const [portfolio, setPortfolio] = useState<{[tokenAddress: string]: { logo: string, name: string, amount: BigNumber, symbol: string }}>({});
 
-  const { loading, data } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
+  const { loading, data, refetch } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
     variables: {
       publicKeys: [personalKeypair?.publicKey, sharedKeypair?.publicKey]
     },
@@ -275,13 +275,13 @@ const PortfolioPage = () => {
         } else {
           return;
         }
-    
+
         const decryptedNote = parseNoteFromBuff(decryptData(privateKey.slice(2), p.encryptedData))
         const token = tokens.find(it => it.address === decryptedNote.token);
         if (!token) {
           return;
         }
-    
+
         if (!tableData[token.address]) {
           tableData[token.address] = {
             logo: token.icon,
@@ -308,6 +308,10 @@ const PortfolioPage = () => {
       setTotalValue(total);
     }
   }, [portfolio]);
+
+  useInterval(async () => {
+    await refetch();
+  }, 5000);
 
   return (
     <Flex
