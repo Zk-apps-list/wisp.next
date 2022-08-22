@@ -142,7 +142,7 @@ const ProgressBar = (props: any) => {
 
 type PortfolioTableProps = {
   portfolio: {},
-  totalValue: number
+  totalValue: string
 }
 
 const PortfolioTable = (props: PortfolioTableProps) => {
@@ -181,10 +181,10 @@ const PortfolioTable = (props: PortfolioTableProps) => {
             return (
               <PortfolioTableRow
                 key={tokenAddress}
-                logo={portfolio[tokenAddress].logo}
-                name={portfolio[tokenAddress].name}
-                amount={ethers.utils.formatEther(portfolio[tokenAddress].amount)}
-                symbol={portfolio[tokenAddress].symbol}
+                logo={(portfolio as any)[tokenAddress].logo}
+                name={(portfolio as any)[tokenAddress].name}
+                amount={ethers.utils.formatEther((portfolio as any)[tokenAddress].amount)}
+                symbol={(portfolio as any)[tokenAddress].symbol}
                 totalValue={totalValue}
               />
             );
@@ -200,14 +200,14 @@ type PortfolioTableRowProps = {
   name: string,
   amount: string,
   symbol: string,
-  totalValue: number
+  totalValue: string
 }
 
 const PortfolioTableRow = (props: PortfolioTableRowProps) => {
   const { name, amount, symbol, totalValue } = props;
 
   const { conversion } = useContext(ConversionContext);
-  const oneDollarEquivalent = Number(conversion[symbol]) || 0;
+  const oneDollarEquivalent = Number((conversion as any)[symbol]) || 0;
   const dollarValue = Number(amount) / oneDollarEquivalent;
   const fixedDollarValue = dollarValue.toFixed(2);
 
@@ -253,7 +253,7 @@ const PortfolioPage = () => {
   const [isWithdrawModalOpen, setWithdrawModalOpen] = useState(false);
   const [isTransferModalOpen, setTransferModalOpen] = useState(false);
 
-  const [totalValue, setTotalValue] = useState<number>(0);
+  const [totalValue, setTotalValue] = useState<string>("");
   const [portfolio, setPortfolio] = useState<{[tokenAddress: string]: { logo: string, name: string, amount: BigNumber, symbol: string }}>({});
 
   const { loading, data, refetch } = useQuery(GET_PAYMENTS_BY_PUBLIC_KEYS_QUERY, {
@@ -301,7 +301,7 @@ const PortfolioPage = () => {
     if(Object.keys(portfolio).length) {
       const total = Object.keys(portfolio).map(el => {
         const amountOfTokens = Number(ethers.utils.formatEther(portfolio[el].amount));
-        const oneDollarEquivalent = Number(conversion[portfolio[el].symbol]) || 0;
+        const oneDollarEquivalent = Number((conversion as any)[portfolio[el].symbol]) || 0;
         const dollarValue = Number(amountOfTokens) / oneDollarEquivalent;
         return dollarValue;
       }).reduce((a, b) => a + b, 0).toFixed(2);

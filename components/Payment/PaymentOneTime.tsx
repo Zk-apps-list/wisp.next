@@ -202,7 +202,7 @@ const PaymentOneTime = ({ id }: Props) => {
                     </Box>
                     <Flex alignItems="center">
                       <Tooltip
-                        label={`You must give the Wisp smart contract permission to use your ${requestedToken.symbol}. You only have to do this once per token.`}
+                        label={`You must give the Wisp smart contract permission to use your ${requestedToken?.symbol}. You only have to do this once per token.`}
                         placement="top"
                         width="250px"
                         p="12px"
