@@ -81,27 +81,27 @@ const Header = () => {
               </Flex>
             </Flex>
             <Flex
-              as={Button}
+              // as={Button}
               backgroundColor="transparent"
               columnGap="8px"
               py="8px"
               px="16px"
-              onClick={() => setIsOpen(!isOpen)}
+              // onClick={() => setIsOpen(!isOpen)}
             >
               <Flex justifyContent="center" alignItems="center">
                 <Text color="neutral.800" textStyle="app_med_14">{truncateWallet(account, 6)}</Text>
               </Flex>
-              <Flex justifyContent="center" alignItems="center">
+              {/* <Flex justifyContent="center" alignItems="center">
                 <Image
                   src={isOpen ? "/icons/chevron_up.svg" : "/icons/chevron_down.svg"}
                   alt="Chevron Down"
                   width="16px"
                   height="16px"
                 />
-              </Flex>
+              </Flex> */}
             </Flex>
 
-            {isOpen && (
+            {/* {isOpen && (
               <Box
                 position="absolute"
                 zIndex={1}
@@ -152,7 +152,7 @@ const Header = () => {
                   Claim ID
                 </Box>
               </Box>
-            )}
+            )} */}
 
           </Flex>
         )}

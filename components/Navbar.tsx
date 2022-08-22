@@ -228,9 +228,9 @@ const Navbar = (props: any) => {
                       </Text>
                     </Box>
 
-                    <Box my="24px" borderBottomWidth="1px" color="primary.400" opacity={0.2} />
+                    {/* <Box my="24px" borderBottomWidth="1px" color="primary.400" opacity={0.2} /> */}
 
-                    <Box>
+                    {/* <Box>
                       <Flex justifyContent="space-between">
                         <Flex textStyle="app_med_14" color="neutral.0" justifyContent="center" alignItems="center">Your ID</Flex>
                         <Tooltip
@@ -267,7 +267,7 @@ const Navbar = (props: any) => {
                       >
                         <Text textStyle="app_med_14" color="neutral.0">Claim ID</Text>
                       </Flex>
-                    </Box>
+                    </Box> */}
                   </>
                 )}
               </Flex>
