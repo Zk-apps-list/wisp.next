@@ -70,7 +70,7 @@ export const AuthContextProvider = (props: any) => {
       // Retrieve signature on first sign in
       if(!account && web3Provider) {
         const accounts = await web3Provider.listAccounts();
-        const signature = await web3Provider.getSigner().signMessage("some message");
+        const signature = await web3Provider.getSigner().signMessage("Please sign this message to log in to your Wisp account.");
 
         localStorage.setItem("account", accounts[0]);
         localStorage.setItem("personalKeypair", JSON.stringify(getPersonalKeypair(signature)));
